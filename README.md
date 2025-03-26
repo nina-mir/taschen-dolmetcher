@@ -1,54 +1,19 @@
-# React + TypeScript + Vite
+# Taschen-Dolmetcher Revisited
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## status
+> [!IMPORTANT]
+> This project is work-in-progress. 
 
-Currently, two official plugins are available:
+<img src="https://asset.museum-digital.org//media/800/berlin/images/34/80372-207263/207263/207263-80372.jpg" align="center" />
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Overview
 
-## Expanding the ESLint configuration
+**Taschen-Dolmetscher Revisited** is an educational project that revives World War 2-era phrasebooks once used by German military to communicate with the people of the occupied Soviet block, allowing learners to practice German, Russian, and English phrases while learning about the Holocaust and Nazi war crimes. 
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Technologies Used
+[![My Skills](https://skillicons.dev/icons?i=react)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=tailwind)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=ts)](https://skillicons.dev)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+This project is being built using a modern web tech stack—primarily React v.19, TypeScript and Tailwind CSS v.4. It provides interactive flashcards, phonetic guides, and historical insights about the crimes of Nazi Germany and its collaborators. By blending language practice with historical context, the project encourages users to reflect on the atrocities committed during World War II while acquiring practical linguistic skills.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
