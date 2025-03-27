@@ -60,13 +60,13 @@ export function NavigationMenuDemo() {
     <NavigationMenu className="font-garamond-pp p-1.5 text-stone">
       <NavigationMenuList >
         <NavigationMenuItem >
-          <NavigationMenuTrigger className="bg-stone-500">Getting started</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuTrigger className="bg-transparent">History</NavigationMenuTrigger>
+          <NavigationMenuContent className="hover:bg-transparent">
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
                 <NavigationMenuLink asChild>
                   <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none"
                     href="/"
                   >
                     <Icons.logo className="h-6 w-6" />
@@ -94,7 +94,7 @@ export function NavigationMenuDemo() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-stone-500">Components</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="bg-transparent">Game</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {components.map((component) => (
@@ -112,9 +112,10 @@ export function NavigationMenuDemo() {
         <NavigationMenuItem>
           {/* <Link href="/docs" legacyBehavior passHref> */}
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Documentation
+              Further Readings
             </NavigationMenuLink>
           {/* </Link> */}
+          
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
@@ -122,7 +123,7 @@ export function NavigationMenuDemo() {
 }
 
 const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
+  React.ComponentRef<"a">,
   React.ComponentPropsWithoutRef<"a">
 >(({ className, title, children, ...props }, ref) => {
   return (
@@ -131,7 +132,7 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-transparent focus:bg-transparent",
             className
           )}
           {...props}

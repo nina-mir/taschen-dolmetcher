@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import Header from './components/Header'
+import LanguageSelctor from './components/LanguageSelector'
 // import { NavigationMenuDemo } from './components/Navbar'
 
 // import { useState } from 'react'
@@ -14,7 +15,8 @@ function App() {
     <>
       {/* <NavigationMenuDemo/> */}
       <Header />
-      <div className="flex flex-col items-center justify-center min-h-200 gap-[3rem]">
+      <div className="flex flex-col items-center justify-start min-h-200 gap-[3rem]">
+        <LanguageSelctor />
         <Button>Click me</Button>
         <Button>Click me</Button>
 
