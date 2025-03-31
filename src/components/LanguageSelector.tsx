@@ -7,27 +7,90 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-import { CircleIcon, BorderNoneIcon } from "@radix-ui/react-icons"
-
-
-
-const LanguageSelctor: React.FC = () => {
+const LanguageSelector: React.FC = () => {
     return (
-        <div className='flex gap-1 mt-5 ml-[10rem] justify-start self-start '>
-            <div className=' w-5 h-5 self-center bg-gradient-to-r rounded-full bg-[linear-gradient(#000_33.333%,#FF0000_33.33%_66.666%,#FFCC00_66.666%)]'></div>
-            <Label htmlFor="inputLanguage">from </Label>
-            <Select>
-                <SelectTrigger id="inputLanguage" className="w-[180px]">
-                    <SelectValue placeholder="Deutsch" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="ru">русский</SelectItem>
-                    <SelectItem value="de">Deutsch</SelectItem>
-                    <SelectItem value="en">English</SelectItem>
-                </SelectContent>
-            </Select>
+        <div className="bg-[url('topography.svg')] bg-contain bg-repeat w-full flex justify-center items-center">
+            <div className='flex flex-col md:flex-row mt-5 mb-5 justify-between md:gap-30 gap-4'>
+                <div className='flex flex-col sm:flex-row items-center gap-4'>
+                    <Label htmlFor="inputLanguage" className='font-gyst text-2xl whitespace-nowrap'>From</Label>
+                    <div className='max-w-[200px]'>
+                        <Select defaultValue="de">
+                            <SelectTrigger
+                                id="inputLanguage"
+                                className="min-w-[10rem] text-1xl"
+                            >
+                                <SelectValue placeholder="choose a language" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="ru">
+                                    <img
+                                        src='russia.svg'
+                                        alt="Soviet flag"
+                                        className='w-8 grayscale'
+                                    />
+                                    русский
+                                </SelectItem>
+                                <SelectItem value="de" className="flex items-center gap-2">
+                                    <img
+                                        src='/german_flag.svg'
+                                        alt="German flag"
+                                        className='w-8 grayscale'          
+                                    />
+                                    Deutsch
+                                </SelectItem>
+                                <SelectItem value="en">
+                                    <img
+                                        src='/english.svg'
+                                        alt="American flag"
+                                        className='w-8 grayscale'
+                                    />English
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+                <div className='flex flex-col sm:flex-row items-center gap-4 w-full'>
+                    <Label htmlFor="outLanguage" className='font-gyst text-2xl whitespace-nowrap'>To</Label>
+                    <div className='w-full max-w-[200px]'>
+                        <Select defaultValue="en">
+                            <SelectTrigger
+                                id="outLanguage"
+                                className="min-w-[10rem] text-1.5xl bg-stone-500/20"
+                            >
+                                <SelectValue placeholder="choose a language" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="ru">
+                                    <img
+                                        src='russia.svg'
+                                        alt="Soviet flag"
+                                        className='w-8 grayscale'
+                                    />
+                                    русский
+                                </SelectItem>
+                                <SelectItem value="de" className="flex items-center gap-2">
+                                    <img
+                                        src='/german_flag.svg'
+                                        alt="German flag"
+                                        className='w-8 grayscale'
+                                    />
+                                    Deutsch
+                                </SelectItem>
+                                <SelectItem value="en">
+                                    <img
+                                        src='/english.svg'
+                                        alt="American flag"
+                                        className='w-8 grayscale'
+                                    />
+                                    English
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
 
-export default LanguageSelctor;
+export default LanguageSelector;

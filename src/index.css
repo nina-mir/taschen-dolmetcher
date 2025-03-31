@@ -3,7 +3,6 @@
 /* treblinka */
 @import url("https://use.typekit.net/wwf2iyo.css"); 
 
-
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -19,9 +18,22 @@ font-family: "aktiv-grotesk", sans-serif;
 
 */
 
+/* Add this to your global.css or equivalent */
+html {
+  /* Always show scrollbar to prevent layout shift */
+  overflow-y: scroll;
+}
+
+body {
+  /* Required when body content is shorter than viewport height */
+  min-height: 101vh;
+}
+
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --selector-bg-color: #d6d3d1;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.147 0.004 49.25);
@@ -141,4 +153,6 @@ font-family: "aktiv-grotesk", sans-serif;
   body {
     @apply bg-background text-foreground;
   }
+  body { @apply !min-w-full; }
 }
+

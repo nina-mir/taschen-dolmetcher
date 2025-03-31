@@ -57,7 +57,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function NavigationMenuDemo() {
   return (
-    <NavigationMenu className="font-garamond-pp p-1.5 text-stone">
+    <NavigationMenu className="font-garamond-pp text-3xl">
       <NavigationMenuList >
         <NavigationMenuItem >
           <NavigationMenuTrigger className="bg-transparent">History</NavigationMenuTrigger>
