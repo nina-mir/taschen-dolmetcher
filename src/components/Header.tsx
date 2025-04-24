@@ -49,7 +49,16 @@ const Header: React.FC = () => {
             {/* <div className="flex flex-row justify-center items-center"> */}
                 <img
                     src='/taschen-cover-2.svg'
-                    className='w-25 md:w-40 fixed -bottom-4 rotate-10 md:-right-20 -right-13' />
+                    className='
+                    w-25 
+                    md:w-40
+                     fixed 
+                     -bottom-4 
+                     rotate-10 
+                     md:-right-20 
+                     -right-13
+                    fill-red-600
+                    ' />
                 <img
                     src='/taschen-cover-2.svg'
                     className='w-25 md:w-40 fixed -bottom-5 md:-bottom-10 -rotate-5 md:-left-20 -left-11' />

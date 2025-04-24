@@ -2,6 +2,11 @@ import * as React from "react"
 import  { useState } from "react";
 
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+
+import { DotFilledIcon, ShadowIcon } from "@radix-ui/react-icons"
+
+
 import {
   Card,
   CardContent,
@@ -20,22 +25,30 @@ import {
 //   SelectValue,
 // } from "@/components/ui/select"
 
-function makeInstruction(from: string, to:string):string {
+function figureQA (fromLanguage:string, toLanguage:string, de:string, en:string, ru:string)
+: [string, string]
+{
 
-  switch (from){
-    case 'de':
-      return `Schreiben Sie die richtige Übersetzung von ${from} nach ${to}!`
-    case 'en':
-      return `Write the correct translation from ${from} to ${to}`
-    case 'ru':
-      return `Напишите правильный перевод с ${from} на ${to}`
-    default:
-      return `Etwas ist kaput!!👎🏽😵 refresh, пожалуйста!😺`
-  }
+  let question = ''
+  let answer = ''
+
+  if (fromLanguage === 'de'){
+    question = de
+  } else if (fromLanguage === 'en'){
+    question = en
+  } else 
+    question = ru
+
+  if (toLanguage === 'de'){
+    answer = de
+  } else if (toLanguage === 'en'){
+    answer = en
+  } else 
+    answer = ru
+
+  return [question, answer]
 
 }
-
-["Schreiben Sie die richtige Übersetzung von [] nach ()"]
 
 interface QuestionProps{
     id: string;
@@ -44,7 +57,7 @@ interface QuestionProps{
     phonetic?: string;
     ru: string;
     fromLanguage: string;
-    toLangueg: string;
+    toLanguage: string;
 }
 
 
@@ -55,20 +68,29 @@ const Question: React.FC<QuestionProps> = ({
   phonetic,
   ru,
   fromLanguage,
-  toLangueg
+  toLanguage
 }) => {
 
   const [result, setResult] = useState<boolean>(false)
 
+  let [question, answer] = figureQA (fromLanguage, toLanguage, de, en, ru)
+  console.log(question)
 
   return (
     <Card className="w-[70%] md:w-[400px] bg-transparent">
       <CardHeader>
-        <CardTitle>{id}</CardTitle>
-        <CardDescription>{makeInstruction(fromLanguage, toLangueg)}</CardDescription>
+        <CardTitle>{id}
+        <DotFilledIcon className="inline w-3 h-3 text-red-600" />
+        {question}</CardTitle>
+        <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
-        <p>Write your answer here!</p>
+        <Input className="bg-stone-400 text-stone-100 tracking-[1rem]" 
+        placeholder="____"
+        onChange={(e)=>{
+          console.log(e.target.value)
+        }} 
+        />
         {de}
         {en}
         {phonetic}

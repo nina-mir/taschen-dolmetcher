@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/select"
 
 
-
 interface LanguageSelectorProps {
     initialFrom?: string;
     initialTo?: string;
@@ -40,16 +39,22 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
         setToLanguage(value);
     };
 
+    const handleSwap = () => {
+        setFromLanguage(toLanguage)
+        setToLanguage(fromLanguage)
+    }
+
     return (
-        <div className="bg-[url('topography.svg')] bg-contain bg-repeat w-full flex justify-center items-center">
-            <div className='flex flex-col md:flex-row mt-5 mb-5 justify-between md:gap-30 gap-4'>
-                <div className='flex flex-col sm:flex-row items-center gap-4'>
-                    <Label htmlFor="inputLanguage" className='font-gyst text-2xl whitespace-nowrap'>From</Label>
-                    <div className='max-w-[200px]'>
+        <div className="bg-[url('topography.svg')] bg-contain bg-repeat w-full">
+            <div className='w-[90%] flex justify-center mt-5 mb-5 gap-[1.5rem]  md:gap-10 m-auto'>
+                {/* <div className='flex flex-row items-center gap-4'> */}
+                <div>
+                    <Label htmlFor="inputLanguage" className='invisible'></Label>
+                    <div className=' md:max-w-[200px]'>
                         <Select value={fromLanguage} onValueChange={handleFromLanguageChange}>
                             <SelectTrigger
                                 id="inputLanguage"
-                                className="min-w-[10rem] text-1xl"
+                                className="max-w-[5rem] md:min-w-[10rem] text-1xl"
                             >
                                 <SelectValue placeholder="choose a language" />
                             </SelectTrigger>
@@ -80,14 +85,45 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                             </SelectContent>
                         </Select>
                     </div>
+
                 </div>
-                <div className='flex flex-col sm:flex-row items-center gap-4 w-full'>
-                    <Label htmlFor="outLanguage" className='font-gyst text-2xl whitespace-nowrap'>To</Label>
-                    <div className='w-full max-w-[200px]'>
+
+                {/* </div> */}
+                <span className='
+                    hover:cursor-pointer
+                    w-10 
+                    '
+                    onClick={handleSwap} >
+                    <svg 
+                    className='
+                    stroke-stone-300
+                    fill-red-500
+                    '
+                    focusable="false" 
+                    fill="pink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path>
+                    </svg>
+
+
+
+                    {/* <img
+                    src='/swap-arrow.svg'
+                    
+                    /> */}
+
+                </span>
+
+                {/* <div className='flex flex-row items-center gap-4 w-full'> */}
+                <div>
+
+                    <Label htmlFor="outLanguage" className='invisible'></Label>
+                    <div className='md:max-w-[200px]'>
                         <Select value={toLanguage} onValueChange={handleToLanguageChange}>
                             <SelectTrigger
                                 id="outLanguage"
-                                className="min-w-[10rem] text-1.5xl bg-stone-500/20"
+                                className="max-w-[5rem] md:min-w-[10rem] text-1xl  bg-stone-500/20"
+
+                            // className="min-w-[10rem] text-1.5xl"
                             >
                                 <SelectValue placeholder="choose a language" />
                             </SelectTrigger>
@@ -119,7 +155,10 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                             </SelectContent>
                         </Select>
                     </div>
+
                 </div>
+
+                {/* </div> */}
             </div>
         </div>
     )
