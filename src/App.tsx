@@ -1,15 +1,16 @@
-import data from '@/data/data.json'
 import { Button } from '@/components/ui/button'
 import Header from './components/Header'
-import Question from '@/components/Question'
+import QuestionsContainer from './components/QuestionsContainer';
 import LanguageSelector from './components/LanguageSelector'
 import { NavigationMenuDemo } from './components/Navbar'
 
+import { StarFilledIcon } from "@radix-ui/react-icons"
+
 import { useState } from 'react'
 
-function makeInstruction(from: string, to:string):string {
+function makeInstruction(from: string, to: string): string {
 
-  switch (from){
+  switch (from) {
     case 'de':
       return `Schreiben Sie die richtige Übersetzung in ${to}!`
     case 'en':
@@ -45,16 +46,24 @@ function App() {
           initialTo={toLangueg}
           onLanguageChange={handleLanguageChange}
         />
-        <p className='font-garamond-pp text-xl text-center text-wrap'>{makeInstruction(fromLanguage, toLangueg)}</p>
-        <Question
-        id = {'1'}
-        de={data[0].de}
-        en={data[0].en}
-        ru={data[0].ru}
-        phonetic={data[0].phonetic}
-        fromLanguage={fromLanguage}
-        toLanguage={toLangueg}
+        <div className='
+        flex
+        items-center
+        gap-[3px]
+        font-garamond-pp
+        text-xl 
+        text-center 
+        text-wrap 
+        '>
+          <StarFilledIcon className='w-6 h-6 inline-block text-red-600'/>
+          <p>{makeInstruction(fromLanguage, toLangueg)}</p>
+        </div>
+
+        <QuestionsContainer
+          toLanguage={toLangueg}
+          fromLanguage={fromLanguage}
         />
+
         <Button>Click me</Button>
         <Button>Click me</Button>
         <img src='Screenshot 2025-03-25 171559.png' />
