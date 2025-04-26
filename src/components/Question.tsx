@@ -106,7 +106,7 @@ const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 };
 
 interface QuestionProps {
-  id: string;
+  id: number;
   de: string;
   en: string;
   phonetic?: string;
@@ -142,6 +142,12 @@ const Question: React.FC<QuestionProps> = ({
 
   const update = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value)
+  }
+
+  const handleEnter = (e: React.KeyboardEvent) =>{
+    if (e.key === 'Enter'){
+      checkAnswer(answer, userInput)
+    }
   }
 
   const checkAnswer = (userInput: string, answer: string): boolean => {
@@ -182,6 +188,7 @@ const Question: React.FC<QuestionProps> = ({
         "
           placeholder={placeholderMaker(answer)}
           onChange={update}
+          onKeyDown={handleEnter}
         // onInput={handleInput}
         />
         {de}
