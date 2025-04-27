@@ -1,0 +1,446 @@
+[
+    {
+      "de": "Halt!",
+      "en": ["Halt!", "Stop!"],
+      "phonetic": "Stoj!",
+      "ru": "Стой!"
+    },
+    {
+      "de": "Hände hoch!",
+      "en": ["Hands up!", "Put your hands up!"],
+      "phonetic": "Ruki wwerch!",
+      "ru": "Руки вверх!"
+    },
+    {
+      "de": "Ergib dich!",
+      "en": ["Surrender!", "Give up!"],
+      "phonetic": "Sdawajssja!",
+      "ru": "Сдавайся!"
+    },
+    {
+      "de": "Wer da?",
+      "en": ["Who goes there?", "Who's there?"],
+      "phonetic": "Kto ijdott?",
+      "ru": "Кто идет?"
+    },
+    {
+      "de": "Rauskommen!",
+      "en": ["Show yourselves!", "Come out!"],
+      "phonetic": "Wyhadij!",
+      "ru": "Выходи!"
+    },
+    {
+      "de": "Die Waffen nieder!",
+      "en": ["Lay down your weapons!", "Drop your weapons!"],
+      "phonetic": "Brassaj orushije!",
+      "ru": "Бросай оружие!"
+    },
+    {
+      "de": "Hinlegen!",
+      "en": ["Lie down!", "Get down!"],
+      "phonetic": "Lashissj!",
+      "ru": "Ложись!"
+    },
+    {
+      "de": "Aufstehen!",
+      "en": ["Stand up!", "Get up!"],
+      "phonetic": "Fstawaj!",
+      "ru": "Вставай!"
+    },
+    {
+      "de": "Halt den Mund!",
+      "en": ["Be quiet!", "Shut up!"],
+      "phonetic": "Maltschil",
+      "ru": "Молчи!"
+    },
+    {
+      "de": "Ruhe!",
+      "en": ["Silence!", "Quiet!"],
+      "phonetic": "Tischel",
+      "ru": "Тише!"
+    },
+    {
+      "de": "Ich schieße!",
+      "en": ["I'm going to shoot!", "I'll shoot!"],
+      "phonetic": "Budu streljatlj",
+      "ru": "Буду стрелять!"
+    },
+    {
+      "de": "Ich erschieße dich!",
+      "en": ["I'm going to shoot you!", "I'll shoot you!"],
+      "phonetic": "Sastrelu!",
+      "ru": "Застрелю!"
+    },
+    {
+      "de": "Antworte!",
+      "en": ["Answer me!", "Respond!"],
+      "phonetic": "Atwetschaj!",
+      "ru": "Отвечай!"
+    },
+    {
+      "de": "Antworte, ja oder nein!",
+      "en": ["Answer yes or no!", "Say yes or no!"],
+      "phonetic": "Atwetschaj, da ili njet!",
+      "ru": "Отвечай, да или нет!"
+    },
+    {
+      "de": "Antworte, schnell und klar!",
+      "en": ["Answer quickly and clearly!", "Respond fast and clear!"],
+      "phonetic": "Atwetschaj, bystro i jassno!",
+      "ru": "Отвечай, быстро и ясно!"
+    },
+    {
+      "de": "Vorwärts!",
+      "en": ["Forward march!", "Move forward!"],
+      "phonetic": "Fjerojtt!",
+      "ru": "Вперед!"
+    },
+    {
+      "de": "Zurück!",
+      "en": ["Go back!", "Back up!"],
+      "phonetic": "Nasatt!",
+      "ru": "Назад!"
+    },
+    {
+      "de": "Waffen her!",
+      "en": ["Hand over your weapons!", "Give me your weapons!"],
+      "phonetic": "Dawaj arushijel",
+      "ru": "Давай оружие!"
+    },
+    {
+      "de": "Papiere her!",
+      "en": ["Hand over your papers!", "Give me your documents!"],
+      "phonetic": "Padaj dokumenty!",
+      "ru": "Подай документы!"
+    },
+    {
+      "de": "Wo liegt dein Truppenteil?",
+      "en": ["Where is your unit?", "Where's your unit located?"],
+      "phonetic": "Gdje twaja tschastj?",
+      "ru": "Где твоя часть?"
+    },
+    {
+      "de": "Wo ist der Stab?",
+      "en": ["Where is your headquarters?", "Where's HQ?"],
+      "phonetic": "Gdje schtab?",
+      "ru": "Где штаб?"
+    },
+    {
+      "de": "Wo ist der Regiments- (Bataillons-) Stab?",
+      "en": ["Where is your regiment (battalion) headquarters?", "Where's the regimental (battalion) HQ?"],
+      "phonetic": "Gdje schtab polka? (bataljona?)",
+      "ru": "Где штаб полка? (батальона?)"
+    },
+    {
+      "de": "Wo sind MG-Stellungen?",
+      "en": ["Where are your machine-gun positions?", "Where are the machine guns?"],
+      "phonetic": "Gdje pulemjoty?",
+      "ru": "Где пулеметы?"
+    },
+    {
+      "de": "Wo sind die Posten?",
+      "en": ["Where are your sentry posts?", "Where are the guards?"],
+      "phonetic": "Gdje pasty?",
+      "ru": "Где посты?"
+    },
+    {
+      "de": "Wo ist die Artillerie?",
+      "en": ["Where is your artillery?", "Where are the artillery pieces?"],
+      "phonetic": "Gdje artillerija?",
+      "ru": "Где артиллерия?"
+    },
+    {
+      "de": "Wo ist die B-Stelle?",
+      "en": ["Where is the observation post?", "Where's the OP?"],
+      "phonetic": "Gdje nabljudatelny punkt?",
+      "ru": "Где наблюдательный пункт?"
+    },
+    {
+      "de": "Wo sind Panzer?",
+      "en": ["Where are your tanks?", "Where are the tanks located?"],
+      "phonetic": "Gdje tanki?",
+      "ru": "Где танки?"
+    },
+    {
+      "de": "Gibt es russische Truppen im Dorf?",
+      "en": ["Are there Russian troops in the village?", "Are Russian soldiers in the village?"],
+      "phonetic": "Jestli russkije wajsska fselje?",
+      "ru": "Есть ли русские войска в селе?"
+    },
+    {
+      "de": "Gibt es Posten in der Nähe, ja oder nein?",
+      "en": ["Are there sentry posts in the area, yes or no?", "Are there guards nearby, yes or no?"],
+      "phonetic": "Jestli pasty wblisi — da ili njet?",
+      "ru": "Есть ли посты вблизи — да или нет?"
+    },
+    {
+      "de": "Gibt es hier Partisanen?",
+      "en": ["Are there partisans here?", "Are there guerrillas here?"],
+      "phonetic": "Jestli sdjessj partisany?",
+      "ru": "Есть ли здесь партизаны?"
+    },
+    {
+      "de": "Bei Fluchtversuch wird geschossen!",
+      "en": ["Those who try to escape will be shot!", "Attempt to escape and you'll be shot!"],
+      "phonetic": "Pabjeshisch — sastrjelju!",
+      "ru": "Побежишь — застрелю!"
+    },
+    {
+      "de": "Sage die Wahrheit!",
+      "en": ["Tell me the truth!", "Speak the truth!"],
+      "phonetic": "Gawari prawdu!",
+      "ru": "Говори правду!"
+    },
+    {
+      "de": "Wo ist die Telefonzentrale?",
+      "en": ["Where is the telephone exchange?", "Where's the phone exchange?"],
+      "phonetic": "Gdje telefonnaja stanzija?",
+      "ru": "Где телефонная станция?"
+    },
+    {
+      "de": "Wo ist das Haus der Roten Armee?",
+      "en": ["Where is the Red Army HQ?", "Where's the Red Army headquarters?"],
+      "phonetic": "Gdje dom krasnoj armii?",
+      "ru": "Где дом Красной Армии?"
+    },
+    {
+      "de": "Wo ist das Haus der GPU?",
+      "en": ["Where is the NKVD HQ?", "Where's the NKVD headquarters?"],
+      "phonetic": "Gdje dom NKWD?",
+      "ru": "Где дом НКВД?"
+    },
+    {
+      "de": "Wo ist die Post?",
+      "en": ["Where is the post office?", "Where's the mail office?"],
+      "phonetic": "Gdje potschta?",
+      "ru": "Где почта?"
+    },
+    {
+      "de": "Wo ist der Dorfsowjet?",
+      "en": ["Where is the village soviet?", "Where's the village council?"],
+      "phonetic": "Gdje sselsjawsjet?",
+      "ru": "Где сельсовет?"
+    },
+    {
+      "de": "Wo ist hier das Stadthaus?",
+      "en": ["Where is the town party committee?", "Where's the city hall?"],
+      "phonetic": "Gdje sdjessj gorkom?",
+      "ru": "Где здесь горком?"
+    },
+    {
+      "de": "Wo ist der Bahnhof?",
+      "en": ["Where is the train station?", "Where's the railway station?"],
+      "phonetic": "Gdje waksal?",
+      "ru": "Где вокзал?"
+    },
+    {
+      "de": "Wo ist das Krankenhaus?",
+      "en": ["Hospital?", "Where's the hospital?"],
+      "phonetic": "Gdje balnica?",
+      "ru": "Где больница?"
+    },
+    {
+      "de": "Wo ist das Lazarett?",
+      "en": ["Field hospital?", "Where's the field hospital?"],
+      "phonetic": "Gdje lazare?",
+      "ru": "Где лазарет?"
+    },
+    {
+      "de": "Geh vorraus!",
+      "en": ["Go ahead!", "Move forward!"],
+      "phonetic": "Idi fperjott!",
+      "ru": "Иди вперед!"
+    },
+    {
+      "de": "Wie heißt dieser Ort?",
+      "en": ["What's this place called?", "What's the name of this place?"],
+      "phonetic": "Kak nasywajetza etto ssjelo?",
+      "ru": "Как называется это село?"
+    },
+    {
+      "de": "Wohin führt diese Straße?",
+      "en": ["Where does this road lead to?", "Where does this road go?"],
+      "phonetic": "Kuda wjedjot eta daroga?",
+      "ru": "Куда ведёт эта дорога?"
+    },
+    {
+      "de": "Ist sie gut befahrbar? — ja — nein?",
+      "en": ["Is it passable - yes - no?", "Can vehicles pass - yes - no?"],
+      "phonetic": "Wasmoshen panjej prajest? — da — njet?",
+      "ru": "Возможен по ней проезд? — да — нет?"
+    },
+    {
+      "de": "Ist die Brücke noch heil?",
+      "en": ["Is the bridge still intact?", "Is the bridge undamaged?"],
+      "phonetic": "Most jeschtscho zel?",
+      "ru": "Мост ещё цел?"
+    },
+    {
+      "de": "Spricht hier jemand Deutsch?",
+      "en": ["Does anyone here speak German?", "Is there a German speaker here?"],
+      "phonetic": "Kto gawarit pa nemetzki?",
+      "ru": "Кто говорит по-немецки?"
+    },
+    {
+      "de": "Wir brauchen Benzin!",
+      "en": ["We need petrol!", "We need gasoline!"],
+      "phonetic": "Bensin jestj?",
+      "ru": "Бензин есть?"
+    },
+    {
+      "de": "Wir brauchen Öl!",
+      "en": ["We need oil!", "We need lubricant!"],
+      "phonetic": "Masslo jestj?",
+      "ru": "Масло есть?"
+    },
+    {
+      "de": "Ist hier eine Motor- und Traktoren-Station?",
+      "en": ["Is there a motor-/tractor-repair workshop near here?", "Is there a machinery repair station here?"],
+      "phonetic": "Jestj sdjessj MTS?",
+      "ru": "Есть здесь MTC?"
+    },
+    {
+      "de": "Wir brauchen Autoschlosser!",
+      "en": ["We need car mechanics!", "We need auto mechanics!"],
+      "phonetic": "Nam nushny aftomechaniki!",
+      "ru": "Нам нужны автомеханики!"
+    },
+    {
+      "de": "Mechaniker!",
+      "en": ["Mechanics!", "Mechanical workers!"],
+      "phonetic": "mechaniki!",
+      "ru": "механики!"
+    },
+    {
+      "de": "Schlosser!",
+      "en": ["Metal workers!", "Locksmiths!"],
+      "phonetic": "ssljessari!",
+      "ru": "слесари!"
+    },
+    {
+      "de": "Elektriker!",
+      "en": ["Electricians!", "Electrical workers!"],
+      "phonetic": "elektromehaniki!",
+      "ru": "электромеханики!"
+    },
+    {
+      "de": "Fahrer!",
+      "en": ["Drivers!", "Chauffeurs!"],
+      "phonetic": "schoffjory!",
+      "ru": "шофёры!"
+    },
+    {
+      "de": "Zimmerleute!",
+      "en": ["Carpenters!", "Woodworkers!"],
+      "phonetic": "plotniki!",
+      "ru": "плотники!"
+    },
+    {
+      "de": "Tischler!",
+      "en": ["Joiners!", "Cabinet makers!"],
+      "phonetic": "stoljary!",
+      "ru": "столяры!"
+    },
+    {
+      "de": "Maurer!",
+      "en": ["Masons!", "Bricklayers!"],
+      "phonetic": "kamenschtschiki!",
+      "ru": "каменщики!"
+    },
+    {
+      "de": "Klempner!",
+      "en": ["Plumbers!", "Pipefitters!"],
+      "phonetic": "wadaprawodtschiki!",
+      "ru": "водопроводчики!"
+    },
+    {
+      "de": "Schuster!",
+      "en": ["Cobblers!", "Shoemakers!"],
+      "phonetic": "ssaposhniki!",
+      "ru": "сапожники!"
+    },
+    {
+      "de": "Schneider!",
+      "en": ["Tailors!", "Dressmakers!"],
+      "phonetic": "portnyje!",
+      "ru": "портные!"
+    },
+    {
+      "de": "Kann das hier repariert werden?",
+      "en": ["Can this be repaired here?", "Can you fix this here?"],
+      "phonetic": "Moschno eto sdjessj patchinitj?",
+      "ru": "Можно это здесь починить?"
+    },
+    {
+      "de": "Wo?",
+      "en": ["Where?", "Where is it?"],
+      "phonetic": "Gdje?",
+      "ru": "Где?"
+    },
+    {
+      "de": "Wann wird das fertig?",
+      "en": ["When will it be ready?", "When will it be done?"],
+      "phonetic": "Kagda gatowo?",
+      "ru": "Когда готово?"
+    },
+    {
+      "de": "Wir brauchen Leute! 10-20-30 Mann!",
+      "en": ["We need people! 10-20-30 men!", "We require workers! 10-20-30 people!"],
+      "phonetic": "Nam nushny ljudi! djessjaj-dwattzaj-trittzaj tschelavejk!",
+      "ru": "Нам нужны люди! десять - двадцать - тридцать человек!"
+    },
+    {
+      "de": "Wir brauchen Pferdegespanne!",
+      "en": ["We need horses and carts!", "We require horse teams!"],
+      "phonetic": "Nam nushny loschadil!",
+      "ru": "Нам нужны лошади!"
+    },
+    {
+      "de": "Das ist eilig!",
+      "en": ["It's urgent!", "This is urgent!"],
+      "phonetic": "Eto spjeschno!",
+      "ru": "Это спешно!"
+    },
+    {
+      "de": "Mach schnell!",
+      "en": ["Hurry!", "Be quick!"],
+      "phonetic": "Shywa!",
+      "ru": "Живо!"
+    },
+    {
+      "de": "Schneller!",
+      "en": ["Faster!", "More quickly!"],
+      "phonetic": "Skareje!",
+      "ru": "Скорее!"
+    },
+    {
+      "de": "Schnell - langsam",
+      "en": ["Fast - Slow!", "Quick - Slow!"],
+      "phonetic": "Skora - medlenna",
+      "ru": "Скоро - медленно"
+    },
+    {
+      "de": "Schlecht - gut",
+      "en": ["Bad - Good", "Poor - Good"],
+      "phonetic": "Ploha - harascho!",
+      "ru": "Плохо - хорошо!"
+    },
+    {
+      "de": "Schlecht gemacht!",
+      "en": ["That's a bad job!", "Poorly done!"],
+      "phonetic": "Ploha ssdjelana!",
+      "ru": "Плохо сделано!"
+    },
+    {
+      "de": "Gut gemacht!",
+      "en": ["Well done!", "Good job!"],
+      "phonetic": "Harascho ssdjelana!",
+      "ru": "Хорошо сделано!"
+    },
+    {
+      "de": "Idiot - Dummkopf!",
+      "en": ["Idiot - Blockhead!", "Fool - Imbecile!"],
+      "phonetic": "Idiott - durack!",
+      "ru": "Идиот - дурак!"
+    }
+  ]

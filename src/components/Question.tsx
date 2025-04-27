@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
 import { DotFilledIcon, ShadowIcon } from "@radix-ui/react-icons"
@@ -13,15 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-// import { Input } from "@/components/ui/input"
-// import { Label } from "@/components/ui/label"
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select"
+
 
 function figureQA(fromLanguage: string, toLanguage: string, de: string, en: string, ru: string)
   : [string, string] {
@@ -48,9 +40,6 @@ function figureQA(fromLanguage: string, toLanguage: string, de: string, en: stri
 }
 
 
-
-
-
 const placeholderMaker = (answer: string): string => {
   // Define what counts as punctuation or whitespace
   const punctuationAndSpace = new Set([
@@ -69,41 +58,6 @@ const placeholderMaker = (answer: string): string => {
 
   return result
 }
-
-const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const input = e.target;
-  const currValue = input.value;
-  const placeholder = input.placeholder; // The template with '-' characters
-
-  let newValue = '';
-
-  // Get the cursor position before any changes
-  const cursorPos = input.selectionStart || 0;
-
-  console.log('currVal', currValue)
-  console.log('cursorPos', cursorPos)
-
-  for (let i = 0; i < currValue.length; i++) {
-    if (currValue[i] !== '-')
-      newValue += currValue[i]
-  }
-
-  newValue += '&'
-
-  console.log('newValue', newValue)
-
-  let newCursorPos = input.selectionStart;
-
-  input.setSelectionRange(newCursorPos + 1, newCursorPos + 1);
-
-  newCursorPos = input.selectionStart;
-
-
-  console.log('new cursorPos', newCursorPos)
-
-  input.value = newValue;
-
-};
 
 interface QuestionProps {
   id: number;
@@ -133,12 +87,22 @@ const Question: React.FC<QuestionProps> = ({
     bg: string;
     text: string;
   };
-
   const [colors, setColors] = useState<KorrektColorClasses>({
     bg: 'bg-transparent',
     text: 'text-red-600'
   });
   // const [bgColor, setBgColor] = useState<[string, string]>(['bg-transparent', 'text-red-600'])
+
+  useEffect(()=>{
+    setColors({
+      bg: 'bg-transparent',
+      text: 'text-red-600'
+    })
+    setUserInput('')
+    setResult(false)
+
+  }, [fromLanguage, toLanguage])
+
 
   const update = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value)
@@ -151,6 +115,7 @@ const Question: React.FC<QuestionProps> = ({
   }
 
   const checkAnswer = (userInput: string, answer: string): boolean => {
+    console.log(`userInput is ${userInput} und answer is ${answer}`)
     if (userInput.toLowerCase() === answer.toLowerCase()) {
       console.log('yessss richtig!')
       setResult(true)
@@ -173,7 +138,7 @@ const Question: React.FC<QuestionProps> = ({
   return (
     <Card className={`w-[70%] md:w-[400px] ${colors.bg} `}>
       <CardHeader>
-        <CardTitle>{id}
+        <CardTitle className="text-xl">{id}
           <DotFilledIcon className={`inline w-3 h-3 ${colors.text}`} />
           {question}</CardTitle>
         <CardDescription></CardDescription>
@@ -189,6 +154,7 @@ const Question: React.FC<QuestionProps> = ({
           placeholder={placeholderMaker(answer)}
           onChange={update}
           onKeyDown={handleEnter}
+          value={userInput}
         // onInput={handleInput}
         />
         {de}
@@ -204,3 +170,38 @@ const Question: React.FC<QuestionProps> = ({
 }
 
 export default Question;
+
+// const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+//   const input = e.target;
+//   const currValue = input.value;
+//   const placeholder = input.placeholder; // The template with '-' characters
+
+//   let newValue = '';
+
+//   // Get the cursor position before any changes
+//   const cursorPos = input.selectionStart || 0;
+
+//   console.log('currVal', currValue)
+//   console.log('cursorPos', cursorPos)
+
+//   for (let i = 0; i < currValue.length; i++) {
+//     if (currValue[i] !== '-')
+//       newValue += currValue[i]
+//   }
+
+//   newValue += '&'
+
+//   console.log('newValue', newValue)
+
+//   let newCursorPos = input.selectionStart;
+
+//   input.setSelectionRange(newCursorPos + 1, newCursorPos + 1);
+
+//   newCursorPos = input.selectionStart;
+
+
+//   console.log('new cursorPos', newCursorPos)
+
+//   input.value = newValue;
+
+// };
