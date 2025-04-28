@@ -2,7 +2,7 @@ import * as React from "react"
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
-import { DotFilledIcon, ShadowIcon } from "@radix-ui/react-icons"
+import { DotFilledIcon, ResetIcon } from "@radix-ui/react-icons"
 
 
 import {
@@ -15,16 +15,16 @@ import {
 } from "@/components/ui/card"
 
 
-function figureQA(fromLanguage: string, toLanguage: string, de: string, en: string, ru: string)
-  : [string, string] {
+function figureQA(fromLanguage: string, toLanguage: string, de: string, en: string[], ru: string)
+  : [string, string | string[]] {
 
   let question = ''
-  let answer = ''
+  let answer: string | string[] = ''
 
   if (fromLanguage === 'de') {
     question = de
   } else if (fromLanguage === 'en') {
-    question = en
+    question = en[0]
   } else
     question = ru
 
@@ -40,7 +40,7 @@ function figureQA(fromLanguage: string, toLanguage: string, de: string, en: stri
 }
 
 
-const placeholderMaker = (answer: string): string => {
+const placeholderMaker = (answer: string | string[]): string => {
   // Define what counts as punctuation or whitespace
   const punctuationAndSpace = new Set([
     ' ', '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-',
@@ -48,7 +48,14 @@ const placeholderMaker = (answer: string): string => {
     '`', '{', '|', '}', '~', '\t', '\n', '\r'
   ]);
   let result = ''
-  for (const char of answer) {
+  let firstAnswer = ''
+  if (Array.isArray(answer)){
+    firstAnswer = answer[0]
+  } else{
+    firstAnswer = answer
+  }
+
+  for (const char of firstAnswer) {
     if (punctuationAndSpace.has(char)) {
       result += char
     } else {
@@ -62,7 +69,7 @@ const placeholderMaker = (answer: string): string => {
 interface QuestionProps {
   id: number;
   de: string;
-  en: string;
+  en: string[];
   phonetic?: string;
   ru: string;
   fromLanguage: string;
@@ -110,20 +117,34 @@ const Question: React.FC<QuestionProps> = ({
 
   const handleEnter = (e: React.KeyboardEvent) =>{
     if (e.key === 'Enter'){
-      checkAnswer(answer, userInput)
+      checkAnswer(userInput, answer)
     }
   }
 
-  const checkAnswer = (userInput: string, answer: string): boolean => {
+  const checkAnswer = (userInput: string, answer: string|string[]): boolean => {
     console.log(`userInput is ${userInput} und answer is ${answer}`)
-    if (userInput.toLowerCase() === answer.toLowerCase()) {
+    let isCorrect = false
+    if (Array.isArray(answer)){
+      for (const item of answer){
+        if (item.toLowerCase() === userInput.toLowerCase()){
+          isCorrect = true
+          break
+        }
+      }
+      //let's do a loop here and do it!
+    } else{
+      if (userInput.toLowerCase() === answer.toLowerCase()) {
+        isCorrect = true
+      }
+    }
+
+    if (isCorrect) {
       console.log('yessss richtig!')
       setResult(true)
       setColors({
         bg: 'bg-red-600', 
         text: 'text-yellow-400'
       })
-
       return true
     } else {
       console.log('nein das ist falsch')
@@ -136,11 +157,22 @@ const Question: React.FC<QuestionProps> = ({
   // console.log(question)
 
   return (
-    <Card className={`w-[70%] md:w-[400px] ${colors.bg} `}>
+    <Card className={`w-[90%] md:w-[400px] ${colors.bg} `}>
       <CardHeader>
-        <CardTitle className="text-xl">{id}
+        <CardTitle className="text-xl">
+          <div>
+            <span className=" font-gyst">{id}</span>
           <DotFilledIcon className={`inline w-3 h-3 ${colors.text}`} />
-          {question}</CardTitle>
+          {question}
+          </div>
+          <ResetIcon 
+          className={
+            `
+            ${colors.text}
+            `
+          } 
+          />
+        </CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
@@ -163,7 +195,9 @@ const Question: React.FC<QuestionProps> = ({
         {ru}
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button onClick={() => checkAnswer(answer, userInput)}>SUBMIT</Button>
+        <Button 
+        className="font-gyst"
+        onClick={() => checkAnswer(userInput, answer)}>SUBMIT</Button>
       </CardFooter>
     </Card>
   )

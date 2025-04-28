@@ -55,14 +55,15 @@ function App() {
         text-center 
         text-wrap 
         '>
-          <StarFilledIcon className='w-6 h-6 inline-block text-red-600'/>
+          <StarFilledIcon className='w-6 h-6 inline-block text-red-600' />
           <p>{makeInstruction(fromLanguage, toLangueg)}</p>
         </div>
 
-        <QuestionsContainer
-          toLanguage={toLangueg}
-          fromLanguage={fromLanguage}
-        />
+          <QuestionsContainer
+            toLanguage={toLangueg}
+            fromLanguage={fromLanguage}
+          />
+
 
         <Button>Click me</Button>
         <Button>Click me</Button>

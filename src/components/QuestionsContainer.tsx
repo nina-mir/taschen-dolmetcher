@@ -1,6 +1,6 @@
 // QuestionsContainer.tsx
 // import { useState } from 'react';
-import data from '@/data/data.json';
+import data from '@/data/deepseek_json_en_array.json';
 import Question from '@/components/Question';
 
 interface QuestionsContainerProps {
@@ -12,6 +12,8 @@ const QuestionsContainer = ({ fromLanguage, toLanguage }: QuestionsContainerProp
   // ToDO add pagination state here
   // const [currentPage, setCurrentPage] = useState(1);
   // const questionsPerPage = 10;
+
+
   
   const questions = data.map((item, idx) => (
     <Question
@@ -26,7 +28,9 @@ const QuestionsContainer = ({ fromLanguage, toLanguage }: QuestionsContainerProp
     />
   ));
 
-  return <>{questions}</>
+  return <div className='w-full flex flex-col items-center content-center gap-5'>
+      {questions}
+    </div>
 };
 
 export default QuestionsContainer;
