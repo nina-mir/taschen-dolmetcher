@@ -88,6 +88,7 @@ const Question: React.FC<QuestionProps> = ({
 }) => {
 
   const [result, setResult] = useState<boolean>(false)
+  const [showInfo, setShowInfo] = useState<string>('hidden')
   const [userInput, setUserInput] = useState<string>('')
   // Using an object with a type
   type KorrektColorClasses = {
@@ -145,6 +146,7 @@ const Question: React.FC<QuestionProps> = ({
         bg: 'bg-red-600', 
         text: 'text-yellow-400'
       })
+      setShowInfo('')
       return true
     } else {
       console.log('nein das ist falsch')
@@ -157,9 +159,9 @@ const Question: React.FC<QuestionProps> = ({
   // console.log(question)
 
   return (
-    <Card className={`w-[90%] md:w-[400px] ${colors.bg} `}>
+    <Card className={`relative w-[90%] md:w-[400px] ${colors.bg} `}>
       <CardHeader>
-        <CardTitle className="text-xl">
+        <CardTitle className="text-xl flex flex-row justify-between">
           <div>
             <span className=" font-gyst">{id}</span>
           <DotFilledIcon className={`inline w-3 h-3 ${colors.text}`} />
@@ -176,6 +178,9 @@ const Question: React.FC<QuestionProps> = ({
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
+        <div className={`${showInfo} absolute w-[100%] h-[100%] top-0 left-0 rounded-xl bg-blue-500`}>
+          this is a test
+        </div>
         <Input className="
         font-garamond-pp
         bg-stone-400
