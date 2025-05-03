@@ -49,9 +49,9 @@ const placeholderMaker = (answer: string | string[]): string => {
   ]);
   let result = ''
   let firstAnswer = ''
-  if (Array.isArray(answer)){
+  if (Array.isArray(answer)) {
     firstAnswer = answer[0]
-  } else{
+  } else {
     firstAnswer = answer
   }
 
@@ -101,7 +101,7 @@ const Question: React.FC<QuestionProps> = ({
   });
   // const [bgColor, setBgColor] = useState<[string, string]>(['bg-transparent', 'text-red-600'])
 
-  useEffect(()=>{
+  useEffect(() => {
     setColors({
       bg: 'bg-transparent',
       text: 'text-red-600'
@@ -116,24 +116,24 @@ const Question: React.FC<QuestionProps> = ({
     setUserInput(e.target.value)
   }
 
-  const handleEnter = (e: React.KeyboardEvent) =>{
-    if (e.key === 'Enter'){
+  const handleEnter = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
       checkAnswer(userInput, answer)
     }
   }
 
-  const checkAnswer = (userInput: string, answer: string|string[]): boolean => {
+  const checkAnswer = (userInput: string, answer: string | string[]): boolean => {
     console.log(`userInput is ${userInput} und answer is ${answer}`)
     let isCorrect = false
-    if (Array.isArray(answer)){
-      for (const item of answer){
-        if (item.toLowerCase() === userInput.toLowerCase()){
+    if (Array.isArray(answer)) {
+      for (const item of answer) {
+        if (item.toLowerCase() === userInput.toLowerCase()) {
           isCorrect = true
           break
         }
       }
       //let's do a loop here and do it!
-    } else{
+    } else {
       if (userInput.toLowerCase() === answer.toLowerCase()) {
         isCorrect = true
       }
@@ -143,7 +143,7 @@ const Question: React.FC<QuestionProps> = ({
       console.log('yessss richtig!')
       setResult(true)
       setColors({
-        bg: 'bg-red-600', 
+        bg: 'bg-black-600',
         text: 'text-yellow-400'
       })
       setShowInfo('')
@@ -164,22 +164,46 @@ const Question: React.FC<QuestionProps> = ({
         <CardTitle className="text-xl flex flex-row justify-between">
           <div>
             <span className=" font-gyst">{id}</span>
-          <DotFilledIcon className={`inline w-3 h-3 ${colors.text}`} />
-          {question}
+            <DotFilledIcon className={`inline w-3 h-3 ${colors.text}`} />
+            {question}
           </div>
-          <ResetIcon 
-          className={
-            `
+          <ResetIcon
+            className={
+              `
             ${colors.text}
             `
-          } 
+            }
           />
         </CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
-        <div className={`${showInfo} absolute w-[100%] h-[100%] top-0 left-0 rounded-xl bg-blue-500`}>
-          this is a test
+        <div className={
+          `${showInfo} 
+          absolute 
+          w-[100%] 
+          h-[100%] 
+          top-0 
+          left-0 
+          rounded-xl
+          bg-[url(https://www.yadvashem.org/sites/default/files/styles/main_image_1block/public/1_120.jpg?itok=UAEkXoCj)]
+          bg-cover
+          bg-center
+          bg-black/50
+          bg-blend-darken
+          
+          backdrop-opacity-[0.1]          `
+          }>
+          <ul className=" leading-5 font-mono text-stone-50 p-1">
+            <li>
+              "If today the newspapers as a whole are discussing how many miles 
+              separate the Red Army from Warsaw, if politicians and lovers of politics 
+              discuss how many months separate us from the defeat of Germany, it is because 
+              Russia held out in 1941 and '42."<br/>
+              <cite className="text-sm">Ehrenburg, Ilya. The Tempering of Russia., Translated by Alexander Kaun, A.A. Knopf, 1944.</cite>
+            </li>
+          </ul>
+
         </div>
         <Input className="
         font-garamond-pp
@@ -200,9 +224,9 @@ const Question: React.FC<QuestionProps> = ({
         {ru}
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button 
-        className="font-gyst"
-        onClick={() => checkAnswer(userInput, answer)}>SUBMIT</Button>
+        <Button
+          className="font-gyst"
+          onClick={() => checkAnswer(userInput, answer)}>SUBMIT</Button>
       </CardFooter>
     </Card>
   )
