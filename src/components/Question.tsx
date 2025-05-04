@@ -159,7 +159,7 @@ const Question: React.FC<QuestionProps> = ({
   // console.log(question)
 
   return (
-    <Card className={`relative w-[90%] md:w-[600px] ${colors.bg} `}>
+    <Card className={`relative w-[90%] h-[16rem] md:w-[600px] ${colors.bg} `}>
       <CardHeader>
         <CardTitle className="text-xl flex flex-row justify-between">
           <div>
@@ -210,12 +210,17 @@ const Question: React.FC<QuestionProps> = ({
             <cite className="font-bold ">Ehrenburg, Ilya. The Tempering of Russia., Translated by Alexander Kaun, A.A. Knopf, 1944.</cite>
             <p className="md:text-lg mt-1">📷: Liepaja, Latvia, 15-17.12.1941 - Women before they were executed</p>
           </div>
-          <EyeClosedIcon className={
+          <EyeOpenIcon className={
           `absolute
           ${showInfo}  
-          -left-35 
-          top-10 
-          w-10 
+          md:-left-35 
+          md:top-10
+      
+          bottom-0
+          right-1
+          md:w-10 
+          md:h-10
+          w-10
           h-10
           text-red-600
           `}
@@ -242,14 +247,17 @@ const Question: React.FC<QuestionProps> = ({
         {phonetic}
         {ru}
 
-        { result && <EyeOpenIcon className={
+        { result && <EyeClosedIcon className={
           `absolute 
           ${showInfo === 'hidden' ? '' : 'hidden'}    
-          -left-35 
-          top-10 
+          md:-left-35 
+          md:top-10 
+          bottom-0
+          right-1
           w-10 
           h-10
-          text-red-400
+        md:text-red-400
+        ${colors.text}
           `}
           onClick={()=>{
             setShowInfo('')
@@ -267,3 +275,6 @@ const Question: React.FC<QuestionProps> = ({
 }
 
 export default Question;
+
+    // -top-6
+          // -right-3 
