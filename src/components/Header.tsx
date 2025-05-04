@@ -13,6 +13,7 @@ const Header: React.FC = () => {
         px-4
         overflow-x-hidden 
         mt-12
+        max-w-full
         "
         >
           
@@ -51,19 +52,20 @@ const Header: React.FC = () => {
                     src='/taschen-cover-2.svg'
                     className='
                     w-25 
-                    md:w-40
+                    md:w-20
                      fixed 
                      -bottom-4 
                      rotate-10 
-                     md:-right-20 
+                     md:-right-4 
                      -right-13
                     fill-red-600
                     ' />
                 <img
                     src='/taschen-cover-2.svg'
-                    className='w-25 md:w-40 fixed -bottom-5 md:-bottom-10 -rotate-5 md:-left-20 -left-11' />
+                    className='w-25 md:w-30 fixed -bottom-5 md:-bottom-8 
+                    -rotate-5 md:-left-14 -left-11' />
                 <img src='/taschen-cover-1.svg' 
-                className='w-35  md:w-50 fixed top-90 md:top-10 md:-left-25 -left-20' />
+                className='w-35  md:w-30 fixed top-90 md:top-10 md:-left-13 -left-20' />
                 <img src='/taschen-cover-1.svg' 
                 className='
                 w-40 
@@ -72,6 +74,7 @@ const Header: React.FC = () => {
                 md:-right-25 
                 top-60
                 md:-top-2
+                z-50
                 ' 
                 />
 

@@ -2,7 +2,7 @@ import * as React from "react"
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
-import { DotFilledIcon, ResetIcon } from "@radix-ui/react-icons"
+import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons"
 
 
 import {
@@ -143,7 +143,7 @@ const Question: React.FC<QuestionProps> = ({
       console.log('yessss richtig!')
       setResult(true)
       setColors({
-        bg: 'bg-black-600',
+        bg: 'bg-red-600',
         text: 'text-yellow-400'
       })
       setShowInfo('')
@@ -159,7 +159,7 @@ const Question: React.FC<QuestionProps> = ({
   // console.log(question)
 
   return (
-    <Card className={`relative w-[90%] md:w-[400px] ${colors.bg} `}>
+    <Card className={`relative w-[90%] md:w-[600px] ${colors.bg} `}>
       <CardHeader>
         <CardTitle className="text-xl flex flex-row justify-between">
           <div>
@@ -181,38 +181,57 @@ const Question: React.FC<QuestionProps> = ({
         <div className={
           `${showInfo} 
           absolute 
+          md:w-[150%]
           w-[100%] 
           h-[100%] 
           top-0 
           left-0 
           rounded-xl
           bg-[url(https://www.yadvashem.org/sites/default/files/styles/main_image_1block/public/1_120.jpg?itok=UAEkXoCj)]
+          md:bg-no-repeat
+          md:bg-contain
           bg-cover
+          md:bg-right
           bg-center
+          md:bg-black/90
           bg-black/50
           bg-blend-darken
+          md:bg-blend-normal
           
           backdrop-opacity-[0.1]          `
           }>
-          <ul className=" leading-5 font-mono text-stone-50 p-1">
-            <li>
+          <p className="leading-5 font-mono text-stone-50 md:w-[60%] md:text-[1.2rem] p-1 m-1">
               "If today the newspapers as a whole are discussing how many miles 
               separate the Red Army from Warsaw, if politicians and lovers of politics 
               discuss how many months separate us from the defeat of Germany, it is because 
               Russia held out in 1941 and '42."<br/>
-              <cite className="text-sm">Ehrenburg, Ilya. The Tempering of Russia., Translated by Alexander Kaun, A.A. Knopf, 1944.</cite>
-            </li>
-          </ul>
-
+          </p>
+          <div className="p-1 text-sm text-stone-100">
+            <cite className="font-bold ">Ehrenburg, Ilya. The Tempering of Russia., Translated by Alexander Kaun, A.A. Knopf, 1944.</cite>
+            <p className="md:text-lg mt-1">📷: Liepaja, Latvia, 15-17.12.1941 - Women before they were executed</p>
+          </div>
+          <EyeClosedIcon className={
+          `absolute
+          ${showInfo}  
+          -left-35 
+          top-10 
+          w-10 
+          h-10
+          text-red-600
+          `}
+          onClick={()=>{
+            setShowInfo('hidden')
+          }}/>
         </div>
-        <Input className="
+        <Input 
+        className="
         font-garamond-pp
-        bg-stone-400
-      text-stone-100 
-        placeholder:tracking-[0.2rem]
-        text-2xl
-        "
-          placeholder={placeholderMaker(answer)}
+      bg-stone-400
+       text-stone-100 
+         placeholder:tracking-[0.2rem]
+         text-2xl
+         "
+         placeholder={placeholderMaker(answer)}
           onChange={update}
           onKeyDown={handleEnter}
           value={userInput}
@@ -222,49 +241,29 @@ const Question: React.FC<QuestionProps> = ({
         {en}
         {phonetic}
         {ru}
+
+        { result && <EyeOpenIcon className={
+          `absolute 
+          ${showInfo === 'hidden' ? '' : 'hidden'}    
+          -left-35 
+          top-10 
+          w-10 
+          h-10
+          text-red-400
+          `}
+          onClick={()=>{
+            setShowInfo('')
+          }}/>
+        }
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button
           className="font-gyst"
           onClick={() => checkAnswer(userInput, answer)}>SUBMIT</Button>
+        
       </CardFooter>
     </Card>
   )
 }
 
 export default Question;
-
-// const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-//   const input = e.target;
-//   const currValue = input.value;
-//   const placeholder = input.placeholder; // The template with '-' characters
-
-//   let newValue = '';
-
-//   // Get the cursor position before any changes
-//   const cursorPos = input.selectionStart || 0;
-
-//   console.log('currVal', currValue)
-//   console.log('cursorPos', cursorPos)
-
-//   for (let i = 0; i < currValue.length; i++) {
-//     if (currValue[i] !== '-')
-//       newValue += currValue[i]
-//   }
-
-//   newValue += '&'
-
-//   console.log('newValue', newValue)
-
-//   let newCursorPos = input.selectionStart;
-
-//   input.setSelectionRange(newCursorPos + 1, newCursorPos + 1);
-
-//   newCursorPos = input.selectionStart;
-
-
-//   console.log('new cursorPos', newCursorPos)
-
-//   input.value = newValue;
-
-// };
