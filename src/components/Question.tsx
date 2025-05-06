@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
 import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons"
 
+import infoData from '@/assets/data/infoData.json';
 
 import {
   Card,
@@ -38,7 +39,6 @@ function figureQA(fromLanguage: string, toLanguage: string, de: string, en: stri
   return [question, answer]
 
 }
-
 
 const placeholderMaker = (answer: string | string[]): string => {
   // Define what counts as punctuation or whitespace
@@ -75,7 +75,6 @@ interface QuestionProps {
   fromLanguage: string;
   toLanguage: string;
 }
-
 
 const Question: React.FC<QuestionProps> = ({
   id,
@@ -181,11 +180,11 @@ const Question: React.FC<QuestionProps> = ({
         <div className={
           `${showInfo} 
           absolute 
-          md:w-[150%]
+          md:w-[180%]
           w-[100%] 
           h-[100%] 
           top-0 
-          left-0 
+          -left-50 
           rounded-xl
           bg-[url(https://www.yadvashem.org/sites/default/files/styles/main_image_1block/public/1_120.jpg?itok=UAEkXoCj)]
           md:bg-no-repeat
@@ -201,13 +200,10 @@ const Question: React.FC<QuestionProps> = ({
           backdrop-opacity-[0.1]          `
           }>
           <p className="leading-5 font-mono text-stone-50 md:w-[60%] md:text-[1.2rem] p-1 m-1">
-              "If today the newspapers as a whole are discussing how many miles 
-              separate the Red Army from Warsaw, if politicians and lovers of politics 
-              discuss how many months separate us from the defeat of Germany, it is because 
-              Russia held out in 1941 and '42."<br/>
+              {infoData[1]['text']}<br/>
           </p>
           <div className="p-1 text-sm text-stone-100">
-            <cite className="font-bold ">Ehrenburg, Ilya. The Tempering of Russia., Translated by Alexander Kaun, A.A. Knopf, 1944.</cite>
+            <cite className="font-bold ">{infoData[1]['sourceAPA']}</cite>
             <p className="md:text-lg mt-1">📷: Liepaja, Latvia, 15-17.12.1941 - Women before they were executed</p>
           </div>
           <EyeOpenIcon className={

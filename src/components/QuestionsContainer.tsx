@@ -1,6 +1,6 @@
 // QuestionsContainer.tsx
 // import { useState } from 'react';
-import data from '@/data/deepseek_json_en_array.json';
+import data from '@/assets/data/deepseek_json_en_array.json';
 import Question from '@/components/Question';
 
 interface QuestionsContainerProps {
