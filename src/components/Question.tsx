@@ -181,12 +181,14 @@ const Question: React.FC<QuestionProps> = ({
           `${showInfo} 
           absolute 
           md:w-[180%]
+          md:h-[100%]
           w-[100%] 
-          h-[100%] 
+          h-[100%]
           top-0 
-          -left-50 
+          md:-left-50 
+          left-0
           rounded-xl
-          bg-[url(https://www.yadvashem.org/sites/default/files/styles/main_image_1block/public/1_120.jpg?itok=UAEkXoCj)]
+          bg-[url(https://drive.google.com/drive-viewer/AKGpihZlIuCwkL5YJp7WHXlM-goDJO7QXzy_hHFJIPlvtRsixI7j9_9fOdCMMNdpk-NXqyJIbQUNBVneQ6fKsb-k837jSHlBfH9rog=s1600-rw-v1)]
           md:bg-no-repeat
           md:bg-contain
           bg-cover
@@ -198,16 +200,18 @@ const Question: React.FC<QuestionProps> = ({
           md:bg-blend-normal
           
           backdrop-opacity-[0.1]          `
-          }>
-          <p className="leading-5 font-mono text-stone-50 md:w-[60%] md:text-[1.2rem] p-1 m-1">
-              {infoData[1]['text']}<br/>
-          </p>
-          <div className="p-1 text-sm text-stone-100">
-            <cite className="font-bold ">{infoData[1]['sourceAPA']}</cite>
-            <p className="md:text-lg mt-1">📷: Liepaja, Latvia, 15-17.12.1941 - Women before they were executed</p>
+        }>
+          <div>
+            <p className="leading-5 font-mono text-stone-50 md:w-[60%] md:text-[1.2rem] p-1 m-1">
+              {infoData[1]['text']}<br />
+            </p>
+            <cite className="ml-1 text-stone-100 text-wrap text-sm">{infoData[1]['sourceAPA']}</cite>
+          </div>
+          <div className="ml-1  text-stone-100 text-wrap">
+            <p className="md:text-lg mt-1 md:visible md:bottom-2 md:absolute">📷: Liepaja, Latvia, 15-17.12.1941 - Women before they were executed</p>
           </div>
           <EyeOpenIcon className={
-          `absolute
+            `absolute
           ${showInfo}  
           md:-left-35 
           md:top-10
@@ -220,19 +224,19 @@ const Question: React.FC<QuestionProps> = ({
           h-10
           text-red-600
           `}
-          onClick={()=>{
-            setShowInfo('hidden')
-          }}/>
+            onClick={() => {
+              setShowInfo('hidden')
+            }} />
         </div>
-        <Input 
-        className="
+        <Input
+          className="
         font-garamond-pp
       bg-stone-400
        text-stone-100 
          placeholder:tracking-[0.2rem]
          text-2xl
          "
-         placeholder={placeholderMaker(answer)}
+          placeholder={placeholderMaker(answer)}
           onChange={update}
           onKeyDown={handleEnter}
           value={userInput}
@@ -243,7 +247,7 @@ const Question: React.FC<QuestionProps> = ({
         {phonetic}
         {ru}
 
-        { result && <EyeClosedIcon className={
+        {result && <EyeClosedIcon className={
           `absolute 
           ${showInfo === 'hidden' ? '' : 'hidden'}    
           md:-left-35 
@@ -255,16 +259,16 @@ const Question: React.FC<QuestionProps> = ({
         md:text-red-400
         ${colors.text}
           `}
-          onClick={()=>{
+          onClick={() => {
             setShowInfo('')
-          }}/>
+          }} />
         }
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button
           className="font-gyst"
           onClick={() => checkAnswer(userInput, answer)}>SUBMIT</Button>
-        
+
       </CardFooter>
     </Card>
   )
@@ -272,5 +276,6 @@ const Question: React.FC<QuestionProps> = ({
 
 export default Question;
 
-    // -top-6
-          // -right-3 
+// -top-6
+// -right-3 
+// bg-[url(https://www.yadvashem.org/sites/default/files/styles/main_image_1block/public/1_120.jpg?itok=UAEkXoCj)]
