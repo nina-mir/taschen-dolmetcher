@@ -2,7 +2,7 @@ import * as React from "react"
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
-import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons"
+import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, ImageIcon } from "@radix-ui/react-icons"
 
 import infoData from '@/assets/data/infoData.json';
 
@@ -89,6 +89,9 @@ const Question: React.FC<QuestionProps> = ({
   const [result, setResult] = useState<boolean>(false)
   const [showInfo, setShowInfo] = useState<string>('hidden')
   const [userInput, setUserInput] = useState<string>('')
+  const [showText, setShowText] = useState<boolean>(true)
+  const [ImageIconBG, setImageIconBG] = useState<string>('bg-red-600')
+
   // Using an object with a type
   type KorrektColorClasses = {
     bg: string;
@@ -98,7 +101,16 @@ const Question: React.FC<QuestionProps> = ({
     bg: 'bg-transparent',
     text: 'text-red-600'
   });
-  // const [bgColor, setBgColor] = useState<[string, string]>(['bg-transparent', 'text-red-600'])
+
+  const handleShowText = () => {
+
+    if (showText == true)
+      setImageIconBG('bg-black')
+    else
+      setImageIconBG('bg-red-600')
+    
+    setShowText(prev => !prev)
+  }
 
   useEffect(() => {
     setColors({
@@ -188,7 +200,7 @@ const Question: React.FC<QuestionProps> = ({
           md:-left-50 
           left-0
           rounded-xl
-          bg-[url(https://drive.google.com/drive-viewer/AKGpihZlIuCwkL5YJp7WHXlM-goDJO7QXzy_hHFJIPlvtRsixI7j9_9fOdCMMNdpk-NXqyJIbQUNBVneQ6fKsb-k837jSHlBfH9rog=s1600-rw-v1)]
+          bg-[url(https://www.yadvashem.org/sites/default/files/styles/main_image_1block/public/1_120.jpg?itok=UAEkXoCj)]
           md:bg-no-repeat
           md:bg-contain
           bg-cover
@@ -201,14 +213,17 @@ const Question: React.FC<QuestionProps> = ({
           
           backdrop-opacity-[0.1]          `
         }>
-          <div>
-            <p className="leading-5 font-mono text-stone-50 md:w-[60%] md:text-[1.2rem] p-1 m-1">
-              {infoData[1]['text']}<br />
-            </p>
-            <cite className="ml-1 text-stone-100 text-wrap text-sm">{infoData[1]['sourceAPA']}</cite>
-          </div>
-          <div className="ml-1  text-stone-100 text-wrap">
-            <p className="md:text-lg mt-1 md:visible md:bottom-2 md:absolute">📷: Liepaja, Latvia, 15-17.12.1941 - Women before they were executed</p>
+          {showText &&
+            <div>
+              <p className="leading-5 font-mono text-stone-50 md:w-[60%] md:text-[1.2rem] p-1 m-1">
+                {infoData[1]['text']}<br />
+              </p>
+              <cite className="ml-1 text-stone-100 text-wrap text-sm">{infoData[1]['sourceAPA']}</cite>
+            </div>
+          }
+
+          <div className={`ml-1 text-stone-100 text-wrap absolute bottom-1 ${showText ? 'hidden md:block' : 'block'}`}>
+            <p className="md:text-lg mt-1 md:visible md:bottom-2  ">📷: Liepaja, Latvia, 15-17.12.1941 - Women before they were executed</p>
           </div>
           <EyeOpenIcon className={
             `absolute
@@ -227,6 +242,22 @@ const Question: React.FC<QuestionProps> = ({
             onClick={() => {
               setShowInfo('hidden')
             }} />
+
+
+          <ImageIcon className={
+            `absolute
+            ${showInfo}  
+            md:hidden       
+            bottom-[90%]
+            -right-[2px]
+            w-8
+            h-8
+            text-yellow-300
+            ${ImageIconBG}
+          `
+          }
+            onClick={handleShowText}
+          />
         </div>
         <Input
           className="
@@ -277,5 +308,5 @@ const Question: React.FC<QuestionProps> = ({
 export default Question;
 
 // -top-6
-// -right-3 
+// -right-3
 // bg-[url(https://www.yadvashem.org/sites/default/files/styles/main_image_1block/public/1_120.jpg?itok=UAEkXoCj)]
