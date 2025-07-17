@@ -133,6 +133,14 @@ const Question: React.FC<QuestionProps> = ({
     }
   }
 
+  const toggleFinalResult = ()=>{
+    if (result) {
+      
+    }
+    showInfo === 'hidden' ? setShowInfo(''):setShowInfo('hidden')
+  }
+
+
   const checkAnswer = (userInput: string, answer: string | string[]): boolean => {
     console.log(`userInput is ${userInput} und answer is ${answer}`)
     let isCorrect = false
@@ -170,7 +178,9 @@ const Question: React.FC<QuestionProps> = ({
   // console.log(question)
 
   return (
-    <Card className={`relative w-[90%] h-[16rem] md:w-[600px] ${colors.bg} `}>
+    <Card 
+    // onClick={()=>toggleFinalResult()}
+    className={`relative w-[90%] h-[16rem] md:w-[600px] ${colors.bg} `}>
       <CardHeader>
         <CardTitle className="text-xl flex flex-row justify-between">
           <div>
