@@ -15,6 +15,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+import { MediaItem, InfoItem } from '@/types';
+
 
 function figureQA(fromLanguage: string, toLanguage: string, de: string, en: string[], ru: string)
   : [string, string | string[]] {
@@ -37,7 +39,6 @@ function figureQA(fromLanguage: string, toLanguage: string, de: string, en: stri
     answer = ru
 
   return [question, answer]
-
 }
 
 const placeholderMaker = (answer: string | string[]): string => {
@@ -74,6 +75,8 @@ interface QuestionProps {
   ru: string;
   fromLanguage: string;
   toLanguage: string;
+  media: MediaItem;
+  info: InfoItem;
 }
 
 const Question: React.FC<QuestionProps> = ({
@@ -83,7 +86,9 @@ const Question: React.FC<QuestionProps> = ({
   phonetic,
   ru,
   fromLanguage,
-  toLanguage
+  toLanguage, 
+  media,
+  info
 }) => {
 
   const [result, setResult] = useState<boolean>(false)
@@ -91,6 +96,9 @@ const Question: React.FC<QuestionProps> = ({
   const [userInput, setUserInput] = useState<string>('')
   const [showText, setShowText] = useState<boolean>(true)
   const [ImageIconBG, setImageIconBG] = useState<string>('bg-red-600')
+
+
+  console.log(media.imgUrl)
 
   // Using an object with a type
   type KorrektColorClasses = {
@@ -210,7 +218,6 @@ const Question: React.FC<QuestionProps> = ({
           md:-left-50 
           left-0
           rounded-xl
-          bg-[url(https://www.yadvashem.org/sites/default/files/styles/main_image_1block/public/1_120.jpg?itok=UAEkXoCj)]
           md:bg-no-repeat
           md:bg-contain
           bg-cover
@@ -222,7 +229,9 @@ const Question: React.FC<QuestionProps> = ({
           md:bg-blend-normal
           
           backdrop-opacity-[0.1]          `
-        }>
+        }
+        style={{ backgroundImage: `url(${media.imgUrl})` }}
+        >
           {showText &&
             <div>
               <p className="leading-5 font-mono text-stone-50 md:w-[60%] md:text-[1.2rem] p-1 m-1">

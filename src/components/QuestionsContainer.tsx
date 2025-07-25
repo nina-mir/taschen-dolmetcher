@@ -1,6 +1,11 @@
 // QuestionsContainer.tsx
-// import { useState } from 'react';
-import data from '@/assets/data/deepseek_json_en_array.json';
+
+import { MediaItem, InfoItem } from '@/types';
+
+import data from '@/assets/data/improved_data_deepseek_en_array.json';
+import mediaData from '@/assets/data/imagesData.json';
+import textData from '@/assets/data/infoData.json';
+
 import Question from '@/components/Question';
 
 interface QuestionsContainerProps {
@@ -12,8 +17,6 @@ const QuestionsContainer = ({ fromLanguage, toLanguage }: QuestionsContainerProp
   // ToDO add pagination state here
   // const [currentPage, setCurrentPage] = useState(1);
   // const questionsPerPage = 10;
-
-
   
   const questions = data.map((item, idx) => (
     <Question
@@ -25,6 +28,10 @@ const QuestionsContainer = ({ fromLanguage, toLanguage }: QuestionsContainerProp
       phonetic={item.phonetic}
       fromLanguage={fromLanguage}
       toLanguage={toLanguage}
+      media={mediaData[idx]}
+      info={textData[idx]}
+
+
     />
   ));
 
