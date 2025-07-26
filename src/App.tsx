@@ -3,6 +3,7 @@ import Header from './components/Header'
 import QuestionsContainer from './components/QuestionsContainer';
 import LanguageSelector from './components/LanguageSelector'
 import { NavigationMenuDemo } from './components/Navbar'
+import ToggleQuestionType from './components/QuestionsType'
 
 import { StarFilledIcon, CornersIcon, BarChartIcon } from "@radix-ui/react-icons"
 
@@ -54,6 +55,7 @@ function App() {
           initialTo={toLangueg}
           onLanguageChange={handleLanguageChange}
         />
+        <ToggleQuestionType />
         <div className='
         flex
         items-center
