@@ -98,7 +98,7 @@ const Question: React.FC<QuestionProps> = ({
   const [ImageIconBG, setImageIconBG] = useState<string>('bg-red-600')
 
 
-  console.log(media.imgUrl)
+  // console.log(media.imgUrl)
 
   // Using an object with a type
   type KorrektColorClasses = {

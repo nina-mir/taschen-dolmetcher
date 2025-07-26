@@ -105,15 +105,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                     </svg>
 
 
-
-                    {/* <img
-                    src='/swap-arrow.svg'
-                    
-                    /> */}
-
                 </span>
 
-                {/* <div className='flex flex-row items-center gap-4 w-full'> */}
                 <div>
 
                     <Label htmlFor="outLanguage" className='invisible'></Label>
@@ -123,7 +116,6 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                                 id="outLanguage"
                                 className="max-w-[5rem] md:min-w-[10rem] text-1xl  bg-stone-500/20"
 
-                            // className="min-w-[10rem] text-1.5xl"
                             >
                                 <SelectValue placeholder="choose a language" />
                             </SelectTrigger>

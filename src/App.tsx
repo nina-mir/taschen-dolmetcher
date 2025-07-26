@@ -1,10 +1,10 @@
-import { Button } from '@/components/ui/button'
+// import { Button } from '@/components/ui/button'
 import Header from './components/Header'
 import QuestionsContainer from './components/QuestionsContainer';
 import LanguageSelector from './components/LanguageSelector'
 import { NavigationMenuDemo } from './components/Navbar'
 
-import { StarFilledIcon } from "@radix-ui/react-icons"
+import { StarFilledIcon, CornersIcon, BarChartIcon } from "@radix-ui/react-icons"
 
 import { useState } from 'react'
 
@@ -27,11 +27,19 @@ function makeInstruction(from: string, to: string): string {
 function App() {
   const [fromLanguage, setFromLanguage] = useState<string>('de')
   const [toLangueg, setToLanguage] = useState<string>('en')
+  const [okayChoices, setOkayChoices] = useState<Boolean>()
 
   const handleLanguageChange = (from: string, to: string) => {
-    setFromLanguage(from)
-    setToLanguage(to)
-    console.log(`user choices are ${from} and ${to}`)
+    if (from !== to) {
+      setFromLanguage(from)
+      setToLanguage(to)
+      setOkayChoices(true)
+      console.log(`user choices are ${from} and ${to}`)
+    } else {
+      setOkayChoices(false)
+      console.log(`user choices are the same so invalid!`)
+    }
+
   }
 
   return (
@@ -56,17 +64,38 @@ function App() {
         text-wrap 
         '>
           <StarFilledIcon className='w-6 h-6 inline-block text-red-600' />
-          <p>{makeInstruction(fromLanguage, toLangueg)}</p>
+          {okayChoices && <p>{makeInstruction(fromLanguage, toLangueg)}</p>}
         </div>
 
-          <QuestionsContainer
+        {
+          okayChoices && <QuestionsContainer
             toLanguage={toLangueg}
             fromLanguage={fromLanguage}
           />
+        }
+
+        {
+          !okayChoices && 
+          <div className='flex flex-col items-center text-center text-xl gap-3 mt-10 w-[80%] font-mono'>
+            <div className='flex items-start'> 
+              <CornersIcon className='w-6 h-6 inline-block text-red-600'/>
+              <span>Выбранные языки должны быть разными!</span>
+            </div>
+            <div className='flex items-start'> 
+            <CornersIcon className='w-4 h-4 inline-block text-red-600'/>
+
+            <span>Your selected languages need to be different!</span>
+            </div>
+            <div className='flex items-start'> 
+            <CornersIcon className='w-2 h-2 inline-block text-red-600'/>
+
+              <span>Ihre ausgewählten Sprachen müssen unterschiedlich sein!</span>
+            </div>
+          </div>
+        }
 
 
-        <Button>Click me</Button>
-        <Button>Click me</Button>
+
         <img src='Screenshot 2025-03-25 171559.png' />
 
       </div>
