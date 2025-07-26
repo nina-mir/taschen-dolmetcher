@@ -1,6 +1,6 @@
 // QuestionsContainer.tsx
 
-import { MediaItem, InfoItem } from '@/types';
+// import { MediaItem, InfoItem } from '@/types';
 
 import data from '@/assets/data/improved_data_deepseek_en_array.json';
 import mediaData from '@/assets/data/imagesData.json';

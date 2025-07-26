@@ -1,0 +1,372 @@
+[
+    {
+      "ru": ["Стой!", "Беги!", "Сиди!", "Лежи!"],
+      "en": ["Halt!", "Run!", "Sit!", "Walk!"],
+      "de": ["Halt!", "Lauf!", "Sitz!", "Geh!"]
+    },
+    {
+      "ru": ["Руки вверх!", "Руки вниз!", "Руки в стороны!", "Руки назад!"],
+      "en": ["Hands up!", "Hands down!", "Hands out!", "Hands back!"],
+      "de": ["Hände hoch!", "Hände runter!", "Hände seitlich!", "Hände zurück!"]
+    },
+    {
+      "ru": ["Сдавайся!", "Сражайся!", "Убегай!", "Прячься!"],
+      "en": ["Surrender!", "Fight!", "Run away!", "Hide!"],
+      "de": ["Ergib dich!", "Kämpfe!", "Lauf weg!", "Versteck dich!"]
+    },
+    {
+      "ru": ["Кто идет?", "Кто спит?", "Кто работает?", "Кто говорит?"],
+      "en": ["Who goes there?", "Who is sleeping?", "Who is working?", "Who is speaking?"],
+      "de": ["Wer da?", "Wer schläft?", "Wer arbeitet?", "Wer spricht?"]
+    },
+    {
+      "ru": ["Выходи!", "Входи!", "Уходи!", "Подходи!"],
+      "en": ["Come out!", "Come in!", "Go away!", "Come here!"],
+      "de": ["Rauskommen!", "Reinkommen!", "Weggehen!", "Herkommen!"]
+    },
+    {
+      "ru": ["Бросай оружие!", "Поднимай оружие!", "Чисти оружие!", "Прячь оружие!"],
+      "en": ["Drop your weapons!", "Raise your weapons!", "Clean your weapons!", "Hide your weapons!"],
+      "de": ["Die Waffen nieder!", "Die Waffen hoch!", "Die Waffen reinigen!", "Die Waffen verstecken!"]
+    },
+    {
+      "ru": ["Ложись!", "Вставай!", "Садись!", "Беги!"],
+      "en": ["Lie down!", "Stand up!", "Sit down!", "Run!"],
+      "de": ["Hinlegen!", "Aufstehen!", "Hinsetzen!", "Laufen!"]
+    },
+    {
+      "ru": ["Вставай!", "Ложись!", "Садись!", "Стой!"],
+      "en": ["Stand up!", "Lie down!", "Sit down!", "Stop!"],
+      "de": ["Aufstehen!", "Hinlegen!", "Hinsetzen!", "Anhalten!"]
+    },
+    {
+      "ru": ["Молчи!", "Говори!", "Кричи!", "Пой!"],
+      "en": ["Be quiet!", "Speak!", "Shout!", "Sing!"],
+      "de": ["Halt den Mund!", "Sprich!", "Schrei!", "Sing!"]
+    },
+    {
+      "ru": ["Тише!", "Громче!", "Быстрее!", "Медленнее!"],
+      "en": ["Silence!", "Louder!", "Faster!", "Slower!"],
+      "de": ["Ruhe!", "Lauter!", "Schneller!", "Langsamer!"]
+    },
+    {
+      "ru": ["Буду стрелять!", "Буду бежать!", "Буду прятаться!", "Буду спать!"],
+      "en": ["I'm going to shoot!", "I'm going to run!", "I'm going to hide!", "I'm going to sleep!"],
+      "de": ["Ich schieße!", "Ich laufe!", "Ich verstecke mich!", "Ich schlafe!"]
+    },
+    {
+      "ru": ["Застрелю!", "Спасу!", "Помогу!", "Отпущу!"],
+      "en": ["I'll shoot you!", "I'll save you!", "I'll help you!", "I'll release you!"],
+      "de": ["Ich erschieße dich!", "Ich rette dich!", "Ich helfe dir!", "Ich lasse dich frei!"]
+    },
+    {
+      "ru": ["Отвечай!", "Слушай!", "Смотри!", "Думай!"],
+      "en": ["Answer me!", "Listen!", "Look!", "Think!"],
+      "de": ["Antworte!", "Höre!", "Schaue!", "Denke!"]
+    },
+    {
+      "ru": ["Отвечай, да или нет!", "Отвечай, быстро или медленно!", "Отвечай, громко или тихо!", "Отвечай, правда или ложь!"],
+      "en": ["Answer yes or no!", "Answer fast or slow!", "Answer loud or quiet!", "Answer truth or lie!"],
+      "de": ["Antworte, ja oder nein!", "Antworte, schnell oder langsam!", "Antworte, laut oder leise!", "Antworte, wahr oder falsch!"]
+    },
+    {
+      "ru": ["Отвечай, быстро и ясно!", "Отвечай, медленно и тихо!", "Отвечай, громко и неясно!", "Отвечай, правдиво и честно!"],
+      "en": ["Answer quickly and clearly!", "Answer slowly and quietly!", "Answer loudly and unclear!", "Answer truthfully and honestly!"],
+      "de": ["Antworte, schnell und klar!", "Antworte, langsam und leise!", "Antworte, laut und unklar!", "Antworte, wahrheitsgemäß und ehrlich!"]
+    },
+    {
+      "ru": ["Вперед!", "Назад!", "Налево!", "Направо!"],
+      "en": ["Forward march!", "Back up!", "Turn left!", "Turn right!"],
+      "de": ["Vorwärts!", "Zurück!", "Links!", "Rechts!"]
+    },
+    {
+      "ru": ["Назад!", "Вперед!", "Стой!", "Беги!"],
+      "en": ["Go back!", "Go forward!", "Stop!", "Run!"],
+      "de": ["Zurück!", "Vorwärts!", "Halt!", "Lauf!"]
+    },
+    {
+      "ru": ["Давай оружие!", "Давай деньги!", "Давай еду!", "Давай воду!"],
+      "en": ["Give me your weapons!", "Give me money!", "Give me food!", "Give me water!"],
+      "de": ["Waffen her!", "Geld her!", "Essen her!", "Wasser her!"]
+    },
+    {
+      "ru": ["Подай документы!", "Подай еду!", "Подай воду!", "Подай руку!"],
+      "en": ["Hand over your papers!", "Hand over food!", "Hand over water!", "Give me your hand!"],
+      "de": ["Papiere her!", "Essen her!", "Wasser her!", "Die Hand her!"]
+    },
+    {
+      "ru": ["Где твоя часть?", "Где твой дом?", "Где твоя семья?", "Где твоя работа?"],
+      "en": ["Where is your unit?", "Where is your home?", "Where is your family?", "Where is your job?"],
+      "de": ["Wo liegt dein Truppenteil?", "Wo ist dein Haus?", "Wo ist deine Familie?", "Wo ist deine Arbeit?"]
+    },
+    {
+      "ru": ["Где штаб?", "Где лагерь?", "Где склад?", "Где кухня?"],
+      "en": ["Where is your headquarters?", "Where is the camp?", "Where is the warehouse?", "Where is the kitchen?"],
+      "de": ["Wo ist der Stab?", "Wo ist das Lager?", "Wo ist das Lager?", "Wo ist die Küche?"]
+    },
+    {
+      "ru": ["Где штаб полка? (батальона?)", "Где казарма полка?", "Где склад полка?", "Где кухня полка?"],
+      "en": ["Where is your regiment (battalion) headquarters?", "Where are the regiment barracks?", "Where is the regiment warehouse?", "Where is the regiment kitchen?"],
+      "de": ["Wo ist der Regiments- (Bataillons-) Stab?", "Wo sind die Regimentskaserne?", "Wo ist das Regimentslager?", "Wo ist die Regimentsküche?"]
+    },
+    {
+      "ru": ["Где пулеметы?", "Где винтовки?", "Где пушки?", "Где патроны?"],
+      "en": ["Where are your machine-gun positions?", "Where are the rifles?", "Where are the cannons?", "Where are the bullets?"],
+      "de": ["Wo sind MG-Stellungen?", "Wo sind die Gewehre?", "Wo sind die Kanonen?", "Wo sind die Patronen?"]
+    },
+    {
+      "ru": ["Где посты?", "Где лагерь?", "Где склады?", "Где кухни?"],
+      "en": ["Where are your sentry posts?", "Where is the camp?", "Where are the warehouses?", "Where are the kitchens?"],
+      "de": ["Wo sind die Posten?", "Wo ist das Lager?", "Wo sind die Lager?", "Wo sind die Küchen?"]
+    },
+    {
+      "ru": ["Где артиллерия?", "Где кавалерия?", "Где пехота?", "Где авиация?"],
+      "en": ["Where is your artillery?", "Where is the cavalry?", "Where is the infantry?", "Where is the aviation?"],
+      "de": ["Wo ist die Artillerie?", "Wo ist die Kavallerie?", "Wo ist die Infanterie?", "Wo ist die Luftwaffe?"]
+    },
+    {
+      "ru": ["Где наблюдательный пункт?", "Где командный пункт?", "Где медицинский пункт?", "Где контрольный пункт?"],
+      "en": ["Where is the observation post?", "Where is the command post?", "Where is the medical post?", "Where is the checkpoint?"],
+      "de": ["Wo ist die B-Stelle?", "Wo ist die Kommandostelle?", "Wo ist die Sanitätsstelle?", "Wo ist die Kontrollstelle?"]
+    },
+    {
+      "ru": ["Где танки?", "Где машины?", "Где самолеты?", "Где корабли?"],
+      "en": ["Where are your tanks?", "Where are the vehicles?", "Where are the airplanes?", "Where are the ships?"],
+      "de": ["Wo sind Panzer?", "Wo sind die Fahrzeuge?", "Wo sind die Flugzeuge?", "Wo sind die Schiffe?"]
+    },
+    {
+      "ru": ["Есть ли русские войска в селе?", "Есть ли немецкие войска в селе?", "Есть ли польские войска в селе?", "Есть ли французские войска в селе?"],
+      "en": ["Are there Russian troops in the village?", "Are there German troops in the village?", "Are there Polish troops in the village?", "Are there French troops in the village?"],
+      "de": ["Gibt es russische Truppen im Dorf?", "Gibt es deutsche Truppen im Dorf?", "Gibt es polnische Truppen im Dorf?", "Gibt es französische Truppen im Dorf?"]
+    },
+    {
+      "ru": ["Есть ли посты вблизи — да или нет?", "Есть ли танки вблизи — да или нет?", "Есть ли склады вблизи — да или нет?", "Есть ли лагеря вблизи — да или нет?"],
+      "en": ["Are there sentry posts in the area, yes or no?", "Are there tanks in the area, yes or no?", "Are there warehouses in the area, yes or no?", "Are there camps in the area, yes or no?"],
+      "de": ["Gibt es Posten in der Nähe, ja oder nein?", "Gibt es Panzer in der Nähe, ja oder nein?", "Gibt es Lager in der Nähe, ja oder nein?", "Gibt es Camps in der Nähe, ja oder nein?"]
+    },
+    {
+      "ru": ["Есть ли здесь партизаны?", "Есть ли здесь солдаты?", "Есть ли здесь офицеры?", "Есть ли здесь шпионы?"],
+      "en": ["Are there partisans here?", "Are there soldiers here?", "Are there officers here?", "Are there spies here?"],
+      "de": ["Gibt es hier Partisanen?", "Gibt es hier Soldaten?", "Gibt es hier Offiziere?", "Gibt es hier Spione?"]
+    },
+    {
+      "ru": ["Побежишь — застрелю!", "Побежишь — поймаю!", "Побежишь — отпущу!", "Побежишь — помогу!"],
+      "en": ["Attempt to escape and you'll be shot!", "Attempt to escape and I'll catch you!", "Attempt to escape and I'll release you!", "Attempt to escape and I'll help you!"],
+      "de": ["Bei Fluchtversuch wird geschossen!", "Bei Fluchtversuch wirst du gefangen!", "Bei Fluchtversuch wirst du freigelassen!", "Bei Fluchtversuch wird geholfen!"]
+    },
+    {
+      "ru": ["Говори правду!", "Говори ложь!", "Говори громко!", "Говори тихо!"],
+      "en": ["Tell me the truth!", "Tell me lies!", "Speak loudly!", "Speak quietly!"],
+      "de": ["Sage die Wahrheit!", "Sage Lügen!", "Sprich laut!", "Sprich leise!"]
+    },
+    {
+      "ru": ["Где телефонная станция?", "Где железнодорожная станция?", "Где автобусная станция?", "Где заправочная станция?"],
+      "en": ["Where is the telephone exchange?", "Where is the railway station?", "Where is the bus station?", "Where is the gas station?"],
+      "de": ["Wo ist die Telefonzentrale?", "Wo ist der Bahnhof?", "Wo ist die Bushaltestelle?", "Wo ist die Tankstelle?"]
+    },
+    {
+      "ru": ["Где дом Красной Армии?", "Где дом культуры?", "Где дом офицеров?", "Где дом молодежи?"],
+      "en": ["Where is the Red Army HQ?", "Where is the cultural center?", "Where is the officers' club?", "Where is the youth center?"],
+      "de": ["Wo ist das Haus der Roten Armee?", "Wo ist das Kulturhaus?", "Wo ist das Offiziershaus?", "Wo ist das Jugendhaus?"]
+    },
+    {
+      "ru": ["Где дом НКВД?", "Где дом КГБ?", "Где дом милиции?", "Где дом суда?"],
+      "en": ["Where is the NKVD HQ?", "Where is the KGB HQ?", "Where is the police station?", "Where is the courthouse?"],
+      "de": ["Wo ist das Haus der GPU?", "Wo ist das KGB-Haus?", "Wo ist das Polizeihaus?", "Wo ist das Gerichtshaus?"]
+    },
+    {
+      "ru": ["Где почта?", "Где банк?", "Где школа?", "Где магазин?"],
+      "en": ["Where is the post office?", "Where is the bank?", "Where is the school?", "Where is the store?"],
+      "de": ["Wo ist die Post?", "Wo ist die Bank?", "Wo ist die Schule?", "Wo ist der Laden?"]
+    },
+    {
+      "ru": ["Где сельсовет?", "Где горсовет?", "Где райсовет?", "Где облсовет?"],
+      "en": ["Where is the village soviet?", "Where is the city soviet?", "Where is the district soviet?", "Where is the regional soviet?"],
+      "de": ["Wo ist der Dorfsowjet?", "Wo ist der Stadtsowjet?", "Wo ist der Kreissowjet?", "Wo ist der Gebietssowjet?"]
+    },
+    {
+      "ru": ["Где здесь горком?", "Где здесь райком?", "Где здесь обком?", "Где здесь цк?"],
+      "en": ["Where is the town party committee?", "Where is the district party committee?", "Where is the regional party committee?", "Where is the central committee?"],
+      "de": ["Wo ist hier das Stadthaus?", "Wo ist hier das Kreishaus?", "Wo ist hier das Gebietshaus?", "Wo ist hier das Zentralhaus?"]
+    },
+    {
+      "ru": ["Где вокзал?", "Где аэропорт?", "Где порт?", "Где автовокзал?"],
+      "en": ["Where is the train station?", "Where is the airport?", "Where is the port?", "Where is the bus terminal?"],
+      "de": ["Wo ist der Bahnhof?", "Wo ist der Flughafen?", "Wo ist der Hafen?", "Wo ist der Busbahnhof?"]
+    },
+    {
+      "ru": ["Где больница?", "Где поликлиника?", "Где аптека?", "Где школа?"],
+      "en": ["Where's the hospital?", "Where is the clinic?", "Where is the pharmacy?", "Where is the school?"],
+      "de": ["Wo ist das Krankenhaus?", "Wo ist die Poliklinik?", "Wo ist die Apotheke?", "Wo ist die Schule?"]
+    },
+    {
+      "ru": ["Где лазарет?", "Где госпиталь?", "Где санчасть?", "Где медпункт?"],
+      "en": ["Where's the field hospital?", "Where is the hospital?", "Where is the medical unit?", "Where is the medical station?"],
+      "de": ["Wo ist das Lazarett?", "Wo ist das Hospital?", "Wo ist die Sanitätsabteilung?", "Wo ist die Sanitätsstation?"]
+    },
+    {
+      "ru": ["Иди вперед!", "Иди назад!", "Иди направо!", "Иди налево!"],
+      "en": ["Go ahead!", "Go back!", "Go right!", "Go left!"],
+      "de": ["Geh vorraus!", "Geh zurück!", "Geh rechts!", "Geh links!"]
+    },
+    {
+      "ru": ["Как называется это село?", "Как называется этот город?", "Как называется эта река?", "Как называется эта дорога?"],
+      "en": ["What's this place called?", "What's this city called?", "What's this river called?", "What's this road called?"],
+      "de": ["Wie heißt dieser Ort?", "Wie heißt diese Stadt?", "Wie heißt dieser Fluss?", "Wie heißt diese Straße?"]
+    },
+    {
+      "ru": ["Куда ведёт эта дорога?", "Откуда идет эта дорога?", "Как долга эта дорога?", "Как широка эта дорога?"],
+      "en": ["Where does this road lead to?", "Where does this road come from?", "How long is this road?", "How wide is this road?"],
+      "de": ["Wohin führt diese Straße?", "Woher kommt diese Straße?", "Wie lang ist diese Straße?", "Wie breit ist diese Straße?"]
+    },
+    {
+      "ru": ["Возможен по ней проезд? — да — нет?", "Возможен по ней проход? — да — нет?", "Возможен по ней перелет? — да — нет?", "Возможен по ней переход? — да — нет?"],
+      "en": ["Is it passable - yes - no?", "Can you walk on it - yes - no?", "Can you fly over it - yes - no?", "Can you cross it - yes - no?"],
+      "de": ["Ist sie gut befahrbar? — ja — nein?", "Ist sie gut begehbar? — ja — nein?", "Ist sie gut überfliegbar? — ja — nein?", "Ist sie gut überquerbar? — ja — nein?"]
+    },
+    {
+      "ru": ["Мост ещё цел?", "Дом ещё цел?", "Завод ещё цел?", "Город ещё цел?"],
+      "en": ["Is the bridge still intact?", "Is the house still intact?", "Is the factory still intact?", "Is the city still intact?"],
+      "de": ["Ist die Brücke noch heil?", "Ist das Haus noch heil?", "Ist die Fabrik noch heil?", "Ist die Stadt noch heil?"]
+    },
+    {
+      "ru": ["Кто говорит по-немецки?", "Кто говорит по-русски?", "Кто говорит по-английски?", "Кто говорит по-французски?"],
+      "en": ["Does anyone here speak German?", "Does anyone here speak Russian?", "Does anyone here speak English?", "Does anyone here speak French?"],
+      "de": ["Spricht hier jemand Deutsch?", "Spricht hier jemand Russisch?", "Spricht hier jemand Englisch?", "Spricht hier jemand Französisch?"]
+    },
+    {
+      "ru": ["Бензин есть?", "Масло есть?", "Вода есть?", "Еда есть?"],
+      "en": ["We need petrol!", "We need oil!", "We need water!", "We need food!"],
+      "de": ["Wir brauchen Benzin!", "Wir brauchen Öl!", "Wir brauchen Wasser!", "Wir brauchen Essen!"]
+    },
+    {
+      "ru": ["Масло есть?", "Бензин есть?", "Вода есть?", "Хлеб есть?"],
+      "en": ["We need oil!", "We need petrol!", "We need water!", "We need bread!"],
+      "de": ["Wir brauchen Öl!", "Wir brauchen Benzin!", "Wir brauchen Wasser!", "Wir brauchen Brot!"]
+    },
+    {
+      "ru": ["Есть здесь MTC?", "Есть здесь завод?", "Есть здесь фабрика?", "Есть здесь мастерская?"],
+      "en": ["Is there a motor-/tractor-repair workshop near here?", "Is there a factory here?", "Is there a plant here?", "Is there a workshop here?"],
+      "de": ["Ist hier eine Motor- und Traktoren-Station?", "Ist hier eine Fabrik?", "Ist hier ein Werk?", "Ist hier eine Werkstatt?"]
+    },
+    {
+      "ru": ["Нам нужны автомеханики!", "Нам нужны водители!", "Нам нужны строители!", "Нам нужны учителя!"],
+      "en": ["We need car mechanics!", "We need drivers!", "We need builders!", "We need teachers!"],
+      "de": ["Wir brauchen Autoschlosser!", "Wir brauchen Fahrer!", "Wir brauchen Bauarbeiter!", "Wir brauchen Lehrer!"]
+    },
+    {
+      "ru": ["механики!", "водители!", "строители!", "учителя!"],
+      "en": ["Mechanics!", "Drivers!", "Builders!", "Teachers!"],
+      "de": ["Mechaniker!", "Fahrer!", "Bauarbeiter!", "Lehrer!"]
+    },
+    {
+      "ru": ["слесари!", "кузнецы!", "токари!", "сварщики!"],
+      "en": ["Metal workers!", "Blacksmiths!", "Turners!", "Welders!"],
+      "de": ["Schlosser!", "Schmiede!", "Dreher!", "Schweißer!"]
+    },
+    {
+      "ru": ["электромеханики!", "радиотехники!", "телефонисты!", "телеграфисты!"],
+      "en": ["Electricians!", "Radio technicians!", "Telephone operators!", "Telegraph operators!"],
+      "de": ["Elektriker!", "Funktechniker!", "Telefonisten!", "Telegrafisten!"]
+    },
+    {
+      "ru": ["шофёры!", "машинисты!", "пилоты!", "капитаны!"],
+      "en": ["Drivers!", "Engineers!", "Pilots!", "Captains!"],
+      "de": ["Fahrer!", "Lokführer!", "Piloten!", "Kapitäne!"]
+    },
+    {
+      "ru": ["плотники!", "столяры!", "кровельщики!", "стекольщики!"],
+      "en": ["Carpenters!", "Joiners!", "Roofers!", "Glaziers!"],
+      "de": ["Zimmerleute!", "Tischler!", "Dachdecker!", "Glaser!"]
+    },
+    {
+      "ru": ["столяры!", "плотники!", "краснодеревщики!", "резчики!"],
+      "en": ["Joiners!", "Carpenters!", "Cabinet makers!", "Carvers!"],
+      "de": ["Tischler!", "Zimmerleute!", "Möbeltischler!", "Schnitzer!"]
+    },
+    {
+      "ru": ["каменщики!", "штукатуры!", "маляры!", "плиточники!"],
+      "en": ["Masons!", "Plasterers!", "Painters!", "Tilers!"],
+      "de": ["Maurer!", "Verputzer!", "Maler!", "Fliesenleger!"]
+    },
+    {
+      "ru": ["водопроводчики!", "газовщики!", "отопленщики!", "канализационщики!"],
+      "en": ["Plumbers!", "Gas fitters!", "Heating technicians!", "Sewer workers!"],
+      "de": ["Klempner!", "Gasinstallateure!", "Heizungstechniker!", "Kanalarbeiter!"]
+    },
+    {
+      "ru": ["сапожники!", "портные!", "шляпники!", "перчаточники!"],
+      "en": ["Cobblers!", "Tailors!", "Hat makers!", "Glove makers!"],
+      "de": ["Schuster!", "Schneider!", "Hutmacher!", "Handschuhmacher!"]
+    },
+    {
+      "ru": ["портные!", "швеи!", "вышивальщицы!", "модистки!"],
+      "en": ["Tailors!", "Seamstresses!", "Embroiderers!", "Milliners!"],
+      "de": ["Schneider!", "Näherinnen!", "Stickerinnen!", "Modistinnen!"]
+    },
+    {
+      "ru": ["Можно это здесь починить?", "Можно это здесь купить?", "Можно это здесь продать?", "Можно это здесь найти?"],
+      "en": ["Can this be repaired here?", "Can this be bought here?", "Can this be sold here?", "Can this be found here?"],
+      "de": ["Kann das hier repariert werden?", "Kann das hier gekauft werden?", "Kann das hier verkauft werden?", "Kann das hier gefunden werden?"]
+    },
+    {
+      "ru": ["Где?", "Когда?", "Как?", "Почему?"],
+      "en": ["Where?", "When?", "How?", "Why?"],
+      "de": ["Wo?", "Wann?", "Wie?", "Warum?"]
+    },
+    {
+      "ru": ["Когда готово?", "Когда начнем?", "Когда закончим?", "Когда уедем?"],
+      "en": ["When will it be ready?", "When do we start?", "When do we finish?", "When do we leave?"],
+      "de": ["Wann wird das fertig?", "Wann fangen wir an?", "Wann hören wir auf?", "Wann fahren wir ab?"]
+    },
+    {
+      "ru": ["Нам нужны люди! десять - двадцать - тридцать человек!", "Нам нужны лошади! десять - двадцать - тридцать лошадей!", "Нам нужны машины! десять - двадцать - тридцать машин!", "Нам нужны дома! десять - двадцать - тридцать домов!"],
+      "en": ["We need people! 10-20-30 men!", "We need horses! 10-20-30 horses!", "We need vehicles! 10-20-30 vehicles!", "We need houses! 10-20-30 houses!"],
+      "de": ["Wir brauchen Leute! 10-20-30 Mann!", "Wir brauchen Pferde! 10-20-30 Pferde!", "Wir brauchen Fahrzeuge! 10-20-30 Fahrzeuge!", "Wir brauchen Häuser! 10-20-30 Häuser!"]
+    },
+    {
+      "ru": ["Нам нужны лошади!", "Нам нужны коровы!", "Нам нужны свиньи!", "Нам нужны овцы!"],
+      "en": ["We need horses and carts!", "We need cows and milk!", "We need pigs and meat!", "We need sheep and wool!"],
+      "de": ["Wir brauchen Pferdegespanne!", "Wir brauchen Kühe!", "Wir brauchen Schweine!", "Wir brauchen Schafe!"]
+    },
+    {
+      "ru": ["Это спешно!", "Это важно!", "Это секретно!", "Это опасно!"],
+      "en": ["It's urgent!", "It's important!", "It's secret!", "It's dangerous!"],
+      "de": ["Das ist eilig!", "Das ist wichtig!", "Das ist geheim!", "Das ist gefährlich!"]
+    },
+    {
+      "ru": ["Живо!", "Тихо!", "Громко!", "Медленно!"],
+      "en": ["Hurry!", "Quietly!", "Loudly!", "Slowly!"],
+      "de": ["Mach schnell!", "Mach leise!", "Mach laut!", "Mach langsam!"]
+    },
+    {
+      "ru": ["Скорее!", "Медленнее!", "Тише!", "Громче!"],
+      "en": ["Faster!", "Slower!", "Quieter!", "Louder!"],
+      "de": ["Schneller!", "Langsamer!", "Leiser!", "Lauter!"]
+    },
+    {
+      "ru": ["Скоро - медленно", "Быстро - тихо", "Громко - слабо", "Сильно - легко"],
+      "en": ["Fast - Slow!", "Quick - Quiet!", "Loud - Weak!", "Strong - Light!"],
+      "de": ["Schnell - langsam", "Schnell - leise", "Laut - schwach", "Stark - leicht"]
+    },
+    {
+      "ru": ["Плохо - хорошо!", "Грустно - весело!", "Темно - светло!", "Холодно - тепло!"],
+      "en": ["Bad - Good", "Sad - Happy", "Dark - Light", "Cold - Warm"],
+      "de": ["Schlecht - gut", "Traurig - fröhlich", "Dunkel - hell", "Kalt - warm"]
+    },
+    {
+      "ru": ["Плохо сделано!", "Хорошо сделано!", "Быстро сделано!", "Медленно сделано!"],
+      "en": ["That's a bad job!", "That's a good job!", "That's done quickly!", "That's done slowly!"],
+      "de": ["Schlecht gemacht!", "Gut gemacht!", "Schnell gemacht!", "Langsam gemacht!"]
+    },
+    {
+      "ru": ["Хорошо сделано!", "Плохо сделано!", "Красиво сделано!", "Уродливо сделано!"],
+      "en": ["Well done!", "Badly done!", "Beautifully done!", "Ugly work!"],
+      "de": ["Gut gemacht!", "Schlecht gemacht!", "Schön gemacht!", "Hässlich gemacht!"]
+    },
+    {
+      "ru": ["Идиот - дурак!", "Умный - глупый!", "Сильный - слабый!", "Большой - маленький!"],
+      "en": ["Idiot - Blockhead!", "Smart - Stupid!", "Strong - Weak!", "Big - Small!"],
+      "de": ["Idiot - Dummkopf!", "Klug - dumm!", "Stark - schwach!", "Groß - klein!"]
+    }
+  ]
