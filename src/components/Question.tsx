@@ -188,7 +188,7 @@ const Question: React.FC<QuestionProps> = ({
   return (
     <Card 
     // onClick={()=>toggleFinalResult()}
-    className={`relative w-[90%] h-[16rem] md:w-[600px] ${colors.bg} `}>
+    className={`relative w-[90%] h-[20rem] md:w-[600px] ${colors.bg} `}>
       <CardHeader>
         <CardTitle className="text-xl flex flex-row justify-between">
           <div>
@@ -225,7 +225,7 @@ const Question: React.FC<QuestionProps> = ({
           bg-center
           md:bg-black/90
           bg-black/50
-          bg-blend-darken
+          bg-blend-normal
           md:bg-blend-normal
           
           backdrop-opacity-[0.1]          `
@@ -235,14 +235,14 @@ const Question: React.FC<QuestionProps> = ({
           {showText &&
             <div>
               <p className="leading-5 font-mono text-stone-50 md:w-[60%] md:text-[1.2rem] p-1 m-1">
-                {infoData[1]['text']}<br />
+                {info.text}
               </p>
-              <cite className="ml-1 text-stone-100 text-wrap text-sm">{infoData[1]['sourceAPA']}</cite>
+              <cite className="ml-1 text-stone-100 text-wrap text-xs md:w-[50%]">{info.sourceChicago}</cite>
             </div>
           }
 
           <div className={`ml-1 text-stone-100 text-wrap absolute bottom-1 ${showText ? 'hidden md:block' : 'block'}`}>
-            <p className="md:text-lg mt-1 md:visible md:bottom-2  ">📷: Liepaja, Latvia, 15-17.12.1941 - Women before they were executed</p>
+            <p className="md:text-lg mt-1 md:visible md:bottom-2 md:bg-black/40 ">📷: {media.imgCaption}</p>
           </div>
           <EyeOpenIcon className={
             `absolute

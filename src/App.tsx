@@ -1,11 +1,10 @@
-// import { Button } from '@/components/ui/button'
 import Header from './components/Header'
 import QuestionsContainer from './components/QuestionsContainer';
 import LanguageSelector from './components/LanguageSelector'
 import { NavigationMenuDemo } from './components/Navbar'
 import ToggleQuestionType from './components/QuestionsType'
 
-import { StarFilledIcon, CornersIcon, BarChartIcon } from "@radix-ui/react-icons"
+import { StarFilledIcon, CornersIcon } from "@radix-ui/react-icons"
 
 import { useState } from 'react'
 
