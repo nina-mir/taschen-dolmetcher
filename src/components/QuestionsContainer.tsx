@@ -30,8 +30,6 @@ const QuestionsContainer = ({ fromLanguage, toLanguage }: QuestionsContainerProp
       toLanguage={toLanguage}
       media={mediaData[idx]}
       info={textData[idx]}
-
-
     />
   ));
 

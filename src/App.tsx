@@ -49,12 +49,15 @@ function App() {
       </div>
       <Header />
       <div className="flex flex-col items-center gap-[1rem]">
-        <LanguageSelector
-          initialFrom={fromLanguage}
-          initialTo={toLangueg}
-          onLanguageChange={handleLanguageChange}
-        />
-        <ToggleQuestionType />
+        <div className='w-full flex flex-col items-center -gap-5'>
+          <LanguageSelector
+            initialFrom={fromLanguage}
+            initialTo={toLangueg}
+            onLanguageChange={handleLanguageChange}
+          />
+          <ToggleQuestionType />
+        </div>
+
         <div className='
         flex
         items-center
@@ -76,19 +79,19 @@ function App() {
         }
 
         {
-          !okayChoices && 
+          !okayChoices &&
           <div className='flex flex-col items-center text-center text-xl gap-3 mt-10 w-[80%] font-mono'>
-            <div className='flex items-start'> 
-              <CornersIcon className='w-6 h-6 inline-block text-red-600'/>
+            <div className='flex items-start'>
+              <CornersIcon className='w-6 h-6 inline-block text-red-600' />
               <span>Выбранные языки должны быть разными!</span>
             </div>
-            <div className='flex items-start'> 
-            <CornersIcon className='w-4 h-4 inline-block text-red-600'/>
+            <div className='flex items-start'>
+              <CornersIcon className='w-4 h-4 inline-block text-red-600' />
 
-            <span>Your selected languages need to be different!</span>
+              <span>Your selected languages need to be different!</span>
             </div>
-            <div className='flex items-start'> 
-            <CornersIcon className='w-2 h-2 inline-block text-red-600'/>
+            <div className='flex items-start'>
+              <CornersIcon className='w-2 h-2 inline-block text-red-600' />
 
               <span>Ihre ausgewählten Sprachen müssen unterschiedlich sein!</span>
             </div>

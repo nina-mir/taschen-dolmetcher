@@ -2,9 +2,8 @@ import * as React from "react"
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
-import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, ImageIcon } from "@radix-ui/react-icons"
+import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, ImageIcon, PlusIcon } from "@radix-ui/react-icons"
 
-import infoData from '@/assets/data/infoData.json';
 
 import {
   Card,
@@ -17,6 +16,12 @@ import {
 
 import { MediaItem, InfoItem } from '@/types';
 
+
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 
 function figureQA(fromLanguage: string, toLanguage: string, de: string, en: string[], ru: string)
   : [string, string | string[]] {
@@ -86,7 +91,7 @@ const Question: React.FC<QuestionProps> = ({
   phonetic,
   ru,
   fromLanguage,
-  toLanguage, 
+  toLanguage,
   media,
   info
 }) => {
@@ -101,13 +106,17 @@ const Question: React.FC<QuestionProps> = ({
   // console.log(media.imgUrl)
 
   // Using an object with a type
-  type KorrektColorClasses = {
+  type KorrektClasses = {
     bg: string;
     text: string;
+    height: string;
+    marginB: string;
   };
-  const [colors, setColors] = useState<KorrektColorClasses>({
+  const [correctClasses, setCorrectClasses] = useState<KorrektClasses>({
     bg: 'bg-transparent',
-    text: 'text-red-600'
+    text: 'text-red-600',
+    height: 'h-[20rem]',
+    marginB: 'mb-[0rem]'
   });
 
   const handleShowText = () => {
@@ -116,14 +125,16 @@ const Question: React.FC<QuestionProps> = ({
       setImageIconBG('bg-black')
     else
       setImageIconBG('bg-red-600')
-    
+
     setShowText(prev => !prev)
   }
 
   useEffect(() => {
-    setColors({
+    setCorrectClasses({
       bg: 'bg-transparent',
-      text: 'text-red-600'
+      text: 'text-red-600',
+      height: 'h-[20rem]',
+      marginB: 'mb-[0rem]'
     })
     setUserInput('')
     setResult(false)
@@ -141,11 +152,11 @@ const Question: React.FC<QuestionProps> = ({
     }
   }
 
-  const toggleFinalResult = ()=>{
+  const toggleFinalResult = () => {
     if (result) {
-      
+
     }
-    showInfo === 'hidden' ? setShowInfo(''):setShowInfo('hidden')
+    showInfo === 'hidden' ? setShowInfo('') : setShowInfo('hidden')
   }
 
 
@@ -169,9 +180,11 @@ const Question: React.FC<QuestionProps> = ({
     if (isCorrect) {
       console.log('yessss richtig!')
       setResult(true)
-      setColors({
+      setCorrectClasses({
         bg: 'bg-red-600',
-        text: 'text-yellow-400'
+        text: 'text-yellow-400',
+        height: 'h-[30rem]',
+        marginB: 'mb-[1.5rem]'
       })
       setShowInfo('')
       return true
@@ -186,20 +199,20 @@ const Question: React.FC<QuestionProps> = ({
   // console.log(question)
 
   return (
-    <Card 
-    // onClick={()=>toggleFinalResult()}
-    className={`relative w-[90%] h-[20rem] md:w-[600px] ${colors.bg} `}>
+    <Card
+      // onClick={()=>toggleFinalResult()}
+      className={`relative w-[90%] md:w-[600px] ${correctClasses.bg} ${correctClasses.height} ${correctClasses.marginB}`}>
       <CardHeader>
         <CardTitle className="text-xl flex flex-row justify-between">
           <div>
             <span className=" font-gyst">{id}</span>
-            <DotFilledIcon className={`inline w-3 h-3 ${colors.text}`} />
+            <DotFilledIcon className={`inline w-3 h-3 ${correctClasses.text}`} />
             {question}
           </div>
           <ResetIcon
             className={
               `
-            ${colors.text}
+            ${correctClasses.text}
             `
             }
           />
@@ -213,7 +226,6 @@ const Question: React.FC<QuestionProps> = ({
           md:w-[180%]
           md:h-[100%]
           w-[100%] 
-          h-[100%]
           top-0 
           md:-left-50 
           left-0
@@ -224,14 +236,25 @@ const Question: React.FC<QuestionProps> = ({
           md:bg-right
           bg-center
           md:bg-black/90
-          bg-black/50
           bg-blend-normal
           md:bg-blend-normal
-          
           backdrop-opacity-[0.1]          `
         }
-        style={{ backgroundImage: `url(${media.imgUrl})` }}
+        // style={{ backgroundImage: `url(${media.imgUrl})` }}
         >
+          <div >
+            <Collapsible className="absolute data-[state=open]:bg-red-500 rounded-t-xl">
+              <CollapsibleTrigger>
+              <PlusIcon className="w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold "/>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="w-[90%] bg-stone-400/90 text-wrap text-lg">
+              📷:{media.imgCaption}
+              </CollapsibleContent>
+            </Collapsible>
+            <img src={media.imgUrl} className="rounded-t-xl" />
+
+          </div>
+
           {showText &&
             <div>
               <p className="leading-5 font-mono text-stone-50 md:w-[60%] md:text-[1.2rem] p-1 m-1">
@@ -241,9 +264,9 @@ const Question: React.FC<QuestionProps> = ({
             </div>
           }
 
-          <div className={`ml-1 text-stone-100 text-wrap absolute bottom-1 ${showText ? 'hidden md:block' : 'block'}`}>
+          {/* <div className={`ml-1 text-stone-100 text-wrap absolute bottom-1 ${showText ? 'hidden md:block' : 'block'}`}>
             <p className="md:text-lg mt-1 md:visible md:bottom-2 md:bg-black/40 ">📷: {media.imgCaption}</p>
-          </div>
+          </div> */}
           <EyeOpenIcon className={
             `absolute
           ${showInfo}  
@@ -256,7 +279,7 @@ const Question: React.FC<QuestionProps> = ({
           md:h-10
           w-10
           h-10
-          text-red-600
+          text-soviet-gold
           `}
             onClick={() => {
               setShowInfo('hidden')
@@ -307,7 +330,7 @@ const Question: React.FC<QuestionProps> = ({
           w-10 
           h-10
         md:text-red-400
-        ${colors.text}
+        ${correctClasses.text}
           `}
           onClick={() => {
             setShowInfo('')
