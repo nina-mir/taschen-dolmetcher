@@ -17,25 +17,26 @@ const QuestionsContainer = ({ fromLanguage, toLanguage }: QuestionsContainerProp
   // ToDO add pagination state here
   // const [currentPage, setCurrentPage] = useState(1);
   // const questionsPerPage = 10;
-  
-  const questions = data.map((item, idx) => (
-    <Question
-      key={idx}
-      id={idx}
-      de={item.de}
-      en={item.en}
-      ru={item.ru}
-      phonetic={item.phonetic}
-      fromLanguage={fromLanguage}
-      toLanguage={toLanguage}
-      media={mediaData[idx]}
-      info={textData[idx]}
-    />
-  ));
+
+  const questions = data.map((item, idx) => {
+
+      return <Question
+        key={idx}
+        id={idx}
+        de={item.de}
+        en={item.en}
+        ru={item.ru}
+        phonetic={item.phonetic}
+        fromLanguage={fromLanguage}
+        toLanguage={toLanguage}
+        media={mediaData[idx]}
+        info={textData[idx]}
+      />
+  });
 
   return <div className='w-full flex flex-col items-center content-center gap-5'>
-      {questions}
-    </div>
+    {questions}
+  </div>
 };
 
 export default QuestionsContainer;

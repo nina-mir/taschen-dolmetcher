@@ -74,7 +74,6 @@ const Header: React.FC = () => {
                 md:-right-25 
                 top-60
                 md:-top-2
-                z-50
                 ' 
                 />
 
