@@ -1,7 +1,6 @@
 import * as React from "react"
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input";
 import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, FaceIcon, PlusIcon } from "@radix-ui/react-icons"
 
 
@@ -14,8 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-import { MediaItem, InfoItem } from '@/types';
-
+import { MediaItem, InfoItem, LanguageType } from '@/types';
 
 import {
   Collapsible,
@@ -23,53 +21,33 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 
-function figureQA(fromLanguage: string, toLanguage: string, de: string, en: string[], ru: string)
+import { Label } from "@/components/ui/label"
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@/components/ui/radio-group"
+
+function figureQA(fromLanguage: LanguageType, toLanguage: LanguageType, de: string, en: string[], ru: string)
   : [string, string | string[]] {
 
   let question = ''
   let answer: string | string[] = ''
 
-  if (fromLanguage === 'de') {
+  if (fromLanguage == 'de') {
     question = de
-  } else if (fromLanguage === 'en') {
+  } else if (fromLanguage == 'en') {
     question = en[0]
   } else
     question = ru
 
-  if (toLanguage === 'de') {
+  if (toLanguage == 'de') {
     answer = de
-  } else if (toLanguage === 'en') {
+  } else if (toLanguage == 'en') {
     answer = en
   } else
     answer = ru
 
   return [question, answer]
-}
-
-const placeholderMaker = (answer: string | string[]): string => {
-  // Define what counts as punctuation or whitespace
-  const punctuationAndSpace = new Set([
-    ' ', '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-',
-    '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_',
-    '`', '{', '|', '}', '~', '\t', '\n', '\r'
-  ]);
-  let result = ''
-  let firstAnswer = ''
-  if (Array.isArray(answer)) {
-    firstAnswer = answer[0]
-  } else {
-    firstAnswer = answer
-  }
-
-  for (const char of firstAnswer) {
-    if (punctuationAndSpace.has(char)) {
-      result += char
-    } else {
-      result += '-'
-    }
-  }
-
-  return result
 }
 
 interface QuestionProps {
@@ -78,18 +56,20 @@ interface QuestionProps {
   en: string[];
   phonetic?: string;
   ru: string;
-  fromLanguage: string;
-  toLanguage: string;
+  choices: string[];
+  fromLanguage: LanguageType;
+  toLanguage: LanguageType;
   media: MediaItem;
   info: InfoItem;
 }
 
-const Question: React.FC<QuestionProps> = ({
+const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   id,
   de,
   en,
   phonetic,
   ru,
+  choices,
   fromLanguage,
   toLanguage,
   media,
@@ -125,22 +105,22 @@ const Question: React.FC<QuestionProps> = ({
   }, [fromLanguage, toLanguage])
 
 
-  const update = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserInput(e.target.value)
-  }
+  // const update = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setUserInput(e.target.value)
+  // }
 
-  const handleEnter = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      checkAnswer(userInput, answer)
-    }
-  }
+  // const handleEnter = (e: React.KeyboardEvent) => {
+  //   if (e.key === 'Enter') {
+  //     checkAnswer(userInput, answer)
+  //   }
+  // }
 
-  const toggleFinalResult = () => {
-    if (result) {
+  // const toggleFinalResult = () => {
+  //   if (result) {
 
-    }
-    showInfo === 'hidden' ? setShowInfo('') : setShowInfo('hidden')
-  }
+  //   }
+  //   showInfo === 'hidden' ? setShowInfo('') : setShowInfo('hidden')
+  // }
 
 
   const checkAnswer = (userInput: string, answer: string | string[]): boolean => {
@@ -294,7 +274,34 @@ const Question: React.FC<QuestionProps> = ({
           /> */}
         </div>
 
-        <Input
+        <RadioGroup
+          className={`
+          ${showInfo === 'hidden' ? '' : 'hidden'}
+          font-garamond-pp
+          bg-stone-400
+          text-stone-100 
+          `
+          }>
+          <div className="flex items-center gap-3">
+            <RadioGroupItem value="default" id="r1" />
+            <Label htmlFor="r1">{choices[1]}</Label>
+          </div>
+          <div className="flex items-center gap-3">
+            <RadioGroupItem value="comfortable" id="r2" />
+            <Label htmlFor="r2">choices[2]</Label>
+          </div>
+          <div className="flex items-center gap-3">
+            <RadioGroupItem value="compact" id="r3" />
+            <Label htmlFor="r3">choices[3]</Label>
+          </div>
+          <div className="flex items-center gap-3">
+            <RadioGroupItem value="vier" id="r4" />
+            <Label htmlFor="r4">choices[4]</Label>
+          </div>
+        </RadioGroup>
+
+
+        {/* <Input
           className={`
           ${showInfo === 'hidden' ? '' : 'hidden'}
          font-garamond-pp
@@ -303,11 +310,10 @@ const Question: React.FC<QuestionProps> = ({
          placeholder:tracking-[0.2rem]
          text-2xl
          `}
-          placeholder={placeholderMaker(answer)}
           onChange={update}
           onKeyDown={handleEnter}
           value={userInput}
-        />
+        /> */}
 
         <p className={`${showInfo === 'hidden' ? '' : 'hidden'}`}>
           {de}
@@ -344,8 +350,4 @@ const Question: React.FC<QuestionProps> = ({
   )
 }
 
-export default Question;
-
-// -top-6
-// -right-3
-// bg-[url(https://www.yadvashem.org/sites/default/files/styles/main_image_1block/public/1_120.jpg?itok=UAEkXoCj)]
+export default MultiChoiceQuestion;

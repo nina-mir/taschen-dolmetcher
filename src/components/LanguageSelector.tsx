@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import {LanguageType} from '@/types'
 import { Label } from '@/components/ui/label'
 import {
     Select,
@@ -10,9 +11,9 @@ import {
 
 
 interface LanguageSelectorProps {
-    initialFrom?: string;
-    initialTo?: string;
-    onLanguageChange: (fromLanguage: string, toLanguage: string) => void;
+    initialFrom?: LanguageType;
+    initialTo?: LanguageType;
+    onLanguageChange: (fromLanguage: LanguageType, toLanguage: LanguageType) => void;
 }
 
 const LanguageSelector: React.FC<LanguageSelectorProps> = ({
@@ -22,20 +23,20 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 
 }) => {
 
-    const [fromLanguage, setFromLanguage] = useState<string>(initialFrom);
-    const [toLanguage, setToLanguage] = useState<string>(initialTo);
+    const [fromLanguage, setFromLanguage] = useState<LanguageType>(initialFrom);
+    const [toLanguage, setToLanguage] = useState<LanguageType>(initialTo);
 
     useEffect(() => {
         onLanguageChange(fromLanguage, toLanguage);
     }, [fromLanguage, toLanguage, onLanguageChange])
 
     // Handle from language change
-    const handleFromLanguageChange = (value: string) => {
+    const handleFromLanguageChange = (value: LanguageType) => {
         setFromLanguage(value);
     };
 
     // Handle to language change
-    const handleToLanguageChange = (value: string) => {
+    const handleToLanguageChange = (value: LanguageType) => {
         setToLanguage(value);
     };
 

@@ -1,24 +1,53 @@
 // QuestionsContainer.tsx
 
-// import { MediaItem, InfoItem } from '@/types';
-
+import { QuestionType, LanguageType } from '@/types';
 import data from '@/assets/data/improved_data_deepseek_en_array.json';
+import multipleChoiceData from '@/assets/data/multiple_choice_data_claude.json'
 import mediaData from '@/assets/data/imagesData.json';
 import textData from '@/assets/data/infoData.json';
 
+
 import Question from '@/components/Question';
+import MultiChoiceQuestion from './MultiChoiceQuestion';
 
 interface QuestionsContainerProps {
-  fromLanguage: string;
-  toLanguage: string;
+  fromLanguage: LanguageType;
+  toLanguage: LanguageType;
+  qFormat: QuestionType;
 }
 
-const QuestionsContainer = ({ fromLanguage, toLanguage }: QuestionsContainerProps) => {
-  // ToDO add pagination state here
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const questionsPerPage = 10;
+const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat }: QuestionsContainerProps) => {
+  // ToDO add pagination state here--maybe! 
 
-  const questions = data.map((item, idx) => {
+  if (qFormat == 'choosing') {
+    console.log('user chose to multiple-choice format')
+    const questions = data.map((item, idx) => {
+
+      console.log(multipleChoiceData[idx][fromLanguage])
+
+      return <MultiChoiceQuestion
+        key={idx}
+        id={idx}
+        de={item.de}
+        en={item.en}
+        ru={item.ru}
+        choices={multipleChoiceData[idx][fromLanguage]}
+        phonetic={item.phonetic}
+        fromLanguage={fromLanguage}
+        toLanguage={toLanguage}
+        media={mediaData[idx]}
+        info={textData[idx]}
+      />
+    });
+
+    return <div className='w-full flex flex-col items-center content-center gap-5'>
+      {questions}
+    </div>
+  } else {
+
+
+
+    const questions = data.map((item, idx) => {
 
       return <Question
         key={idx}
@@ -32,11 +61,12 @@ const QuestionsContainer = ({ fromLanguage, toLanguage }: QuestionsContainerProp
         media={mediaData[idx]}
         info={textData[idx]}
       />
-  });
+    });
 
-  return <div className='w-full flex flex-col items-center content-center gap-5'>
-    {questions}
-  </div>
+    return <div className='w-full flex flex-col items-center content-center gap-5'>
+      {questions}
+    </div>
+  }
 };
 
 export default QuestionsContainer;
