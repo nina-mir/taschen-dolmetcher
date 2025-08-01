@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
 import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, FaceIcon, PlusIcon } from "@radix-ui/react-icons"
 
+import { SVG_LIST } from "@/constants/svgs";
 
 import {
   Card,
@@ -63,6 +64,13 @@ interface QuestionProps {
   info: InfoItem;
 }
 
+// function to create a random integer for the contant SVG_LIST imported above!
+function randInt(max: number): number {
+  return Math.floor(Math.random() * max)
+}
+
+
+
 const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   id,
   de,
@@ -80,6 +88,9 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   const [showInfo, setShowInfo] = useState<string>('hidden')
   const [userInput, setUserInput] = useState<string>('')
   const [showText, setShowText] = useState<boolean>(true)
+  // radio group value tracking
+  const [selectedValue, setSelectedValue] = useState<string>('');
+
 
   // Using an object with a type
   type KorrektClasses = {
@@ -103,6 +114,10 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
     setResult(false)
 
   }, [fromLanguage, toLanguage])
+
+
+  // console.log(SVG_LIST.length)
+  // const randomSvg = SVG_LIST[randInt(SVG_LIST.length)];
 
 
   // const update = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -158,7 +173,12 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   }
 
   let [question, answer] = figureQA(fromLanguage, toLanguage, de, en, ru)
-  // console.log(question)
+
+  // labelClasses specify the radio group's labels' text/style
+  const labelClasses = `text-2xl font-garamond-pp text-blue-200]`
+  // RadioGroup item styling
+  const radioItem = `border-2 border-stone-600 ml-2 ring-2 ring-soviet-gold`
+
 
   return (
     <Card
@@ -244,7 +264,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           ${showInfo}  
           md:-left-35 
           md:top-10
-      
           bottom-0
           right-1
           md:w-10 
@@ -274,29 +293,52 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           /> */}
         </div>
 
+
         <RadioGroup
+          value={selectedValue}  // Add this
+          onValueChange={setSelectedValue}  // Add this
+          // style={{ 
+          //   backgroundImage: `url('/svgs/${randomSvg}')`, 
+          //   backgroundSize: `10%`,
+          // }}
           className={`
+          relative
           ${showInfo === 'hidden' ? '' : 'hidden'}
           font-garamond-pp
-          bg-stone-400
-          text-stone-100 
-          `
-          }>
-          <div className="flex items-center gap-3">
-            <RadioGroupItem value="default" id="r1" />
-            <Label htmlFor="r1">{choices[1]}</Label>
+          bg-red-500
+          pl-5
+          pr-5
+          bg-contain bg-repeat
+          rounded-tl-xl
+          rounded-br-lg
+          border-l-1
+          border-soviet-gold
+          hover:bg-stone-100
+          hover:border-r-2
+          hover:border-r-red-500
+          hover:font-bold
+          **:text-black
+          `}>
+          {/* Pseudo-element for background image */}
+          {/* <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url('/svgs/${randomSvg}')`, backgroundSize: `8%`, opacity: 0.08 }} // Adjust opacity here (e.g., 0.8 for 80%)
+          ></div> */}
+          <div className="flex items-center gap-3 mt-3 bg-stone-400">
+            <RadioGroupItem value={choices[0]} id="r1" className={radioItem} />
+            <Label htmlFor="r1" className={labelClasses}>{choices[0]}</Label>
           </div>
-          <div className="flex items-center gap-3">
-            <RadioGroupItem value="comfortable" id="r2" />
-            <Label htmlFor="r2">choices[2]</Label>
+          <div className="flex items-center gap-3 bg-stone-400">
+            <RadioGroupItem value={choices[1]} id="r2" className={radioItem} />
+            <Label htmlFor="r2" className={labelClasses}>{choices[1]}</Label>
           </div>
-          <div className="flex items-center gap-3">
-            <RadioGroupItem value="compact" id="r3" />
-            <Label htmlFor="r3">choices[3]</Label>
+          <div className="flex items-center gap-3 bg-stone-400">
+            <RadioGroupItem value={choices[2]} id="r3" className={radioItem} />
+            <Label htmlFor="r3" className={labelClasses}>{choices[2]}</Label>
           </div>
-          <div className="flex items-center gap-3">
-            <RadioGroupItem value="vier" id="r4" />
-            <Label htmlFor="r4">choices[4]</Label>
+          <div className="flex items-center gap-3 mb-3 bg-stone-400">
+            <RadioGroupItem value={choices[3]} id="r4" className={radioItem} />
+            <Label htmlFor="r4" className={labelClasses}>{choices[3]}</Label>
           </div>
         </RadioGroup>
 
@@ -343,7 +385,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       <CardFooter className={`flex justify-between ${showInfo === 'hidden' ? '' : 'hidden'}`}>
         <Button
           className="font-gyst "
-          onClick={() => checkAnswer(userInput, answer)}>SUBMIT</Button>
+          onClick={() => checkAnswer(selectedValue, answer)}>SUBMIT</Button>
 
       </CardFooter>
     </Card>
