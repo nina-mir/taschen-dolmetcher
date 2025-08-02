@@ -6,15 +6,20 @@ import multipleChoiceData from '@/assets/data/multiple_choice_data_claude.json'
 import mediaData from '@/assets/data/imagesData.json';
 import textData from '@/assets/data/infoData.json';
 
-
 import Question from '@/components/Question';
 import MultiChoiceQuestion from './MultiChoiceQuestion';
+
+import knuthRandomizer from '@/utils/helpers'
+
 
 interface QuestionsContainerProps {
   fromLanguage: LanguageType;
   toLanguage: LanguageType;
   qFormat: QuestionType;
 }
+
+const shuffledMediaData = knuthRandomizer(mediaData)
+const shuffledTextData = knuthRandomizer(textData)
 
 const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat }: QuestionsContainerProps) => {
   // ToDO add pagination state here--maybe! 
@@ -31,12 +36,12 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat }: QuestionsCont
         de={item.de}
         en={item.en}
         ru={item.ru}
-        choices={multipleChoiceData[idx][fromLanguage]}
+        choices={multipleChoiceData[idx][toLanguage]}
         phonetic={item.phonetic}
         fromLanguage={fromLanguage}
         toLanguage={toLanguage}
-        media={mediaData[idx]}
-        info={textData[idx]}
+        media={shuffledMediaData[idx]}
+        info={shuffledTextData[idx]}
       />
     });
 

@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
 import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, FaceIcon, PlusIcon } from "@radix-ui/react-icons"
 
-import { SVG_LIST } from "@/constants/svgs";
-
 import {
   Card,
   CardContent,
@@ -62,11 +60,6 @@ interface QuestionProps {
   toLanguage: LanguageType;
   media: MediaItem;
   info: InfoItem;
-}
-
-// function to create a random integer for the contant SVG_LIST imported above!
-function randInt(max: number): number {
-  return Math.floor(Math.random() * max)
 }
 
 
@@ -177,7 +170,12 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   // labelClasses specify the radio group's labels' text/style
   const labelClasses = `text-2xl font-garamond-pp text-blue-200]`
   // RadioGroup item styling
-  const radioItem = `border-2 border-stone-600 ml-2 ring-2 ring-soviet-gold`
+  const radioItem = `border-2 
+  border-stone-600 
+  ml-2 
+  hover:bg-red-500
+  hover:ring-0
+  `
 
 
   return (
@@ -305,7 +303,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           relative
           ${showInfo === 'hidden' ? '' : 'hidden'}
           font-garamond-pp
-          bg-red-500
           pl-5
           pr-5
           bg-contain bg-repeat
@@ -313,30 +310,31 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           rounded-br-lg
           border-l-1
           border-soviet-gold
-          hover:bg-stone-100
-          hover:border-r-2
+          hover:bg-stone-400/50
+          hover:border-r-6
           hover:border-r-red-500
           hover:font-bold
           **:text-black
+        
           `}>
           {/* Pseudo-element for background image */}
           {/* <div
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url('/svgs/${randomSvg}')`, backgroundSize: `8%`, opacity: 0.08 }} // Adjust opacity here (e.g., 0.8 for 80%)
           ></div> */}
-          <div className="flex items-center gap-3 mt-3 bg-stone-400">
+          <div className="flex items-center gap-3 mt-3 bg-stone-400/30 rounded-l-full">
             <RadioGroupItem value={choices[0]} id="r1" className={radioItem} />
             <Label htmlFor="r1" className={labelClasses}>{choices[0]}</Label>
           </div>
-          <div className="flex items-center gap-3 bg-stone-400">
+          <div className="flex items-center gap-3 bg-stone-400/25 rounded-l-full">
             <RadioGroupItem value={choices[1]} id="r2" className={radioItem} />
             <Label htmlFor="r2" className={labelClasses}>{choices[1]}</Label>
           </div>
-          <div className="flex items-center gap-3 bg-stone-400">
+          <div className="flex items-center gap-3 bg-stone-400/20 rounded-l-full">
             <RadioGroupItem value={choices[2]} id="r3" className={radioItem} />
             <Label htmlFor="r3" className={labelClasses}>{choices[2]}</Label>
           </div>
-          <div className="flex items-center gap-3 mb-3 bg-stone-400">
+          <div className="flex items-center gap-3 mb-3 bg-stone-400/15 rounded-l-full">
             <RadioGroupItem value={choices[3]} id="r4" className={radioItem} />
             <Label htmlFor="r4" className={labelClasses}>{choices[3]}</Label>
           </div>

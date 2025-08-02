@@ -1,14 +1,16 @@
+import {QuestionType, LanguageType} from '@/types';
 import Header from './components/Header'
 import QuestionsContainer from './components/QuestionsContainer';
 import LanguageSelector from './components/LanguageSelector'
 import { NavigationMenuDemo } from './components/Navbar'
-import ToggleQuestionType from './components/QuestionsType'
+import ToggleQuestionType from './components/QuestionsFormat'
 
 import { StarFilledIcon, CornersIcon } from "@radix-ui/react-icons"
 
 import { useState } from 'react'
 
-function makeInstruction(from: string, to: string): string {
+
+function makeInstruction(from: LanguageType, to: LanguageType): string {
 
   switch (from) {
     case 'de':
@@ -25,11 +27,14 @@ function makeInstruction(from: string, to: string): string {
 
 
 function App() {
-  const [fromLanguage, setFromLanguage] = useState<string>('de')
-  const [toLangueg, setToLanguage] = useState<string>('en')
+  const [fromLanguage, setFromLanguage] = useState<LanguageType>('de')
+  const [toLangueg, setToLanguage] = useState<LanguageType>('en')
+  // okayChoices stat are related to LanguageSelector' user choices and their validity
   const [okayChoices, setOkayChoices] = useState<Boolean>()
+  // qFromat is the user choice which is either 'choosing' or 'typing'
+  const [qFormat, setQFormat] = useState<QuestionType>('choosing')
 
-  const handleLanguageChange = (from: string, to: string) => {
+  const handleLanguageChange = (from: LanguageType, to: LanguageType) => {
     if (from !== to) {
       setFromLanguage(from)
       setToLanguage(to)
@@ -55,7 +60,7 @@ function App() {
             initialTo={toLangueg}
             onLanguageChange={handleLanguageChange}
           />
-          <ToggleQuestionType />
+          <ToggleQuestionType initialType={qFormat} onTypeChange={setQFormat}/>
         </div>
 
         <div className='
@@ -75,6 +80,7 @@ function App() {
           okayChoices && <QuestionsContainer
             toLanguage={toLangueg}
             fromLanguage={fromLanguage}
+            qFormat={qFormat}
           />
         }
 
