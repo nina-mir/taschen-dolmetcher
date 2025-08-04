@@ -1,5 +1,8 @@
-import {QuestionType} from '@/types';
+import { QuestionType } from '@/types';
 import { TokensIcon, KeyboardIcon, DotsVerticalIcon } from "@radix-ui/react-icons"
+
+import topographySvg from '@/assets/topography.svg'
+
 
 import {
   ToggleGroup,
@@ -19,10 +22,10 @@ const ToggleQuestionType: React.FC<TypeProps> = ({
   onTypeChange
 }) => {
 
-  const [userChoice, setUserChoice]= useState<QuestionType>(initialType)
+  const [userChoice, setUserChoice] = useState<QuestionType>(initialType)
 
-  const handleUserChoiceUpdate = (value:QuestionType)=>{
-    if (value){
+  const handleUserChoiceUpdate = (value: QuestionType) => {
+    if (value) {
       setUserChoice(value)
       onTypeChange(value)
       console.log(`user choice is now ${value} .... 1982`)
@@ -31,7 +34,12 @@ const ToggleQuestionType: React.FC<TypeProps> = ({
 
   return (
 
-    <div className="bg-[url('topography-2.svg')] bg-contain bg-repeat bg-stone-300 w-full -mt-100] ">
+    <div
+      style={{
+        backgroundImage: `url(${topographySvg})`
+      }}
+      className="bg-contain bg-repeat bg-stone-300 w-full -mt-100]"
+    >
       <div className='w-[90%] flex justify-center mt-5 mb-5 gap-[1.5rem]  md:gap-10 m-auto'>
 
 

@@ -2,7 +2,7 @@ import * as React from "react"
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
-import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, FaceIcon, PlusIcon } from "@radix-ui/react-icons"
+import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, PlusIcon } from "@radix-ui/react-icons"
 
 
 import {
@@ -99,7 +99,6 @@ const Question: React.FC<QuestionProps> = ({
   const [result, setResult] = useState<boolean>(false)
   const [showInfo, setShowInfo] = useState<string>('hidden')
   const [userInput, setUserInput] = useState<string>('')
-  const [showText, setShowText] = useState<boolean>(true)
 
   // Using an object with a type
   type KorrektClasses = {
@@ -135,12 +134,12 @@ const Question: React.FC<QuestionProps> = ({
     }
   }
 
-  const toggleFinalResult = () => {
-    if (result) {
+  // const toggleFinalResult = () => {
+  //   if (result) {
 
-    }
-    showInfo === 'hidden' ? setShowInfo('') : setShowInfo('hidden')
-  }
+  //   }
+  //   showInfo === 'hidden' ? setShowInfo('') : setShowInfo('hidden')
+  // }
 
 
   const checkAnswer = (userInput: string, answer: string | string[]): boolean => {
@@ -178,7 +177,6 @@ const Question: React.FC<QuestionProps> = ({
   }
 
   let [question, answer] = figureQA(fromLanguage, toLanguage, de, en, ru)
-  // console.log(question)
 
   return (
     <Card
@@ -220,7 +218,6 @@ const Question: React.FC<QuestionProps> = ({
           bg-blend-normal
           backdrop-opacity-[0.9]          `
         }
-        // style={{ backgroundImage: `url(${media.imgUrl})` }}
         >
           <div >
             <Collapsible className="absolute data-[state=open]:bg-red-500/50 rounded-t-xl">
@@ -234,7 +231,6 @@ const Question: React.FC<QuestionProps> = ({
             <img src={media.imgUrl} className="rounded-t-xl mr-0" />
 
 
-            {showText &&
               <div>
                 <p className={`
                 leading-5 
@@ -251,7 +247,6 @@ const Question: React.FC<QuestionProps> = ({
                 </p>
                 <cite className="ml-1 text-stone-100 text-wrap text-xs md:w-[50%]">{info.sourceChicago}</cite>
               </div>
-            }
 
           </div>
 

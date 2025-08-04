@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
-import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, FaceIcon, PlusIcon } from "@radix-ui/react-icons"
+import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, PlusIcon } from "@radix-ui/react-icons"
 
 import {
   Card,
@@ -79,8 +79,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
   const [result, setResult] = useState<boolean>(false)
   const [showInfo, setShowInfo] = useState<string>('hidden')
-  const [userInput, setUserInput] = useState<string>('')
-  const [showText, setShowText] = useState<boolean>(true)
+  // const [showText, setShowText] = useState<boolean>(true)
   // radio group value tracking
   const [selectedValue, setSelectedValue] = useState<string>('');
 
@@ -103,7 +102,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       text: 'text-red-600',
       marginB: 'mb-[0rem]'
     })
-    setUserInput('')
     setResult(false)
 
   }, [fromLanguage, toLanguage])
@@ -141,7 +139,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           break
         }
       }
-      //let's do a loop here and do it!
     } else {
       if (userInput.toLowerCase() === answer.toLowerCase()) {
         isCorrect = true
@@ -169,7 +166,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
   // labelClasses specify the radio group's labels' text/style
   const labelClasses = `text-2xl font-garamond-pp text-blue-200]`
-  // RadioGroup item styling
+  // RadioGroup item styling is set via radioItem 
   const radioItem = `border-2 
   border-stone-600 
   ml-2 
@@ -180,7 +177,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
   return (
     <Card
-      // onClick={()=>toggleFinalResult()}
       className={`relative w-[90%] md:w-[600px] ${correctClasses.bg} ${correctClasses.marginB} `}>
       <CardHeader>
         <CardTitle className="text-xl flex flex-row justify-between">
@@ -218,7 +214,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           bg-blend-normal
           backdrop-opacity-[0.9]          `
         }
-        // style={{ backgroundImage: `url(${media.imgUrl})` }}
         >
           <div >
             <Collapsible className="absolute data-[state=open]:bg-red-500/50 rounded-t-xl">
@@ -232,9 +227,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
             <img src={media.imgUrl} className="rounded-t-xl mr-0" />
 
 
-            {showText &&
-              <div>
-                <p className={`
+            <div>
+              <p className={`
                 leading-5 
                 w-full
                 font-mono 
@@ -244,19 +238,17 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
                 md:text-[1.2rem] 
                 p-2 
                 `
-                }>
-                  {info.text}
-                </p>
-                <cite className="ml-1 text-stone-100 text-wrap text-xs md:w-[50%]">{info.sourceChicago}</cite>
-              </div>
-            }
+              }>
+                {info.text}
+              </p>
+              <cite
+                className="ml-1 text-stone-100 text-wrap text-xs md:w-[50%]">
+                {info.sourceChicago}
+              </cite>
+            </div>
 
           </div>
 
-
-          {/* <div className={`ml-1 text-stone-100 text-wrap absolute bottom-1 ${showText ? 'hidden md:block' : 'block'}`}>
-            <p className="md:text-lg mt-1 md:visible md:bottom-2 md:bg-black/40 ">📷: {media.imgCaption}</p>
-          </div> */}
           <EyeOpenIcon className={
             `absolute
           ${showInfo}  

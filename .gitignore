@@ -29,5 +29,10 @@ package-lock.json
 # custom files
 87938207afff1598611ba626a8c4827c.svg
 test.html
+public/svgs
 
 
+# Build outputs
+dist/
+build/
+out/

@@ -1,5 +1,6 @@
 import { DotFilledIcon, ShadowIcon, BorderSolidIcon } from "@radix-ui/react-icons"
-
+import taschen1 from '@/assets/taschen-cover-1.svg'
+import taschen2 from '@/assets/taschen-cover-2.svg'
 
 const Header: React.FC = () => {
     return (
@@ -49,7 +50,7 @@ const Header: React.FC = () => {
             <ShadowIcon className="bg-soviet-gold rounded-full" />
             {/* <div className="flex flex-row justify-center items-center"> */}
                 <img
-                    src='/taschen-cover-2.svg'
+                    src={taschen2}
                     className='
                     w-25 
                     md:w-20
@@ -61,12 +62,12 @@ const Header: React.FC = () => {
                     fill-red-600
                     ' />
                 <img
-                    src='/taschen-cover-2.svg'
+                    src={taschen2}
                     className='w-25 md:w-30 fixed -bottom-5 md:-bottom-8 
                     -rotate-5 md:-left-14 -left-11' />
-                <img src='/taschen-cover-1.svg' 
+                <img src={taschen1} 
                 className='w-35  md:w-30 fixed top-90 md:top-10 md:-left-13 -left-20' />
-                <img src='/taschen-cover-1.svg' 
+                <img src={taschen1} 
                 className='
                 w-40 
                 md:w-50 fixed 
