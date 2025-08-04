@@ -1,7 +1,8 @@
 import * as React from "react"
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
-import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, PlusIcon } from "@radix-ui/react-icons"
+import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, PlusIcon, ImageIcon } from "@radix-ui/react-icons"
+import { Separator } from "@/components/ui/separator"
 
 import {
   Card,
@@ -61,8 +62,6 @@ interface QuestionProps {
   media: MediaItem;
   info: InfoItem;
 }
-
-
 
 const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   id,
@@ -177,7 +176,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
   return (
     <Card
-      className={`relative w-[90%] md:w-[600px] ${correctClasses.bg} ${correctClasses.marginB} `}>
+      className={`relative w-[90%]  ${correctClasses.bg} ${correctClasses.marginB} `}>
       <CardHeader>
         <CardTitle className="text-xl flex flex-row justify-between">
           <div>
@@ -198,7 +197,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       <CardContent>
         <div className={
           `${showInfo} 
-          md:w-[180%]
           w-[100%] 
           max-h-[100vh]
           top-0 
@@ -216,7 +214,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
         }
         >
           <div >
-            <Collapsible className="absolute data-[state=open]:bg-red-500/50 rounded-t-xl">
+            <Collapsible className="md:hidden absolute data-[state=open]:bg-red-500/50 rounded-t-xl w-[70%]">
               <CollapsibleTrigger className="transition-transform duration-500 ease-in-out data-[state=open]:rotate-45">
                 <PlusIcon className="w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold" />
               </CollapsibleTrigger>
@@ -224,11 +222,46 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
                 <p className="bg-stone-500 text-white">📷:{media.imgCaption}</p>
               </CollapsibleContent>
             </Collapsible>
-            <img src={media.imgUrl} className="rounded-t-xl mr-0" />
+            <img src={media.imgUrl} className="block md:hidden rounded-t-xl md:rounded-t-none mr-0 md:max-h-[70vh] md:w-[50%]" />
+
+            <div className="hidden md:flex">
+              <img src={media.imgUrl} className="rounded-t-xl md:rounded-t-none md:max-h-[70vh] md:w-[50%] my-auto" />
+              <div className="flex flex-col gap-3">
+                <p className="font-mono text-white text-[1rem] p-2 ">
+                  📷:&nbsp;{media.imgCaption}
+                </p>
+                <Separator className="bg-soviet-gold" />
+                <p className={`
+                leading-5 
+                font-mono
+                w-full
+                text-stone-50 
+                p-2 
+                text-[1rem]
+                `
+                }>
+                  {info.text}
+                  <Collapsible className="absolute rounded-t-xl w-[70%]">
+                    <CollapsibleTrigger className="transition-transform duration-500 ease-in-out data-[state=open]:rotate-45">
+                      <PlusIcon className="w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold"/>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="w-[70%] p-1 text-wrap text-[1rem] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-500">
+                      <cite
+                        className="bg-stone-500 text-white"><b>source:</b>{info.sourceChicago}
+                      </cite>
+                    </CollapsibleContent>
+                  </Collapsible>
+
+                </p>
+
+              </div>
+            </div>
 
 
             <div>
               <p className={`
+                block
+                md:hidden
                 leading-5 
                 w-full
                 font-mono 
@@ -241,8 +274,10 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
               }>
                 {info.text}
               </p>
+
+
               <cite
-                className="ml-1 text-stone-100 text-wrap text-xs md:w-[50%]">
+                className="block md:hidden ml-1 text-stone-100 text-wrap text-xs md:w-[50%]">
                 {info.sourceChicago}
               </cite>
             </div>
@@ -252,12 +287,10 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           <EyeOpenIcon className={
             `absolute
           ${showInfo}  
-          md:-left-35 
-          md:top-10
+          md:left-35 
+          md:-top-17
           bottom-0
           right-1
-          md:w-10 
-          md:h-10
           w-10
           h-10
           text-soviet-gold
