@@ -388,13 +388,14 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           value={userInput}
         /> */}
 
-        {/* <p className={`${showInfo === 'hidden' ? '' : 'hidden'}`}>
+        { 0>1 && <p className={`${showInfo === 'hidden' ? '' : 'hidden'}`}>
           {de}
           {en}
           {phonetic}
           {ru}
-        </p> */}
+        </p>
 
+        }
 
         {result && <EyeClosedIcon className={
           `absolute 

@@ -65,28 +65,34 @@ export function NavigationMenuDemo() {
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr] ">
               <li className="row-span-3">
                 <NavigationMenuLink asChild>
-                  <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none"
-                    href="https://berlin.museum-digital.de/object/80372"
-                  >
-                    {/* <Icons.logo className="h-6 w-6" /> */}
-                    {/* <div className="mb-2 mt-4 text-lg font-medium">
-                      shadcn/ui
-                    </div> */}
-                    <p className="text-sm leading-tight text-muted-foreground">
-                    <cite>
-                      Hindersin, Bob. Taschen-Dolmetscher für Frontsoldaten Russisch. 
-                      Georg Siemens Verlagsbuchhandlung, 1943.
-                    </cite>
-                    </p>
-                  </a>
+                  <p>On June-22-1941, Germany attacked the USSR. This fast invasion caught despot Joseph Stalin by surprise. 
+                    But, the Soviet residents did not hide for 12 days like Stalin did.
+                    The Soviet citizens mobilized. Their sacrifice on the frontlines and on the home front decided the ending of German fascists.
+                   
+                    This web game is an ode to the sacrifice, resilience and courage of ordinary Soviet citizens and Jewish fighters and the lasting impressions and memories of Vasily Grossman and Ilya Ehrenburg.
+                  </p>
                 </NavigationMenuLink>
               </li>
               <ListItem href="/docs" title="Introduction">
-                Re-usable components built using Radix UI and Tailwind CSS.
+                <img src="https://camo.githubusercontent.com/c207e3fb3ee188b56a32c8acbdf6559d191d3c1f08a0913be2a5b78b3fd4c6b6/68747470733a2f2f61737365742e6d757365756d2d6469676974616c2e6f72672f2f6d656469612f3830302f6265726c696e2f696d616765732f33342f38303337322d3230373236332f3230373236332f3230373236332d38303337322e6a7067"/>
+                <a
+                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none"
+                    href="https://berlin.museum-digital.de/object/80372"
+                  >
+                
+                    <p className="text-sm leading-tight text-muted-foreground">
+                    <cite>
+                  Hindersin, Bob. Taschen-Dolmetscher für Frontsoldaten Russisch.
+                  Georg Siemens Verlagsbuchhandlung, 1943.
+                </cite>  
+                    </p>
+                  </a>
+                          
               </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
-                How to install dependencies and structure your app.
+              <ListItem href="/docs/installation" title="Writers/Words">
+              Many Soviet artists and writers also participated in this great effort.<em>Ilya Ehrenburg 
+              and Vasily Grossman</em>, 
+              two Jewish Ukranian-born writers, stand out for their coverage of the frontlines and inspiring words.   
               </ListItem>
               <ListItem href="/docs/primitives/typography" title="Typography">
                 Styles for headings, paragraphs, lists...etc
@@ -112,11 +118,11 @@ export function NavigationMenuDemo() {
         </NavigationMenuItem>
         <NavigationMenuItem>
           {/* <Link href="/docs" legacyBehavior passHref> */}
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Further Readings
-            </NavigationMenuLink>
+          <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            Further Readings
+          </NavigationMenuLink>
           {/* </Link> */}
-          
+
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
