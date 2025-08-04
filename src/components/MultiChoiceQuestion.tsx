@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
-import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, PlusIcon, ImageIcon } from "@radix-ui/react-icons"
+import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, PlusIcon } from "@radix-ui/react-icons"
 import { Separator } from "@/components/ui/separator"
 
 import {
@@ -120,12 +120,19 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   //   }
   // }
 
-  // const toggleFinalResult = () => {
-  //   if (result) {
+  const toggleFinalResult = () => {
+    if (result) {
+      setResult(false)
+      setCorrectClasses({
+        bg: 'bg-transparent',
+        text: 'text-red-600',
+        marginB: 'mb-[0rem]'
+      })
+      setSelectedValue('')
+      showInfo === 'hidden' ? setShowInfo('') : setShowInfo('hidden')
 
-  //   }
-  //   showInfo === 'hidden' ? setShowInfo('') : setShowInfo('hidden')
-  // }
+    }
+  }
 
 
   const checkAnswer = (userInput: string, answer: string | string[]): boolean => {
@@ -185,6 +192,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
             {question}
           </div>
           <ResetIcon
+          onClick={()=>toggleFinalResult()}
+          
             className={
               `
             ${correctClasses.text}
@@ -200,7 +209,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           w-[100%] 
           max-h-[100vh]
           top-0 
-          md:-left-50 
           left-0
           rounded-xl
           md:bg-no-repeat
@@ -241,7 +249,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
                 `
                 }>
                   {info.text}
-                  <Collapsible className="absolute rounded-t-xl w-[70%]">
+                  <Collapsible className="absolute rounded-t-xl">
                     <CollapsibleTrigger className="transition-transform duration-500 ease-in-out data-[state=open]:rotate-45">
                       <PlusIcon className="w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold"/>
                     </CollapsibleTrigger>
@@ -380,12 +388,12 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           value={userInput}
         /> */}
 
-        <p className={`${showInfo === 'hidden' ? '' : 'hidden'}`}>
+        {/* <p className={`${showInfo === 'hidden' ? '' : 'hidden'}`}>
           {de}
           {en}
           {phonetic}
           {ru}
-        </p>
+        </p> */}
 
 
         {result && <EyeClosedIcon className={
