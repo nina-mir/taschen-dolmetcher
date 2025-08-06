@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/card"
 
 import { MediaItem, InfoItem, LanguageType } from '@/types';
+// wrong data images
+import wrongData from '@/assets/data/wrongAnswerImages.json'
 
 import {
   Collapsible,
@@ -85,21 +87,30 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
   // Using an object with a type
   type KorrektClasses = {
+    backgroundImage: string,
     bg: string;
     text: string;
     marginB: string;
+    showText: boolean;
+    displayText: string;
   };
   const [correctClasses, setCorrectClasses] = useState<KorrektClasses>({
+    backgroundImage: '',
     bg: 'bg-transparent',
     text: 'text-red-600',
-    marginB: 'mb-[0rem]'
+    marginB: 'mb-[0rem]',
+    showText: false,
+    displayText: ''
   });
 
   useEffect(() => {
     setCorrectClasses({
+      backgroundImage: '',
       bg: 'bg-transparent',
       text: 'text-red-600',
-      marginB: 'mb-[0rem]'
+      marginB: 'mb-[0rem]',
+      showText: false,
+      displayText: ''
     })
     setResult(false)
 
@@ -124,13 +135,15 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
     if (result) {
       setResult(false)
       setCorrectClasses({
+        backgroundImage: '',
         bg: 'bg-transparent',
         text: 'text-red-600',
-        marginB: 'mb-[0rem]'
+        marginB: 'mb-[0rem]',
+        showText: false,
+        displayText: ''
       })
       setSelectedValue('')
       showInfo === 'hidden' ? setShowInfo('') : setShowInfo('hidden')
-
     }
   }
 
@@ -155,18 +168,45 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       console.log('yessss richtig!')
       setResult(true)
       setCorrectClasses({
+        backgroundImage: '',
         bg: 'bg-red-600',
         text: 'text-yellow-400',
-        marginB: 'mb-[1.5rem]'
+        marginB: 'mb-[1.5rem]',
+        showText: false,
+        displayText: ''
       })
       setShowInfo('')
       return true
     } else {
       console.log('nein das ist falsch')
+      handleWrongAnswer()
       setResult(false)
       return false
     }
   }
+
+  const handleWrongAnswer = () => {
+    setCorrectClasses({
+      backgroundImage: `url(${wrongData[0].imgUrl})`,
+      bg: `bg-black`,
+      text: 'text-red-600',
+      marginB: 'mb-[0rem]',
+      showText: true,
+      displayText: wrongData[0].altText || 'Wrong Answer!'
+    })
+
+    setTimeout(() => {
+      setCorrectClasses({
+        backgroundImage: '',
+        bg: 'bg-transparent',
+        text: 'text-red-600',
+        marginB: 'mb-[0rem]',
+        showText: false,
+        displayText: ''
+      }); // Revert to the previous state
+    }, 3500); // 2000 milliseconds = 2 seconds
+  }
+
 
   let [question, answer] = figureQA(fromLanguage, toLanguage, de, en, ru)
 
@@ -183,7 +223,26 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
   return (
     <Card
-      className={`relative w-[90%]  ${correctClasses.bg} ${correctClasses.marginB} `}>
+      className={`relative w-[90%]  ${correctClasses.bg} ${correctClasses.marginB}`}
+      style={{
+        backgroundImage: correctClasses.backgroundImage,
+        backgroundSize: 'contain',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}>
+      {/* Conditional text overlay */}
+      {correctClasses.showText && (
+        <div className="absolute inset-0 flex flex-col items-center justify-between z-10">
+          <p className="text-xl md:text-2xl text-soviet-gold bg-red-500/30 p-3 md:self-start"> 
+          wrong❌⚠️falsch❌⚠️неправильный
+          </p>
+          <div className="bg-black/50 text-white px-4 py-2 rounded-lg font-semibold text-lg backdrop-blur-sm">
+            {correctClasses.displayText}
+          </div>
+        </div>
+      )}
+
+
       <CardHeader>
         <CardTitle className="text-xl flex flex-row justify-between">
           <div>
@@ -192,8 +251,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
             {question}
           </div>
           <ResetIcon
-          onClick={()=>toggleFinalResult()}
-          
+            onClick={() => toggleFinalResult()}
+
             className={
               `
             ${correctClasses.text}
@@ -239,7 +298,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
                   📷:&nbsp;{media.imgCaption}
                 </p>
                 <Separator className="bg-soviet-gold" />
-                <p className={`
+                <div className={`
                 leading-5 
                 font-mono
                 w-full
@@ -251,7 +310,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
                   {info.text}
                   <Collapsible className="absolute rounded-t-xl">
                     <CollapsibleTrigger className="transition-transform duration-500 ease-in-out data-[state=open]:rotate-45">
-                      <PlusIcon className="w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold"/>
+                      <PlusIcon className="w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold" />
                     </CollapsibleTrigger>
                     <CollapsibleContent className="w-[70%] p-1 text-wrap text-[1rem] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-500">
                       <cite
@@ -260,7 +319,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
                     </CollapsibleContent>
                   </Collapsible>
 
-                </p>
+                </div>
 
               </div>
             </div>
@@ -388,7 +447,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           value={userInput}
         /> */}
 
-        { 0>1 && <p className={`${showInfo === 'hidden' ? '' : 'hidden'}`}>
+        {0 > 1 && <p className={`${showInfo === 'hidden' ? '' : 'hidden'}`}>
           {de}
           {en}
           {phonetic}
