@@ -1,9 +1,10 @@
-import {QuestionType, LanguageType} from '@/types';
+import { QuestionType, LanguageType } from '@/types';
 import Header from './components/Header'
 import QuestionsContainer from './components/QuestionsContainer';
 import LanguageSelector from './components/LanguageSelector'
 import { NavigationMenuDemo } from './components/Navbar'
 import ToggleQuestionType from './components/QuestionsFormat'
+import Footer from './components/Footer';
 
 import { StarFilledIcon, CornersIcon } from "@radix-ui/react-icons"
 
@@ -60,7 +61,7 @@ function App() {
             initialTo={toLangueg}
             onLanguageChange={handleLanguageChange}
           />
-          <ToggleQuestionType initialType={qFormat} onTypeChange={setQFormat}/>
+          <ToggleQuestionType initialType={qFormat} onTypeChange={setQFormat} />
         </div>
 
         <div className='
@@ -107,7 +108,13 @@ function App() {
 
 
         <img src='Screenshot 2025-03-25 171559.png' />
+        <p className="w-full p-4 mt-2 mb-0 font-gyst inline-block align-bottom text-stone-900 text-2xl text-center">
+          In Memory of Vasily Grossman, Ilya Ehrenburg, and countless other poets fighting fascism.
+        </p>
 
+      </div>
+      <div className="w-full">
+        <Footer />
       </div>
     </div>
   )
