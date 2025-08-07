@@ -108,12 +108,13 @@ function App() {
 
 
         <img src='Screenshot 2025-03-25 171559.png' />
-        <p className="w-full p-4 mt-2 mb-0 font-gyst inline-block align-bottom text-stone-900 text-2xl text-center">
-          In Memory of Vasily Grossman, Ilya Ehrenburg, and countless other poets fighting fascism.
-        </p>
+
 
       </div>
-      <div className="w-full">
+      <div className="w-full flex flex-col mt-10">
+        <p className="font-semibold bg-pink-400 w-full p-4 font-gyst inline-block align-bottom text-stone-900 text-2xl text-center">
+          In memory & admiration of Vasily Grossman, Ilya Ehrenburg, and countless other poets fighting fascism.
+        </p>
         <Footer />
       </div>
     </div>

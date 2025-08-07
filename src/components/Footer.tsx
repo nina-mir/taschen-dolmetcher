@@ -47,7 +47,7 @@ const Footer: React.FC<FooterProps> = ({
   },
   sourceCode = {
     url: "https://github.com/nina-mir/taschen-dolmetcher",
-    text: "Source code available on GitHub."
+    text: "Source code on GitHub."
   },
   height = "h-[32vh]",
   backgroundColor = "bg-stone-600",
@@ -57,13 +57,13 @@ const Footer: React.FC<FooterProps> = ({
 }) => {
   return (
     <footer className={cn(
-      "mt-10 w-full font-gyst text-2xl p-10",
+      "w-full font-gyst text-2xl p-10",
       height,
       backgroundColor,
       className
     )}>
       <div>
-        <div className="flex flex-col text-balance text-center text-md leading-loose text-muted-foreground md:text-center gap-9.5">
+        <div className="flex flex-col text-balance text-center text-md leading-loose text-muted-foreground md:text-center gap-5.5">
           <span className={textColor}>
             {author.emoji && (
               <span className="text-3lg bg-stone-500 rounded-l-full">
@@ -74,12 +74,12 @@ const Footer: React.FC<FooterProps> = ({
             <span className={accentColor}>
               {author.name}
             </span>
-            
+
             {/* Social Links */}
             {socialLinks.map((link, index) => (
               <span key={index}>
-                <Separator 
-                  orientation="vertical" 
+                <Separator
+                  orientation="vertical"
                   className="border-2 border-white mx-[15px] h-3 text-amber-50 bg-white inline-block"
                 />
                 <a href={link.url} aria-label={link.label}>
@@ -87,32 +87,36 @@ const Footer: React.FC<FooterProps> = ({
                 </a>
               </span>
             ))}
-            
-            <Separator 
-              orientation="vertical" 
+
+            <Separator
+              orientation="vertical"
               className="border-2 border-white mx-[15px] h-3 text-amber-50 bg-white inline-block"
             />
             &copy; {copyright.year}
-            
+
             {copyright.location && (
               <>
-                <Separator 
-                  orientation="vertical" 
+                <Separator
+                  orientation="vertical"
                   className="border-2 border-white mx-[15px] h-3 text-amber-50 bg-white inline-block"
                 />
                 {copyright.location}
               </>
             )}
           </span>
-          
+
           {sourceCode && (
-            <a 
+            <a
               href={sourceCode.url}
               className={textColor}
               aria-label="View source code on GitHub"
             >
-              <span>{sourceCode.text}</span>&nbsp;
-              <GitHubLogoIcon className="w-6 h-auto inline-block text-red-600 bg-soviet-gold rounded-4xl" />
+              <div className="flex flex-col justify-center items-center">
+
+                <span>{sourceCode.text}</span>
+                <GitHubLogoIcon className="w-7 h-auto text-red-600 bg-soviet-gold rounded-4xl" />
+              </div>
+
             </a>
           )}
         </div>

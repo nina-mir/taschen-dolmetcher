@@ -6,7 +6,6 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 // import { Icons } from "@/components/Icons"
 
-// import { Icons } from "@radix-ui/react-icons"
 import {
   NavigationMenu,
   NavigationMenuContent,
