@@ -113,6 +113,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       displayText: ''
     })
     setResult(false)
+    setShowInfo('hidden')
+    setSelectedValue('')
 
   }, [fromLanguage, toLanguage])
 
@@ -143,7 +145,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
         displayText: ''
       })
       setSelectedValue('')
-      showInfo === 'hidden' ? setShowInfo('') : setShowInfo('hidden')
+      // showInfo === 'hidden' ? setShowInfo('') : setShowInfo('hidden')
+      setShowInfo('hidden')
     }
   }
 
@@ -354,8 +357,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           <EyeOpenIcon className={
             `absolute
           ${showInfo}  
-          md:left-35 
-          md:-top-17
+          
           bottom-0
           right-1
           w-10

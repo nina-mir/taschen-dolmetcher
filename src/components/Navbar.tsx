@@ -18,25 +18,25 @@ import {
 
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: "Alert Dialog",
+    title: "Questions",
     href: "/docs/primitives/alert-dialog",
     description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
+      "74 questions total. Translate from a source language to a target language! Choose from Russian, German and English.",
   },
   {
-    title: "Hover Card",
+    title: "Try Multiple choice question type!",
     href: "/docs/primitives/hover-card",
     description:
-      "For sighted users to preview content available behind a link.",
+      "The choices in the multiple choice problems are a mix of AI-generated and human-created.",
   },
   {
-    title: "Progress",
+    title: "Correct Answer!",
     href: "/docs/primitives/progress",
     description:
       "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
   },
   {
-    title: "Scroll-area",
+    title: "Wong Answer!",
     href: "/docs/primitives/scroll-area",
     description: "Visually or semantically separates content.",
   },

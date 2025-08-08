@@ -49,7 +49,7 @@ const Footer: React.FC<FooterProps> = ({
     url: "https://github.com/nina-mir/taschen-dolmetcher",
     text: "Source code on GitHub."
   },
-  height = "h-[32vh]",
+  height = "h-[16rem]",
   backgroundColor = "bg-stone-600",
   textColor = "text-stone-300",
   accentColor = "text-soviet-gold",
@@ -62,8 +62,8 @@ const Footer: React.FC<FooterProps> = ({
       backgroundColor,
       className
     )}>
-      <div>
-        <div className="flex flex-col text-balance text-center text-md leading-loose text-muted-foreground md:text-center gap-5.5">
+      <div className="relative">
+        <div className="flex flex-col text-balance text-center text-md leading-loose text-muted-foreground md:text-center gap-1.5">
           <span className={textColor}>
             {author.emoji && (
               <span className="text-3lg bg-stone-500 rounded-l-full">
@@ -106,18 +106,21 @@ const Footer: React.FC<FooterProps> = ({
           </span>
 
           {sourceCode && (
-            <a
-              href={sourceCode.url}
-              className={textColor}
-              aria-label="View source code on GitHub"
-            >
-              <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center">
 
-                <span>{sourceCode.text}</span>
-                <GitHubLogoIcon className="w-7 h-auto text-red-600 bg-soviet-gold rounded-4xl" />
-              </div>
+              <a
+                href={sourceCode.url}
+                className={` ${textColor}`}
+                
+                aria-label="View source code on GitHub"
+              >
 
-            </a>
+                <span >{sourceCode.text}</span>
+                <GitHubLogoIcon className="inline-block w-7 h-auto text-red-600 bg-soviet-gold rounded-4xl" />
+
+              </a>
+            </div>
+
           )}
         </div>
       </div>
