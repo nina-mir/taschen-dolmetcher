@@ -38,16 +38,19 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
 
     const answerChoices = choices.map((item, idx) => {
 
-        let wrapperClassName = `flex items-center gap-3 rounded-l-full cursor-pointer group`
+        let wrapperClassName = `${bgClass} flex items-center gap-3 rounded-l-full cursor-pointer group`
         if (idx == 0) { wrapperClassName += ` mt-3` }
         if (idx == (choices.length - 1)) { wrapperClassName += ` mb-3` }
         const maxOpacity = choices.length*5 + 10
-        let itemOpacity = maxOpacity - 5*idx
-        wrapperClassName = wrapperClassName + ` ${bgClass}/${itemOpacity}`
+        let itemOpacity = (maxOpacity - 5*idx)/100
+        const itemStyle = {
+            backgroundColor: `rgb(168, 162, 158, ${itemOpacity})` //bg-stone-400/opacity
+          } as React.CSSProperties;
         return (
             <div
                 key={`${uniqueId}-r-${idx}`}
                 className={wrapperClassName}
+                style={itemStyle}
                 onClick={() => onValueChange(item)}
             >
                 <RadioGroupItem

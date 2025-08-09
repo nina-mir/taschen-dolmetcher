@@ -199,14 +199,9 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   let [question, answer] = figureQA(fromLanguage, toLanguage, de, en, ru)
 
   // labelClasses specify the radio group's labels' text/style
-  const labelClasses = `text-2xl font-garamond-pp text-blue-200`
+  const labelClasses = `text-2xl font-garamond-pp`
   // RadioGroup item styling is set via radioItem 
-  const radioItem = `border-2 
-  border-stone-600 
-  ml-2 
-  hover:ring-0
-  group-hover:bg-red-500
-  `
+  const radioItem = `border-2 border-stone-600 ml-2  hover:ring-0  group-hover:bg-red-500`
 
 
   return (
