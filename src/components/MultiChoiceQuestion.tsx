@@ -2,6 +2,7 @@ import * as React from "react"
 import QuestionHeader from "./question/QuestionHeader";
 import SubmitSection from "./question/SubmitSection";
 import AnswerChoices from "./question/AnswerChoices";
+import FeedbackOverlay from "./question/FeedbackOverlay";
 import { useState, useEffect, useId } from "react";
 import { EyeClosedIcon, EyeOpenIcon, PlusIcon } from "@radix-ui/react-icons"
 import { Separator } from "@/components/ui/separator"
@@ -137,7 +138,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
 
   const checkAnswer = (userInput: string, answer: string | string[]): boolean => {
-    console.log(`userInput is ${userInput} und answer is ${answer}`)
+    // console.log(`userInput is ${userInput} und answer is ${answer}`)
     let isCorrect = false
     if (Array.isArray(answer)) {
       for (const item of answer) {
@@ -153,7 +154,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
     }
 
     if (isCorrect) {
-      console.log('yesss richtig!')
+      // console.log('yesss richtig!')
       setResult(true)
       setCorrectClasses({
         backgroundImage: '',
@@ -166,7 +167,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       setShowInfo('')
       return true
     } else {
-      console.log('nein das ist falsch')
+      // console.log('nein das ist falsch')
       handleWrongAnswer()
       setResult(false)
       return false
@@ -207,24 +208,14 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   return (
     <Card
       className={`relative w-[90%]  ${correctClasses.bg} ${correctClasses.marginB}`}
-      style={{
-        backgroundImage: correctClasses.backgroundImage,
-        backgroundSize: 'contain',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}>
-      {/* Conditional text overlay */}
-      {correctClasses.showText && (
-        <div className="absolute inset-0 flex flex-col items-center justify-between z-10">
-          <p className="text-xl md:text-2xl text-soviet-gold bg-red-500/30 p-3 md:self-start">
-            wrong❌⚠️falsch❌⚠️неправильный
-          </p>
-          <div className="bg-black/50 text-white px-4 py-2 rounded-lg font-semibold text-lg backdrop-blur-sm">
-            {correctClasses.displayText}
-          </div>
-        </div>
-      )}
-
+    >
+      {/* FeedbackOverlay will be displayed in case of wrong answers */}
+      <FeedbackOverlay
+        isVisible={correctClasses.showText}
+        backgroundImgUrl={wrongData[0].imgUrl}
+        messageText="wrong❌⚠️falsch❌⚠️неправильный"
+        captionText={wrongData[0].altText}
+      />
 
       <QuestionHeader
         question={question}
@@ -234,7 +225,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
         idClassName="font-gyst"
       />
 
-    
+
       <CardContent>
         <div className={
           `${showInfo} 
@@ -291,12 +282,9 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
                       </cite>
                     </CollapsibleContent>
                   </Collapsible>
-
                 </div>
-
               </div>
             </div>
-
 
             <div>
               <p className={`
@@ -315,7 +303,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
                 {info.text}
               </p>
 
-
               <cite
                 className="block md:hidden ml-1 text-stone-100 text-wrap text-xs md:w-[50%]">
                 {info.sourceChicago}
@@ -324,21 +311,19 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
           </div>
 
-          <EyeOpenIcon className={
+          <EyeOpenIcon 
+          className={
             `absolute
-          ${showInfo}  
-          
-          bottom-0
-          right-1
-          w-10
-          h-10
-          text-soviet-gold
+            ${showInfo}  
+            bottom-0
+            right-1
+            w-10
+            h-10
+            text-soviet-gold
           `}
-            onClick={() => {
-              setShowInfo('hidden')
-            }} />
-
-
+          onClick={() => {
+            setShowInfo('hidden')
+          }} />
 
         </div>
 
@@ -380,10 +365,10 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           }} />
         }
       </CardContent>
-      <SubmitSection 
-      showInfo={showInfo}
-      btnClassName="font-gyst"
-      checkAnswer={() => checkAnswer(selectedValue, answer)}
+      <SubmitSection
+        showInfo={showInfo}
+        btnClassName="font-gyst"
+        checkAnswer={() => checkAnswer(selectedValue, answer)}
       />
     </Card>
   )
