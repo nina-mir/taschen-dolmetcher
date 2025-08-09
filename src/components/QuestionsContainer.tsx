@@ -1,5 +1,4 @@
 // QuestionsContainer.tsx
-
 import { QuestionType, LanguageType } from '@/types';
 import data from '@/assets/data/improved_data_deepseek_en_array.json';
 import multipleChoiceData from '@/assets/data/multiple_choice_data_claude.json'
@@ -10,6 +9,7 @@ import Question from '@/components/Question';
 import MultiChoiceQuestion from './MultiChoiceQuestion';
 
 import knuthRandomizer from '@/utils/helpers'
+import { useState, useEffect } from 'react';
 
 
 interface QuestionsContainerProps {
@@ -22,13 +22,23 @@ const shuffledMediaData = knuthRandomizer(mediaData)
 const shuffledTextData = knuthRandomizer(textData)
 
 const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat }: QuestionsContainerProps) => {
+  // Add state management here
+  const [fromL, setFromL] = useState<string>(fromLanguage)
+  const [toL, setToL] = useState<string>(toLanguage)
+
+  useEffect(()=>{
+    setFromL(fromL)
+    setToL(toL)
+  },[fromL, toL])
+
+  
   // ToDO add pagination state here--maybe! 
 
   if (qFormat == 'choosing') {
     console.log('user chose to multiple-choice format')
     const questions = data.map((item, idx) => {
 
-      console.log(multipleChoiceData[idx][fromLanguage])
+      // console.log(multipleChoiceData[idx][fromLanguage])
 
       return <MultiChoiceQuestion
         key={idx}
