@@ -186,7 +186,7 @@ Error generating stack: `+n.message+`
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const LC=[["circle",{cx:"12",cy:"12",r:"10",key:"1mglay"}]],UC=Nl("circle",LC);function GC({className:a,...o}){return y.jsx(SC,{"data-slot":"radio-group",className:Oe("grid gap-3",a),...o})}function BC({className:a,...o}){return y.jsx(AC,{"data-slot":"radio-group-item",className:Oe("border-input text-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",a),...o,children:y.jsx(TC,{"data-slot":"radio-group-indicator",className:"relative flex items-center justify-center",children:y.jsx(UC,{className:"fill-primary absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2"})})})}const WC=({value:a,onValueChange:o,onKeyDown:l,showInfo:i,choices:c,radioItemClassName:d,labelClassName:f,uniqueId:m,bgClass:p="bg-stone-400"})=>{const g=c.map((b,C)=>{let x="flex items-center gap-3 rounded-l-full cursor-pointer group";C==0&&(x+=" mt-3"),C==c.length-1&&(x+=" mb-3");let _=c.length*5+10-5*C;return x=x+` ${p}/${_}`,y.jsxs("div",{className:x,onClick:()=>o(b),children:[y.jsx(BC,{value:b,className:d,id:`${m}-r-${C}`}),y.jsx(Cu,{htmlFor:`${m}-r-${C}`,className:f,children:b})]},`${m}-r-${C}`)});return y.jsx(GC,{value:a,onValueChange:o,onKeyDown:l,className:`
+ */const LC=[["circle",{cx:"12",cy:"12",r:"10",key:"1mglay"}]],UC=Nl("circle",LC);function GC({className:a,...o}){return y.jsx(SC,{"data-slot":"radio-group",className:Oe("grid gap-3",a),...o})}function BC({className:a,...o}){return y.jsx(AC,{"data-slot":"radio-group-item",className:Oe("border-input text-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",a),...o,children:y.jsx(TC,{"data-slot":"radio-group-indicator",className:"relative flex items-center justify-center",children:y.jsx(UC,{className:"fill-primary absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2"})})})}const WC=({value:a,onValueChange:o,onKeyDown:l,showInfo:i,choices:c,radioItemClassName:d,labelClassName:f,uniqueId:m,bgClass:p="bg-stone-400"})=>{const g=c.map((b,C)=>{let x=`${p} flex items-center gap-3 rounded-l-full cursor-pointer group`;C==0&&(x+=" mt-3"),C==c.length-1&&(x+=" mb-3");const E={backgroundColor:`rgb(168, 162, 158, ${(c.length*5+10-5*C)/100})`};return y.jsxs("div",{className:x,style:E,onClick:()=>o(b),children:[y.jsx(BC,{value:b,className:d,id:`${m}-r-${C}`}),y.jsx(Cu,{htmlFor:`${m}-r-${C}`,className:f,children:b})]},`${m}-r-${C}`)});return y.jsx(GC,{value:a,onValueChange:o,onKeyDown:l,className:`
                 relative
                 ${i==="hidden"?"":"hidden"}
                 font-garamond-pp
@@ -241,12 +241,7 @@ Error generating stack: `+n.message+`
           w-10
           h-10
           text-soviet-gold
-          `,onClick:()=>{A("hidden")}})]}),y.jsx(WC,{value:_,onValueChange:E,onKeyDown:R,showInfo:x,choices:d,uniqueId:D,labelClassName:"text-2xl font-garamond-pp text-blue-200",radioItemClassName:`border-2 
-  border-stone-600 
-  ml-2 
-  hover:ring-0
-  group-hover:bg-red-500
-  `}),!1,b&&y.jsx(gp,{className:`absolute 
+          `,onClick:()=>{A("hidden")}})]}),y.jsx(WC,{value:_,onValueChange:E,onKeyDown:R,showInfo:x,choices:d,uniqueId:D,labelClassName:"text-2xl font-garamond-pp",radioItemClassName:"border-2 border-stone-600 ml-2  hover:ring-0  group-hover:bg-red-500"}),!1,b&&y.jsx(gp,{className:`absolute 
           ${x==="hidden"?"":"hidden"}    
           md:-left-35 
           md:top-10 
