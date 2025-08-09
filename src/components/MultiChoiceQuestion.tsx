@@ -1,16 +1,14 @@
 import * as React from "react"
+import QuestionHeader from "./question/QuestionHeader";
+import SubmitSection from "./question/SubmitSection";
+import AnswerChoices from "./question/AnswerChoices";
 import { useState, useEffect, useId } from "react";
-import { Button } from "@/components/ui/button"
-import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, PlusIcon } from "@radix-ui/react-icons"
+import { EyeClosedIcon, EyeOpenIcon, PlusIcon } from "@radix-ui/react-icons"
 import { Separator } from "@/components/ui/separator"
 
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 
 import { MediaItem, InfoItem, LanguageType } from '@/types';
@@ -23,11 +21,6 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 
-import { Label } from "@/components/ui/label"
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from "@/components/ui/radio-group"
 
 function figureQA(fromLanguage: LanguageType, toLanguage: LanguageType, de: string, en: string[], ru: string)
   : [string, string | string[]] {
@@ -80,7 +73,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
   const [result, setResult] = useState<boolean>(false)
   const [showInfo, setShowInfo] = useState<string>('hidden')
-  // const [showText, setShowText] = useState<boolean>(true)
   // radio group value tracking
   const [selectedValue, setSelectedValue] = useState<string>('');
 
@@ -121,15 +113,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
   const uniqueId = useId(); // Generates a unique ID for this component instance
 
-
-  // console.log(SVG_LIST.length)
-  // const randomSvg = SVG_LIST[randInt(SVG_LIST.length)];
-
-
-  // const update = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setUserInput(e.target.value)
-  // }
-
   const handleEnter = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && selectedValue) {
       checkAnswer(selectedValue, answer)
@@ -148,7 +131,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
         displayText: ''
       })
       setSelectedValue('')
-      // showInfo === 'hidden' ? setShowInfo('') : setShowInfo('hidden')
       setShowInfo('hidden')
     }
   }
@@ -171,7 +153,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
     }
 
     if (isCorrect) {
-      console.log('yessss richtig!')
+      console.log('yesss richtig!')
       setResult(true)
       setCorrectClasses({
         backgroundImage: '',
@@ -249,25 +231,15 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       )}
 
 
-      <CardHeader>
-        <CardTitle className="text-xl flex flex-row justify-between">
-          <div>
-            <span className="font-gyst">{id}</span>
-            <DotFilledIcon className={`inline w-3 h-3 ${correctClasses.text}`} />
-            {question}
-          </div>
-          <ResetIcon
-            onClick={() => toggleFinalResult()}
+      <QuestionHeader
+        question={question}
+        id={id}
+        toggleFinalResult={() => toggleFinalResult()}
+        textColor={correctClasses.text}
+        idClassName="font-gyst"
+      />
 
-            className={
-              `
-            ${correctClasses.text}
-            `
-            }
-          />
-        </CardTitle>
-        <CardDescription></CardDescription>
-      </CardHeader>
+    
       <CardContent>
         <div className={
           `${showInfo} 
@@ -375,74 +347,17 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
         </div>
 
-
-        <RadioGroup
+        <AnswerChoices
           value={selectedValue}
           onValueChange={setSelectedValue}
           onKeyDown={handleEnter}
-          className={`
-          relative
-          ${showInfo === 'hidden' ? '' : 'hidden'}
-          font-garamond-pp
-          pl-5
-          pr-5
-          bg-contain bg-repeat
-          rounded-tl-xl
-          rounded-br-lg
-          border-l-1
-          border-soviet-gold
-          hover:bg-stone-400/50
-          hover:border-r-6
-          hover:border-r-red-500
-          hover:font-bold
-          **:text-black
-        
-          `}>
+          showInfo={showInfo}
+          choices={choices}
+          uniqueId={uniqueId}
+          labelClassName={labelClasses}
+          radioItemClassName={radioItem}
+        />
 
-          <div
-            className="flex items-center gap-3 mt-3 bg-stone-400/30 rounded-l-full  cursor-pointer group"
-            onClick={() => setSelectedValue(choices[0])}
-          >
-            <RadioGroupItem
-              value={choices[0]}
-              className={radioItem}
-              id={`${uniqueId}-r1`}  // Unique ID
-            />
-            <Label htmlFor={`${uniqueId}-r1`} className={labelClasses}>{choices[0]}</Label>
-          </div>
-          <div
-            className="flex items-center gap-3 bg-stone-400/25 rounded-l-full cursor-pointer group"
-            onClick={() => setSelectedValue(choices[1])}
-          >
-            <RadioGroupItem value={choices[1]}
-              id={`${uniqueId}-r2`}  // Unique ID
-              className={radioItem} />
-            <Label 
-            htmlFor={`${uniqueId}-r2`} className={labelClasses}>{choices[1]}</Label>
-          </div>
-          <div
-            className="flex items-center gap-3 bg-stone-400/20 rounded-l-full cursor-pointer group"
-            onClick={() => setSelectedValue(choices[2])}
-          >
-            <RadioGroupItem
-              value={choices[2]}
-              id={`${uniqueId}-r3`}
-              className={radioItem} />
-            <Label htmlFor={`${uniqueId}-r3`}
-              className={labelClasses}>{choices[2]}</Label>
-          </div>
-          <div
-            className="flex items-center gap-3 mb-3 bg-stone-400/15 rounded-l-full cursor-pointer group"
-            onClick={() => setSelectedValue(choices[3])}
-          >
-            <RadioGroupItem value={choices[3]} id={`${uniqueId}-r4`} className={radioItem} />
-            <Label 
-            htmlFor={`${uniqueId}-r4`} 
-            className={labelClasses}>
-              {choices[3]}
-            </Label>
-          </div>
-        </RadioGroup>
 
         {0 > 1 && <p className={`${showInfo === 'hidden' ? '' : 'hidden'}`}>
           {de}
@@ -470,12 +385,11 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           }} />
         }
       </CardContent>
-      <CardFooter className={`flex justify-between ${showInfo === 'hidden' ? '' : 'hidden'}`}>
-        <Button
-          className="font-gyst "
-          onClick={() => checkAnswer(selectedValue, answer)}>SUBMIT</Button>
-
-      </CardFooter>
+      <SubmitSection 
+      showInfo={showInfo}
+      btnClassName="font-gyst"
+      checkAnswer={() => checkAnswer(selectedValue, answer)}
+      />
     </Card>
   )
 }
