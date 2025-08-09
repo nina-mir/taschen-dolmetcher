@@ -47,7 +47,7 @@ const Footer: React.FC<FooterProps> = ({
   },
   sourceCode = {
     url: "https://github.com/nina-mir/taschen-dolmetcher",
-    text: "Source code on GitHub."
+    text: "Source code on GitHub"
   },
   height = "h-[16rem]",
   backgroundColor = "bg-stone-600",
@@ -57,12 +57,12 @@ const Footer: React.FC<FooterProps> = ({
 }) => {
   return (
     <footer className={cn(
-      "w-full font-gyst text-2xl p-10",
+      "w-full font-gyst text-2xl pt-10 flex flex-col justify-end",
       height,
       backgroundColor,
       className
     )}>
-      <div className="relative">
+      <div className="pb-8">
         <div className="flex flex-col text-balance text-center text-md leading-loose text-muted-foreground md:text-center gap-1.5">
           <span className={textColor}>
             {author.emoji && (
@@ -115,7 +115,7 @@ const Footer: React.FC<FooterProps> = ({
                 aria-label="View source code on GitHub"
               >
 
-                <span >{sourceCode.text}</span>
+                <span >{sourceCode.text} &nbsp;</span>
                 <GitHubLogoIcon className="inline-block w-7 h-auto text-red-600 bg-soviet-gold rounded-4xl" />
 
               </a>

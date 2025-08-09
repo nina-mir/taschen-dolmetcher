@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId } from "react";
 import { Button } from "@/components/ui/button"
 import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, PlusIcon } from "@radix-ui/react-icons"
 import { Separator } from "@/components/ui/separator"
@@ -119,6 +119,9 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   }, [fromLanguage, toLanguage])
 
 
+  const uniqueId = useId(); // Generates a unique ID for this component instance
+
+
   // console.log(SVG_LIST.length)
   // const randomSvg = SVG_LIST[randInt(SVG_LIST.length)];
 
@@ -127,11 +130,11 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   //   setUserInput(e.target.value)
   // }
 
-  // const handleEnter = (e: React.KeyboardEvent) => {
-  //   if (e.key === 'Enter') {
-  //     checkAnswer(userInput, answer)
-  //   }
-  // }
+  const handleEnter = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && selectedValue) {
+      checkAnswer(selectedValue, answer)
+    }
+  }
 
   const toggleFinalResult = () => {
     if (result) {
@@ -214,13 +217,13 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   let [question, answer] = figureQA(fromLanguage, toLanguage, de, en, ru)
 
   // labelClasses specify the radio group's labels' text/style
-  const labelClasses = `text-2xl font-garamond-pp text-blue-200]`
+  const labelClasses = `text-2xl font-garamond-pp text-blue-200`
   // RadioGroup item styling is set via radioItem 
   const radioItem = `border-2 
   border-stone-600 
   ml-2 
-  hover:bg-red-500
   hover:ring-0
+  group-hover:bg-red-500
   `
 
 
@@ -236,8 +239,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       {/* Conditional text overlay */}
       {correctClasses.showText && (
         <div className="absolute inset-0 flex flex-col items-center justify-between z-10">
-          <p className="text-xl md:text-2xl text-soviet-gold bg-red-500/30 p-3 md:self-start"> 
-          wrong❌⚠️falsch❌⚠️неправильный
+          <p className="text-xl md:text-2xl text-soviet-gold bg-red-500/30 p-3 md:self-start">
+            wrong❌⚠️falsch❌⚠️неправильный
           </p>
           <div className="bg-black/50 text-white px-4 py-2 rounded-lg font-semibold text-lg backdrop-blur-sm">
             {correctClasses.displayText}
@@ -369,30 +372,14 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
             }} />
 
 
-          {/* <ImageIcon className={
-            `absolute
-            ${showInfo}  
-            md:hidden       
-            bottom-[90%]
-            -right-[2px]
-            w-8
-            h-8
-            text-yellow-300
-            ${ImageIconBG}
-          `
-          }
-            onClick={handleShowText}
-          /> */}
+
         </div>
 
 
         <RadioGroup
-          value={selectedValue}  // Add this
-          onValueChange={setSelectedValue}  // Add this
-          // style={{ 
-          //   backgroundImage: `url('/svgs/${randomSvg}')`, 
-          //   backgroundSize: `10%`,
-          // }}
+          value={selectedValue}
+          onValueChange={setSelectedValue}
+          onKeyDown={handleEnter}
           className={`
           relative
           ${showInfo === 'hidden' ? '' : 'hidden'}
@@ -411,43 +398,51 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           **:text-black
         
           `}>
-          {/* Pseudo-element for background image */}
-          {/* <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('/svgs/${randomSvg}')`, backgroundSize: `8%`, opacity: 0.08 }} // Adjust opacity here (e.g., 0.8 for 80%)
-          ></div> */}
-          <div className="flex items-center gap-3 mt-3 bg-stone-400/30 rounded-l-full">
-            <RadioGroupItem value={choices[0]} id="r1" className={radioItem} />
-            <Label htmlFor="r1" className={labelClasses}>{choices[0]}</Label>
+
+          <div
+            className="flex items-center gap-3 mt-3 bg-stone-400/30 rounded-l-full  cursor-pointer group"
+            onClick={() => setSelectedValue(choices[0])}
+          >
+            <RadioGroupItem
+              value={choices[0]}
+              className={radioItem}
+              id={`${uniqueId}-r1`}  // Unique ID
+            />
+            <Label htmlFor={`${uniqueId}-r1`} className={labelClasses}>{choices[0]}</Label>
           </div>
-          <div className="flex items-center gap-3 bg-stone-400/25 rounded-l-full">
-            <RadioGroupItem value={choices[1]} id="r2" className={radioItem} />
-            <Label htmlFor="r2" className={labelClasses}>{choices[1]}</Label>
+          <div
+            className="flex items-center gap-3 bg-stone-400/25 rounded-l-full cursor-pointer group"
+            onClick={() => setSelectedValue(choices[1])}
+          >
+            <RadioGroupItem value={choices[1]}
+              id={`${uniqueId}-r2`}  // Unique ID
+              className={radioItem} />
+            <Label 
+            htmlFor={`${uniqueId}-r2`} className={labelClasses}>{choices[1]}</Label>
           </div>
-          <div className="flex items-center gap-3 bg-stone-400/20 rounded-l-full">
-            <RadioGroupItem value={choices[2]} id="r3" className={radioItem} />
-            <Label htmlFor="r3" className={labelClasses}>{choices[2]}</Label>
+          <div
+            className="flex items-center gap-3 bg-stone-400/20 rounded-l-full cursor-pointer group"
+            onClick={() => setSelectedValue(choices[2])}
+          >
+            <RadioGroupItem
+              value={choices[2]}
+              id={`${uniqueId}-r3`}
+              className={radioItem} />
+            <Label htmlFor={`${uniqueId}-r3`}
+              className={labelClasses}>{choices[2]}</Label>
           </div>
-          <div className="flex items-center gap-3 mb-3 bg-stone-400/15 rounded-l-full">
-            <RadioGroupItem value={choices[3]} id="r4" className={radioItem} />
-            <Label htmlFor="r4" className={labelClasses}>{choices[3]}</Label>
+          <div
+            className="flex items-center gap-3 mb-3 bg-stone-400/15 rounded-l-full cursor-pointer group"
+            onClick={() => setSelectedValue(choices[3])}
+          >
+            <RadioGroupItem value={choices[3]} id={`${uniqueId}-r4`} className={radioItem} />
+            <Label 
+            htmlFor={`${uniqueId}-r4`} 
+            className={labelClasses}>
+              {choices[3]}
+            </Label>
           </div>
         </RadioGroup>
-
-
-        {/* <Input
-          className={`
-          ${showInfo === 'hidden' ? '' : 'hidden'}
-         font-garamond-pp
-       bg-stone-400
-       text-stone-100 
-         placeholder:tracking-[0.2rem]
-         text-2xl
-         `}
-          onChange={update}
-          onKeyDown={handleEnter}
-          value={userInput}
-        /> */}
 
         {0 > 1 && <p className={`${showInfo === 'hidden' ? '' : 'hidden'}`}>
           {de}
