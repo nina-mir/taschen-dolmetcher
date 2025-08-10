@@ -18,40 +18,40 @@ import {
 
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: "Questions",
+    title: "Step.1 Choose languages!🧠",
     href: "/docs/primitives/alert-dialog",
     description:
-      "74 questions total. Translate from a source language to a target language! Choose from Russian, German and English.",
+      "Choose a from and to language option! Choose from German/English/Russian!",
   },
   {
-    title: "Try Multiple choice question type!",
+    title: "Step.2 Multiple-choice OR typing? ⚓",
     href: "/docs/primitives/hover-card",
     description:
-      "The choices in the multiple choice problems are a mix of AI-generated and human-created.",
+      "Choose between Multiple-Choice questions or typing-in your answer!",
   },
   {
-    title: "Correct Answer!",
+    title: "Step.3 Submit your answer!✌🏽",
     href: "/docs/primitives/progress",
     description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+      "If your answer is correct, you'll see an image + interesting text of the war.",
   },
   {
-    title: "Wong Answer!",
+    title: "Wong Answer?!❌",
     href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
+    description: "Anna Akhmatova and Boris Pasternak will tell you if your answer is wrong!",
   },
   {
-    title: "Tabs",
+    title: "Correct answer?🎈",
     href: "/docs/primitives/tabs",
     description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+      "You'll be rewarded with a piece of history: An image + a bit of text from the Eastern Front!",
   },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
+  // {
+  //   title: "Tooltip",
+  //   href: "/docs/primitives/tooltip",
+  //   description:
+  //     "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+  // },
 ]
 
 export function NavigationMenuDemo() {
@@ -70,23 +70,24 @@ export function NavigationMenuDemo() {
 
   return (
     <NavigationMenu 
-      className="font-garamond-pp text-3xl bg-stone-300/80 max-w-full"
+      className="font-garamond-pp bg-stone-300/80 max-w-full"
       value={activeMenu}
       onValueChange={handleValueChange}
     >
       <NavigationMenuList>
         <NavigationMenuItem value="history">
           <NavigationMenuTrigger 
-            className="bg-transparent"
+            className=" text-lg data-[state=open]:bg-stone-300"
             onClick={() => handleMenuClick("history")}
             clickOnly={true}
           >
             History
           </NavigationMenuTrigger>
-          <NavigationMenuContent className="hover:bg-stone-300 bg-stone-300 border-0 focus:ring-0" clickOnly={true}>
+          <NavigationMenuContent 
+          className="hover:bg-stone-300 bg-stone-300 border-0 focus:ring-0" clickOnly={true}>
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
-                <NavigationMenuLink asChild>
+                <NavigationMenuLink asChild className="text-base">
                   <p>On June-22-1941, Germany attacked the USSR. This invasion caught despot Joseph Stalin by surprise. 
                     But, the Soviet residents did not hide for 12 days like Stalin did.
                     The Soviet citizens mobilized. Their sacrifice on the eastern front and on the home front decided the demise of German fascists.
@@ -119,20 +120,24 @@ export function NavigationMenuDemo() {
         
         <NavigationMenuItem value="game">
           <NavigationMenuTrigger 
-            className="bg-transparent"
+            className="text-lg data-[state=open]:bg-stone-300"
             onClick={() => handleMenuClick("game")}
             clickOnly={true}
           >
-            Game
+            How to Play
           </NavigationMenuTrigger>
-          <NavigationMenuContent clickOnly={true}>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+          <NavigationMenuContent 
+          clickOnly={true}
+          className="hover:bg-stone-300 bg-stone-300 border-0 focus:ring-0" >
+            {/* <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]"> */}
+            <ul className="text-base grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               {components.map((component) => (
                 <ListItem
                   key={component.title}
                   title={component.title}
                   href={component.href}
-                >
+                  className="[&>*]:text-lg"
+                  >
                   {component.description}
                 </ListItem>
               ))}

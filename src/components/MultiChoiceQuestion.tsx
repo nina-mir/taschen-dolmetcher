@@ -3,8 +3,9 @@ import QuestionHeader from "./question/QuestionHeader";
 import SubmitSection from "./question/SubmitSection";
 import AnswerChoices from "./question/AnswerChoices";
 import FeedbackOverlay from "./question/FeedbackOverlay";
+import CollapsibleInfo from "./question/CollapsibleInfo";
 import { useState, useEffect, useId } from "react";
-import { EyeClosedIcon, EyeOpenIcon, PlusIcon } from "@radix-ui/react-icons"
+import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons"
 import { Separator } from "@/components/ui/separator"
 
 import {
@@ -15,13 +16,6 @@ import {
 import { MediaItem, InfoItem, LanguageType } from '@/types';
 // wrong data images
 import wrongData from '@/assets/data/wrongAnswerImages.json'
-
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
-
 
 function figureQA(fromLanguage: LanguageType, toLanguage: LanguageType, de: string, en: string[], ru: string)
   : [string, string | string[]] {
@@ -108,7 +102,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
     setResult(false)
     setShowInfo('hidden')
     setSelectedValue('')
-
   }, [fromLanguage, toLanguage])
 
 
@@ -245,14 +238,13 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
         }
         >
           <div >
-            <Collapsible className="md:hidden absolute data-[state=open]:bg-red-500/50 rounded-t-xl w-[70%]">
-              <CollapsibleTrigger className="transition-transform duration-500 ease-in-out data-[state=open]:rotate-45">
-                <PlusIcon className="w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold" />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="w-[95%] p-2 text-wrap text-lg data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-500">
-                <p className="bg-stone-500 text-white">📷:{media.imgCaption}</p>
-              </CollapsibleContent>
-            </Collapsible>
+            <CollapsibleInfo
+              content={<p className="bg-stone-500 text-white">📷:{media.imgCaption}</p>}
+              wrapperClassName={`md:hidden absolute data-[state=open]:bg-red-500/50 rounded-t-xl w-[70%]`}
+              triggerClassName={`transition-transform duration-500 ease-in-out data-[state=open]:rotate-45`}
+              iconClassName={`w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold`}
+              contentClassName={`w-[95%] p-2 text-wrap text-lg data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-500`}
+            />
             <img src={media.imgUrl} className="block md:hidden rounded-t-xl md:rounded-t-none mr-0 md:max-h-[70vh] md:w-[50%]" />
 
             <div className="hidden md:flex">
@@ -272,16 +264,16 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
                 `
                 }>
                   {info.text}
-                  <Collapsible className="absolute rounded-t-xl">
-                    <CollapsibleTrigger className="transition-transform duration-500 ease-in-out data-[state=open]:rotate-45">
-                      <PlusIcon className="w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold" />
-                    </CollapsibleTrigger>
-                    <CollapsibleContent className="w-[70%] p-1 text-wrap text-[1rem] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-500">
-                      <cite
-                        className="bg-stone-500 text-white"><b>source:</b>{info.sourceChicago}
-                      </cite>
-                    </CollapsibleContent>
-                  </Collapsible>
+                  <CollapsibleInfo
+                    defaultOpen={true}
+                    content={<cite
+                      className="bg-stone-500 text-white block "><b>Source:&nbsp;</b>{info.sourceChicago}
+                    </cite>}
+                    wrapperClassName={`absolute rounded-t-xl`}
+                    triggerClassName={`transition-transform duration-500 ease-in-out data-[state=open]:rotate-45`}
+                    iconClassName={`w-3 h-3 bg-red-500 text-soviet-gold border-1 border-soviet-gold`}
+                    contentClassName={`w-[85%] p-2 text-wrap text-[0.9rem] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-500`}
+                  />
                 </div>
               </div>
             </div>
@@ -311,9 +303,9 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
           </div>
 
-          <EyeOpenIcon 
-          className={
-            `absolute
+          <EyeOpenIcon
+            className={
+              `absolute
             ${showInfo}  
             bottom-0
             right-1
@@ -321,9 +313,9 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
             h-10
             text-soviet-gold
           `}
-          onClick={() => {
-            setShowInfo('hidden')
-          }} />
+            onClick={() => {
+              setShowInfo('hidden')
+            }} />
 
         </div>
 

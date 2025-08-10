@@ -25,10 +25,10 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat }: QuestionsCont
   // ToDO add pagination state here--maybe! 
 
   if (qFormat == 'choosing') {
-    console.log('user chose to multiple-choice format')
+    // console.log('user chose to multiple-choice format')
     const questions = data.map((item, idx) => {
 
-      console.log(multipleChoiceData[idx][fromLanguage])
+      // console.log(multipleChoiceData[idx][fromLanguage])
 
       return <MultiChoiceQuestion
         key={idx}

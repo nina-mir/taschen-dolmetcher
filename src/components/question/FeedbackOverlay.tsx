@@ -22,6 +22,8 @@ const FeedbackOverlay: React.FC<FeedbackProps> = ({
     console.log(backgroundImgUrl)
     if (isVisible){return (
         <div 
+        role="alert"
+        aria-live="polite"
         className={`
         absolute 
         inset-0 flex flex-col items-center justify-between z-10
