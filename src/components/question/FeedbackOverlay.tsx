@@ -19,7 +19,6 @@ const FeedbackOverlay: React.FC<FeedbackProps> = ({
     messageText,
     captionText = 'Wrong Answer!'
 }) => {
-    console.log(backgroundImgUrl)
     if (isVisible){return (
         <div 
         role="alert"

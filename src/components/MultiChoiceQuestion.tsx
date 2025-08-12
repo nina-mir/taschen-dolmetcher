@@ -3,10 +3,8 @@ import QuestionHeader from "./question/QuestionHeader";
 import SubmitSection from "./question/SubmitSection";
 import AnswerChoices from "./question/AnswerChoices";
 import FeedbackOverlay from "./question/FeedbackOverlay";
-import CollapsibleInfo from "./question/CollapsibleInfo";
 import { useState, useEffect, useId } from "react";
-import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons"
-import { Separator } from "@/components/ui/separator"
+
 
 import {
   Card,
@@ -16,6 +14,7 @@ import {
 import { MediaItem, InfoItem, LanguageType } from '@/types';
 // wrong data images
 import wrongData from '@/assets/data/wrongAnswerImages.json'
+import ContentSection from "./question/ContentSection";
 
 function figureQA(fromLanguage: LanguageType, toLanguage: LanguageType, de: string, en: string[], ru: string)
   : [string, string | string[]] {
@@ -220,7 +219,47 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
 
       <CardContent>
-        <div className={
+        <ContentSection
+          media={media}
+          info={info}
+          showInfo={showInfo}
+          onToggleInfo={setShowInfo}
+        />
+
+        <AnswerChoices
+          value={selectedValue}
+          onValueChange={setSelectedValue}
+          onKeyDown={handleEnter}
+          showInfo={showInfo}
+          choices={choices}
+          uniqueId={uniqueId}
+          labelClassName={labelClasses}
+          radioItemClassName={radioItem}
+        />
+
+
+        {0 > 1 && <p className={`${showInfo === 'hidden' ? '' : 'hidden'}`}>
+          {de}
+          {en}
+          {phonetic}
+          {ru}
+        </p>
+        }
+
+      </CardContent>
+      <SubmitSection
+        showInfo={showInfo}
+        btnClassName="font-gyst"
+        checkAnswer={() => checkAnswer(selectedValue, answer)}
+      />
+    </Card>
+  )
+}
+
+export default MultiChoiceQuestion;
+
+
+{/* <div className={
           `${showInfo} 
           w-[100%] 
           max-h-[100vh]
@@ -299,71 +338,44 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
                 className="block md:hidden ml-1 text-stone-100 text-wrap text-xs md:w-[50%]">
                 {info.sourceChicago}
               </cite>
+
+
+
+              <EyeOpenIcon
+                className={
+                  `absolute
+                ${showInfo}  
+                bottom-0
+                right-1
+                w-10
+                h-10
+                text-soviet-gold
+                `}
+                onClick={() => {
+                  setShowInfo('hidden')
+                }} />
+
+              {result && <EyeClosedIcon className={
+                `absolute 
+                ${showInfo === 'hidden' ? '' : 'hidden'}    
+                md:-left-35 
+                md:top-10 
+                bottom-0
+                right-1
+                w-10 
+                h-10
+              md:text-red-400
+                ${correctClasses.text}
+                `}
+                onClick={() => {
+                  setShowInfo('')
+                }} />
+              }
             </div>
+
 
           </div>
 
-          <EyeOpenIcon
-            className={
-              `absolute
-            ${showInfo}  
-            bottom-0
-            right-1
-            w-10
-            h-10
-            text-soviet-gold
-          `}
-            onClick={() => {
-              setShowInfo('hidden')
-            }} />
-
-        </div>
-
-        <AnswerChoices
-          value={selectedValue}
-          onValueChange={setSelectedValue}
-          onKeyDown={handleEnter}
-          showInfo={showInfo}
-          choices={choices}
-          uniqueId={uniqueId}
-          labelClassName={labelClasses}
-          radioItemClassName={radioItem}
-        />
 
 
-        {0 > 1 && <p className={`${showInfo === 'hidden' ? '' : 'hidden'}`}>
-          {de}
-          {en}
-          {phonetic}
-          {ru}
-        </p>
-
-        }
-
-        {result && <EyeClosedIcon className={
-          `absolute 
-          ${showInfo === 'hidden' ? '' : 'hidden'}    
-          md:-left-35 
-          md:top-10 
-          bottom-0
-          right-1
-          w-10 
-          h-10
-        md:text-red-400
-        ${correctClasses.text}
-          `}
-          onClick={() => {
-            setShowInfo('')
-          }} />
-        }
-      </CardContent>
-      <SubmitSection
-        showInfo={showInfo}
-        btnClassName="font-gyst"
-        checkAnswer={() => checkAnswer(selectedValue, answer)}
-      />
-    </Card>
-  )
-}
-
-export default MultiChoiceQuestion;
+        </div> */}

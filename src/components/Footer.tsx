@@ -72,7 +72,7 @@ const Footer: React.FC<FooterProps> = ({
             )}
             &nbsp;by&nbsp;
             <span className={accentColor}>
-              {author.name}
+              <a href="https://nina-mir.github.io/words/">{author.name}</a>
             </span>
 
             {/* Social Links */}
