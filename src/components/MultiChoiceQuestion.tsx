@@ -3,6 +3,7 @@ import QuestionHeader from "./question/QuestionHeader";
 import SubmitSection from "./question/SubmitSection";
 import AnswerChoices from "./question/AnswerChoices";
 import FeedbackOverlay from "./question/FeedbackOverlay";
+import ContentSection from "./question/ContentSection";
 import { useState, useEffect, useId } from "react";
 
 
@@ -14,7 +15,6 @@ import {
 import { MediaItem, InfoItem, LanguageType } from '@/types';
 // wrong data images
 import wrongData from '@/assets/data/wrongAnswerImages.json'
-import ContentSection from "./question/ContentSection";
 
 function figureQA(fromLanguage: LanguageType, toLanguage: LanguageType, de: string, en: string[], ru: string)
   : [string, string | string[]] {
