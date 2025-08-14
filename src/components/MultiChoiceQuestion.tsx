@@ -6,7 +6,6 @@ import FeedbackOverlay from "./question/FeedbackOverlay";
 import ContentSection from "./question/ContentSection";
 import { useState, useEffect, useId } from "react";
 
-
 import {
   Card,
   CardContent,
@@ -67,9 +66,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
   const [result, setResult] = useState<boolean>(false)
   const [showInfo, setShowInfo] = useState<string>('hidden')
-  // radio group value tracking
   const [selectedValue, setSelectedValue] = useState<string>('');
-
+  const [feedbackMessage, setFeedbackMessage] = useState<string>('');
 
   // Using an object with a type
   type KorrektClasses = {
@@ -101,10 +99,13 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
     setResult(false)
     setShowInfo('hidden')
     setSelectedValue('')
+    setFeedbackMessage('')
   }, [fromLanguage, toLanguage])
 
-
-  const uniqueId = useId(); // Generates a unique ID for this component instance
+  const uniqueId = useId();
+  const questionId = `question-${uniqueId}`;
+  const radioGroupId = `radio-group-${uniqueId}`;
+  const feedbackId = `feedback-${uniqueId}`;
 
   const handleEnter = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && selectedValue) {
@@ -125,12 +126,11 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       })
       setSelectedValue('')
       setShowInfo('hidden')
+      setFeedbackMessage('')
     }
   }
 
-
   const checkAnswer = (userInput: string, answer: string | string[]): boolean => {
-    // console.log(`userInput is ${userInput} und answer is ${answer}`)
     let isCorrect = false
     if (Array.isArray(answer)) {
       for (const item of answer) {
@@ -146,8 +146,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
     }
 
     if (isCorrect) {
-      // console.log('yesss richtig!')
       setResult(true)
+      setFeedbackMessage('Correct answer!')
       setCorrectClasses({
         backgroundImage: '',
         bg: 'bg-red-600',
@@ -159,7 +159,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       setShowInfo('')
       return true
     } else {
-      // console.log('nein das ist falsch')
       handleWrongAnswer()
       setResult(false)
       return false
@@ -167,6 +166,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   }
 
   const handleWrongAnswer = () => {
+    setFeedbackMessage('Incorrect answer. Please try again.')
     setCorrectClasses({
       backgroundImage: `url(${wrongData[0].imgUrl})`,
       bg: `bg-black`,
@@ -184,29 +184,40 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
         marginB: 'mb-[0rem]',
         showText: false,
         displayText: ''
-      }); // Revert to the previous state
-    }, 3500); // 2000 milliseconds = 2 seconds
+      });
+      setFeedbackMessage('')
+    }, 3500);
   }
-
 
   let [question, answer] = figureQA(fromLanguage, toLanguage, de, en, ru)
 
-  // labelClasses specify the radio group's labels' text/style
   const labelClasses = `text-2xl font-garamond-pp`
-  // RadioGroup item styling is set via radioItem 
-  const radioItem = `border-2 border-stone-600 ml-2  hover:ring-0  group-hover:bg-red-500`
-
+  const radioItem = `border-2 border-stone-600 ml-2 hover:ring-0 group-hover:bg-red-500 focus:ring-1 focus:ring-red-500 focus:ring-offset-1`
 
   return (
     <Card
-      className={`relative w-[90%]  ${correctClasses.bg} ${correctClasses.marginB}`}
+      className={`relative w-[90%] ${correctClasses.bg} ${correctClasses.marginB}`}
+      role="region"
+      aria-labelledby={questionId}
+      aria-describedby={feedbackMessage ? feedbackId : undefined}
     >
+      {/* Screen reader only status announcement */}
+      <div 
+        id={feedbackId}
+        className="sr-only" 
+        aria-live="polite" 
+        aria-atomic="true"
+      >
+        {feedbackMessage}
+      </div>
+
       {/* FeedbackOverlay will be displayed in case of wrong answers */}
       <FeedbackOverlay
         isVisible={correctClasses.showText}
         backgroundImgUrl={wrongData[0].imgUrl}
-        messageText="wrong❌⚠️falsch❌⚠️неправильный"
+        messageText="Incorrect❌⚠️"
         captionText={wrongData[0].altText}
+        ariaLabel="Answer feedback"
       />
 
       <QuestionHeader
@@ -215,8 +226,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
         toggleFinalResult={() => toggleFinalResult()}
         textColor={correctClasses.text}
         idClassName="font-gyst"
+        questionId={questionId}
       />
-
 
       <CardContent>
         <ContentSection
@@ -226,17 +237,29 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           onToggleInfo={setShowInfo}
         />
 
-        <AnswerChoices
-          value={selectedValue}
-          onValueChange={setSelectedValue}
-          onKeyDown={handleEnter}
-          showInfo={showInfo}
-          choices={choices}
-          uniqueId={uniqueId}
-          labelClassName={labelClasses}
-          radioItemClassName={radioItem}
-        />
-
+        <fieldset 
+          id={radioGroupId}
+          aria-labelledby={questionId}
+          aria-required="true"
+          aria-invalid={result === false && selectedValue !== '' ? 'true' : 'false'}
+        >
+          <legend className="sr-only">
+            Choose the correct translation from the options below
+          </legend>
+          
+          <AnswerChoices
+            value={selectedValue}
+            onValueChange={setSelectedValue}
+            onKeyDown={handleEnter}
+            showInfo={showInfo}
+            choices={choices}
+            uniqueId={uniqueId}
+            labelClassName={labelClasses}
+            radioItemClassName={radioItem}
+            groupId={radioGroupId}
+            questionId={questionId}
+          />
+        </fieldset>
 
         {0 > 1 && <p className={`${showInfo === 'hidden' ? '' : 'hidden'}`}>
           {de}
@@ -247,16 +270,280 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
         }
 
       </CardContent>
+      
       <SubmitSection
         showInfo={showInfo}
         btnClassName="font-gyst"
         checkAnswer={() => checkAnswer(selectedValue, answer)}
+        disabled={!selectedValue}
+        ariaDescribedby={questionId}
       />
+
     </Card>
   )
 }
 
 export default MultiChoiceQuestion;
+
+// import * as React from "react"
+// import QuestionHeader from "./question/QuestionHeader";
+// import SubmitSection from "./question/SubmitSection";
+// import AnswerChoices from "./question/AnswerChoices";
+// import FeedbackOverlay from "./question/FeedbackOverlay";
+// import ContentSection from "./question/ContentSection";
+// import { useState, useEffect, useId } from "react";
+
+
+// import {
+//   Card,
+//   CardContent,
+// } from "@/components/ui/card"
+
+// import { MediaItem, InfoItem, LanguageType } from '@/types';
+// // wrong data images
+// import wrongData from '@/assets/data/wrongAnswerImages.json'
+
+// function figureQA(fromLanguage: LanguageType, toLanguage: LanguageType, de: string, en: string[], ru: string)
+//   : [string, string | string[]] {
+
+//   let question = ''
+//   let answer: string | string[] = ''
+
+//   if (fromLanguage == 'de') {
+//     question = de
+//   } else if (fromLanguage == 'en') {
+//     question = en[0]
+//   } else
+//     question = ru
+
+//   if (toLanguage == 'de') {
+//     answer = de
+//   } else if (toLanguage == 'en') {
+//     answer = en
+//   } else
+//     answer = ru
+
+//   return [question, answer]
+// }
+
+// interface QuestionProps {
+//   id: number;
+//   de: string;
+//   en: string[];
+//   phonetic?: string;
+//   ru: string;
+//   choices: string[];
+//   fromLanguage: LanguageType;
+//   toLanguage: LanguageType;
+//   media: MediaItem;
+//   info: InfoItem;
+// }
+
+// const MultiChoiceQuestion: React.FC<QuestionProps> = ({
+//   id,
+//   de,
+//   en,
+//   phonetic,
+//   ru,
+//   choices,
+//   fromLanguage,
+//   toLanguage,
+//   media,
+//   info
+// }) => {
+
+//   const [result, setResult] = useState<boolean>(false)
+//   const [showInfo, setShowInfo] = useState<string>('hidden')
+//   // radio group value tracking
+//   const [selectedValue, setSelectedValue] = useState<string>('');
+
+
+//   // Using an object with a type
+//   type KorrektClasses = {
+//     backgroundImage: string,
+//     bg: string;
+//     text: string;
+//     marginB: string;
+//     showText: boolean;
+//     displayText: string;
+//   };
+//   const [correctClasses, setCorrectClasses] = useState<KorrektClasses>({
+//     backgroundImage: '',
+//     bg: 'bg-transparent',
+//     text: 'text-red-600',
+//     marginB: 'mb-[0rem]',
+//     showText: false,
+//     displayText: ''
+//   });
+
+//   useEffect(() => {
+//     setCorrectClasses({
+//       backgroundImage: '',
+//       bg: 'bg-transparent',
+//       text: 'text-red-600',
+//       marginB: 'mb-[0rem]',
+//       showText: false,
+//       displayText: ''
+//     })
+//     setResult(false)
+//     setShowInfo('hidden')
+//     setSelectedValue('')
+//   }, [fromLanguage, toLanguage])
+
+
+//   const uniqueId = useId(); // Generates a unique ID for this component instance
+
+//   const handleEnter = (e: React.KeyboardEvent) => {
+//     if (e.key === 'Enter' && selectedValue) {
+//       checkAnswer(selectedValue, answer)
+//     }
+//   }
+
+//   const toggleFinalResult = () => {
+//     if (result) {
+//       setResult(false)
+//       setCorrectClasses({
+//         backgroundImage: '',
+//         bg: 'bg-transparent',
+//         text: 'text-red-600',
+//         marginB: 'mb-[0rem]',
+//         showText: false,
+//         displayText: ''
+//       })
+//       setSelectedValue('')
+//       setShowInfo('hidden')
+//     }
+//   }
+
+
+//   const checkAnswer = (userInput: string, answer: string | string[]): boolean => {
+//     // console.log(`userInput is ${userInput} und answer is ${answer}`)
+//     let isCorrect = false
+//     if (Array.isArray(answer)) {
+//       for (const item of answer) {
+//         if (item.toLowerCase() === userInput.toLowerCase()) {
+//           isCorrect = true
+//           break
+//         }
+//       }
+//     } else {
+//       if (userInput.toLowerCase() === answer.toLowerCase()) {
+//         isCorrect = true
+//       }
+//     }
+
+//     if (isCorrect) {
+//       // console.log('yesss richtig!')
+//       setResult(true)
+//       setCorrectClasses({
+//         backgroundImage: '',
+//         bg: 'bg-red-600',
+//         text: 'text-yellow-400',
+//         marginB: 'mb-[1.5rem]',
+//         showText: false,
+//         displayText: ''
+//       })
+//       setShowInfo('')
+//       return true
+//     } else {
+//       // console.log('nein das ist falsch')
+//       handleWrongAnswer()
+//       setResult(false)
+//       return false
+//     }
+//   }
+
+//   const handleWrongAnswer = () => {
+//     setCorrectClasses({
+//       backgroundImage: `url(${wrongData[0].imgUrl})`,
+//       bg: `bg-black`,
+//       text: 'text-red-600',
+//       marginB: 'mb-[0rem]',
+//       showText: true,
+//       displayText: wrongData[0].altText || 'Wrong Answer!'
+//     })
+
+//     setTimeout(() => {
+//       setCorrectClasses({
+//         backgroundImage: '',
+//         bg: 'bg-transparent',
+//         text: 'text-red-600',
+//         marginB: 'mb-[0rem]',
+//         showText: false,
+//         displayText: ''
+//       }); // Revert to the previous state
+//     }, 3500); // 2000 milliseconds = 2 seconds
+//   }
+
+
+//   let [question, answer] = figureQA(fromLanguage, toLanguage, de, en, ru)
+
+//   // labelClasses specify the radio group's labels' text/style
+//   const labelClasses = `text-2xl font-garamond-pp`
+//   // RadioGroup item styling is set via radioItem 
+//   const radioItem = `border-2 border-stone-600 ml-2  hover:ring-0  group-hover:bg-red-500`
+
+
+//   return (
+//     <Card
+//       className={`relative w-[90%]  ${correctClasses.bg} ${correctClasses.marginB}`}
+//     >
+//       {/* FeedbackOverlay will be displayed in case of wrong answers */}
+//       <FeedbackOverlay
+//         isVisible={correctClasses.showText}
+//         backgroundImgUrl={wrongData[0].imgUrl}
+//         messageText="wrong❌⚠️falsch❌⚠️неправильный"
+//         captionText={wrongData[0].altText}
+//       />
+
+//       <QuestionHeader
+//         question={question}
+//         id={id}
+//         toggleFinalResult={() => toggleFinalResult()}
+//         textColor={correctClasses.text}
+//         idClassName="font-gyst"
+//       />
+
+
+//       <CardContent>
+//         <ContentSection
+//           media={media}
+//           info={info}
+//           showInfo={showInfo}
+//           onToggleInfo={setShowInfo}
+//         />
+
+//         <AnswerChoices
+//           value={selectedValue}
+//           onValueChange={setSelectedValue}
+//           onKeyDown={handleEnter}
+//           showInfo={showInfo}
+//           choices={choices}
+//           uniqueId={uniqueId}
+//           labelClassName={labelClasses}
+//           radioItemClassName={radioItem}
+//         />
+
+
+//         {0 > 1 && <p className={`${showInfo === 'hidden' ? '' : 'hidden'}`}>
+//           {de}
+//           {en}
+//           {phonetic}
+//           {ru}
+//         </p>
+//         }
+
+//       </CardContent>
+//       <SubmitSection
+//         showInfo={showInfo}
+//         btnClassName="font-gyst"
+//         checkAnswer={() => checkAnswer(selectedValue, answer)}
+//       />
+//     </Card>
+//   )
+// }
+
+// export default MultiChoiceQuestion;
 
 
 {/* <div className={
