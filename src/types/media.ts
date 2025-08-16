@@ -2,8 +2,8 @@
 
 export interface MediaItem {
     imgUrl: string;
-    sourceUrl: string;
-    imgCaption: string;
+    sourceUrl?: string;
+    imgCaption?: string;
     photog?: string;
     altText?: string;
     credit?: string;

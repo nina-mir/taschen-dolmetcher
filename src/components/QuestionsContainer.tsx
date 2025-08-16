@@ -7,7 +7,7 @@ import mediaData from '@/assets/data/imagesData.json';
 import textData from '@/assets/data/infoData.json';
 
 import Question from '@/components/Question';
-import MultiChoiceQuestion from './MultiChoiceQuestion';
+import MultiChoiceQuestion from '@/components/question/MultiChoiceQuestion';
 
 import knuthRandomizer from '@/utils/helpers'
 

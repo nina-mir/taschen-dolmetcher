@@ -75,13 +75,7 @@ const ContentSection: React.FC<ContentSectionProps> = ({
             aria-hidden={!isVisible}
         >
             <div >
-                {/* <CollapsibleInfo
-                    content={<p className="bg-stone-500 text-white">📷:{media.imgCaption}</p>}
-                    wrapperClassName={`md:hidden absolute data-[state=open]:bg-red-500/50 rounded-t-xl w-[70%]`}
-                    triggerClassName={`transition-transform duration-500 ease-in-out data-[state=open]:rotate-45`}
-                    iconClassName={`w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold`}
-                    contentClassName={`w-[95%] p-2 text-wrap text-lg data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-500`}
-                /> */}
+
                 {/* Mobile: Collapsible image caption */}
                 <div className="md:hidden">
                     <CollapsibleInfo
@@ -118,20 +112,7 @@ const ContentSection: React.FC<ContentSectionProps> = ({
                         id={imageId}
                         ariaDescribedby={`${captionId} ${infoId}`}
                     />
-                    {/* <div className="flex flex-col gap-3">
-                        <p className="font-mono text-white text-[1rem] p-2 ">
-                            📷:&nbsp;{media.imgCaption}
-                        </p>
-                        <Separator className="bg-soviet-gold" />
-                        {/* textInfo + source on large screen */}
-                    {/* <InfoText
-                            info={info}
-                            isSourceCollapsible={true}
-                            wrapperClassName={`leading-5 font-mono w-full 
-                            text-stone-50 p-2 text-[1rem]`}
-                            citeSourceClassName={`bg-stone-500 text-white block`}
-                        /> */}
-                    {/* </div> */}
+
                     <div className="flex flex-col gap-3" role="region" aria-label="Image details and information">
                         <p
                             id={captionId}
@@ -178,21 +159,7 @@ const ContentSection: React.FC<ContentSectionProps> = ({
                     />
 
 
-                    {/* <EyeOpenIcon
-                        className={
-                            `absolute
-                            ${showInfo}  
-                            bottom-0
-                            right-1
-                            w-10
-                            h-10
-                            text-soviet-gold
-                        `}
-                        onClick={() => {
-                            onToggleInfo('hidden')
-                        }} /> */}
 
-                    {/* Close/Hide button */}
                     <button
                         className={
                             `absolute
@@ -236,6 +203,48 @@ const ContentSection: React.FC<ContentSectionProps> = ({
 
 export default ContentSection;
 
+
+
+{/* <CollapsibleInfo
+                    content={<p className="bg-stone-500 text-white">📷:{media.imgCaption}</p>}
+                    wrapperClassName={`md:hidden absolute data-[state=open]:bg-red-500/50 rounded-t-xl w-[70%]`}
+                    triggerClassName={`transition-transform duration-500 ease-in-out data-[state=open]:rotate-45`}
+                    iconClassName={`w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold`}
+                    contentClassName={`w-[95%] p-2 text-wrap text-lg data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-500`}
+                /> */}
+
+
+{/* <div className="flex flex-col gap-3">
+                        <p className="font-mono text-white text-[1rem] p-2 ">
+                            📷:&nbsp;{media.imgCaption}
+                        </p>
+                        <Separator className="bg-soviet-gold" />
+                        {/* textInfo + source on large screen */}
+{/* <InfoText
+                            info={info}
+                            isSourceCollapsible={true}
+                            wrapperClassName={`leading-5 font-mono w-full 
+                            text-stone-50 p-2 text-[1rem]`}
+                            citeSourceClassName={`bg-stone-500 text-white block`}
+                        /> */}
+{/* </div> */ }
+
+
+{/* <EyeOpenIcon
+                        className={
+                            `absolute
+                            ${showInfo}  
+                            bottom-0
+                            right-1
+                            w-10
+                            h-10
+                            text-soviet-gold
+                        `}
+                        onClick={() => {
+                            onToggleInfo('hidden')
+                        }} /> */}
+
+{/* Close/Hide button */ }
 
 {/* {result && <EyeClosedIcon className={
         `absolute 

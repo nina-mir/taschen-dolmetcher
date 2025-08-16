@@ -20,7 +20,7 @@ const MediaImage: React.FC<MediaImageProps> = ({
     id,
     ariaDescribedby,
     role,
-    loading = 'lazy',
+    loading = 'eager',
     fetchPriority = 'auto'
 }) => {
     // Improve alt text handling

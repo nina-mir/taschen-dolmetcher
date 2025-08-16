@@ -36,3 +36,6 @@ public/svgs
 dist/
 build/
 out/
+
+*storybook.log
+storybook-static

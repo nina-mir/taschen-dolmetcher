@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button"
 import { CardFooter } from "@/components/ui/card"
 
 interface SubmitProps {
-    showInfo: string;
+    hideBtn: string; 
     btnClassName: string;
     checkAnswer: () => void;
     disabled?: boolean;
@@ -24,7 +24,7 @@ interface SubmitProps {
 }
 
 const SubmitSection: React.FC<SubmitProps> = ({
-    showInfo,
+    hideBtn,
     btnClassName = "font-sans",
     checkAnswer,
     disabled = false,
@@ -32,7 +32,7 @@ const SubmitSection: React.FC<SubmitProps> = ({
     isLoading = false
 }) => {
 
-    const isHidden = showInfo !== 'hidden';
+    const isHidden = hideBtn === 'hidden';
 
 
     return (
