@@ -84,7 +84,7 @@ function NavigationMenuItem({
     <NavigationMenuPrimitive.Item
       ref={itemRef}
       data-slot="navigation-menu-item"
-      className={cn("relative", className)}
+      className={cn("relative ", className)}
       value={value}
       {...props}
     />
