@@ -39,3 +39,7 @@ out/
 
 *storybook.log
 storybook-static
+
+# Testing
+vitest.shims.d.ts
+*.shims.d.ts

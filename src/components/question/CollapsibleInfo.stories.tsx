@@ -448,7 +448,7 @@ export const AccessibilityShowcase: Story = {
 // Interactive state demo
 export const InteractiveDemo: Story = {
   render: (args) => {
-    const [openStates, setOpenStates] = React.useState<Record<string, boolean>>({});
+    const [, setOpenStates] = React.useState<Record<string, boolean>>({});
     const [eventLog, setEventLog] = React.useState<string[]>([]);
 
     const handleOpenChange = (id: string) => (open: boolean) => {

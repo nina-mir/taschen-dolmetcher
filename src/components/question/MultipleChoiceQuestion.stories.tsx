@@ -299,7 +299,7 @@ export const NoPhonetic: Story = {
 
 // All language combinations showcase
 export const LanguageCombinations: Story = {
-  render: (args) => (
+  render: (_args) => (
     <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-300 p-4 space-y-6">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold text-gray-800">Language Combination Examples</h2>
