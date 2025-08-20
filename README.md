@@ -1,4 +1,4 @@
-# Taschen-Dolmetcher.Revisited
+# Taschen-Dolmetcher <span style="color:yellow">&middot;</span> Revisited
 
 ## Overview
 
@@ -27,8 +27,9 @@ and heavily inspired by
 <hr>
 
 ## Technology
+<p style="font-size:2rem">React <img src="src\assets\react.svg"></p> 
 
-<p style="font-size:2rem; color: #61DAFB">React <svg width="40" height="40" viewBox="-10.5 -9.45 21 18.9" fill="#61DAFB" xmlns="http://www.w3.org/2000/svg" class="text-sm me-0 w-10 h-10 text-brand dark:text-brand-dark flex origin-center transition-all ease-in-out"><circle cx="0" cy="0" r="2" fill="#61DAFB"></circle><g stroke="#61DAFB" stroke-width="1" fill="none"><ellipse rx="10" ry="4.5"></ellipse><ellipse rx="10" ry="4.5" transform="rotate(60)"></ellipse><ellipse rx="10" ry="4.5" transform="rotate(120)"></ellipse></g></svg> </p> 
+<img src="https://github.com/storybookjs/brand/blob/main/logo/logo-storybook-default.png?raw=true" width="120" style="background-color: white">
 
  <picture width="20">
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/HEAD/.github/logo-dark.svg">
@@ -36,7 +37,15 @@ and heavily inspired by
       <img alt="Tailwind CSS" src="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/HEAD/.github/logo-light.svg" width="150" height="70" style="max-width: 100%;">
 </picture>
 
-
 [![My Skills](https://skillicons.dev/icons?i=ts)](https://skillicons.dev)
 
 This project is being built using a modern web tech stack—primarily React v.19, TypeScript and Tailwind CSS v.4. It provides interactive flashcards, phonetic guides, and historical insights about the crimes of Nazi Germany and its collaborators. By blending language practice with historical context, the project encourages users to reflect on the atrocities committed during World War II while acquiring practical linguistic skills.
+
+# Design 
+
+Using a design-first apparoach in creating this project, all the components were build and tested via Storybook <a
+            href="https://nina-mir.github.io/taschen-dolmetcher-storybook/"
+            target="_blank"
+          >
+            <img src="https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg" />
+          </a> 
