@@ -27,7 +27,7 @@ and heavily inspired by
 <hr>
 
 ## Technology
-<p style="font-size:2rem">React <img src="src\assets\react.svg"></p> 
+<p style="font-size:32px">React<img src="src\assets\react.svg"></p> 
 
 <img src="https://github.com/storybookjs/brand/blob/main/logo/logo-storybook-default.png?raw=true" width="120" style="background-color: white">
 
