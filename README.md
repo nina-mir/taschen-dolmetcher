@@ -28,13 +28,14 @@ and heavily inspired by
 
 ## Technology
 
-<p style="font-size:2rem; color: #61DAFB">React <svg width="40" height="40" viewBox="-10.5 -9.45 21 18.9" fill="#61DAFB" xmlns="http://www.w3.org/2000/svg" class="text-sm me-0 w-10 h-10 text-brand dark:text-brand-dark flex origin-center transition-all ease-in-out"><circle cx="0" cy="0" r="2" fill="currentColor"></circle><g stroke="currentColor" stroke-width="1" fill="none"><ellipse rx="10" ry="4.5"></ellipse><ellipse rx="10" ry="4.5" transform="rotate(60)"></ellipse><ellipse rx="10" ry="4.5" transform="rotate(120)"></ellipse></g></svg> </p> 
+<p style="font-size:2rem; color: #61DAFB">React <svg width="40" height="40" viewBox="-10.5 -9.45 21 18.9" fill="#61DAFB" xmlns="http://www.w3.org/2000/svg" class="text-sm me-0 w-10 h-10 text-brand dark:text-brand-dark flex origin-center transition-all ease-in-out"><circle cx="0" cy="0" r="2" fill="#61DAFB"></circle><g stroke="#61DAFB" stroke-width="1" fill="none"><ellipse rx="10" ry="4.5"></ellipse><ellipse rx="10" ry="4.5" transform="rotate(60)"></ellipse><ellipse rx="10" ry="4.5" transform="rotate(120)"></ellipse></g></svg> </p> 
 
  <picture width="20">
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/HEAD/.github/logo-dark.svg">
       <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/HEAD/.github/logo-light.svg">
       <img alt="Tailwind CSS" src="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/HEAD/.github/logo-light.svg" width="150" height="70" style="max-width: 100%;">
 </picture>
+
 
 [![My Skills](https://skillicons.dev/icons?i=ts)](https://skillicons.dev)
 
