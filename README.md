@@ -1,16 +1,23 @@
 # Taschen-Dolmetcher <span style="color:yellow">&middot;</span> Revisited
 
+## Table of Contents
+- [Overview](#overview)
+- [Project Status](#project-status)
+- [Motivation](#motivation)
+- [Technology](#technology)
+- [UI Engineering Design and Testing](#ui-engineering-design-and-testing)
+
 ## Overview
 
 **Taschen-Dolmetscher Revisited** is an educational project that revives a World War 2-era phrasebook once used by German military to communicate with the people of the occupied Soviet Union, allowing learners to practice German, Russian, and English phrases while learning about the Holocaust and German war crimes. This game's material are inspired by real events, reportage from the frontlines, and artwork created by witnesses of the Holocaust and former partisans fighting fascists.
 
-### project status
+### Project Status
 
 > [!IMPORTANT]
 > The first phase of this project (creating a beautifully-designed, fast and accessible website) is completed.
 > The project is seeking user feedback and sponsors for exhibition and growth. Please contact the author: Nina@SFSU.Edu
 
-## motivation
+## Motivation
 
 This idea to create this work was initially prompted by
 
@@ -27,7 +34,8 @@ and heavily inspired by
 <hr>
 
 ## Technology
-<p style="font-size:32px">React<img src="src\assets\react.svg"></p> 
+
+<h2>React <img src="src\assets\react.svg" width="32" height="32"></h2>
 
 <img src="https://github.com/storybookjs/brand/blob/main/logo/logo-storybook-default.png?raw=true" width="120" style="background-color: white">
 
@@ -41,11 +49,12 @@ and heavily inspired by
 
 This project is being built using a modern web tech stack—primarily React v.19, TypeScript and Tailwind CSS v.4. It provides interactive flashcards, phonetic guides, and historical insights about the crimes of Nazi Germany and its collaborators. By blending language practice with historical context, the project encourages users to reflect on the atrocities committed during World War II while acquiring practical linguistic skills.
 
-# Design 
+
+## UI Engineering Design and Testing
 
 Using a design-first apparoach in creating this project, all the components were build and tested via Storybook <a
             href="https://nina-mir.github.io/taschen-dolmetcher-storybook/"
             target="_blank"
           >
             <img src="https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg" />
-          </a> 
+          </a>
