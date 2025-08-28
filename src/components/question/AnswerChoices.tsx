@@ -102,7 +102,7 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
             >
                 <RadioGroupItem
                     value={item}
-                    className={`${radioItemClassName}  focus:ring-red-500/30`}
+                    className={`${radioItemClassName}  focus:ring-red-500/30 cursor-pointer`}
                     id={choiceId}
                     aria-describedby={`${choiceId}-desc`}
                 />
@@ -130,6 +130,7 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
             onValueChange={onValueChange}
             onKeyDown={handleKeyDown}
             className={`
+            cursor-pointer
                 relative
                 ${showInfo === 'hidden' ? '' : 'hidden'}
                 font-garamond-pp

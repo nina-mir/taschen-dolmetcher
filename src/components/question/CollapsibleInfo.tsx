@@ -25,7 +25,7 @@ interface CollapsibleInfoProps {
     ariaLabel?: string;
     // New accessibility props
     contentId?: string;
-    triggerText?: string;
+    triggerText?: React.ReactNode;
     contentDescription?: string;
 }
 
@@ -58,17 +58,14 @@ const CollapsibleInfo: React.FC<CollapsibleInfoProps> = ({
     // Determine appropriate aria-label based on state and content
     const getAriaLabel = (): string => {
         if (ariaLabel) return ariaLabel;
-        
+
         const action = isOpen ? "Collapse" : "Expand";
         const target = contentDescription || "additional information";
         return `${action} ${target}`;
     };
 
-    // Create proper heading if level is specified
-    // const TriggerWrapper = level ? `h${level}` as keyof JSX.IntrinsicElements : 'div';
-
     const triggerContent = (
-        <CollapsibleTrigger 
+        <CollapsibleTrigger
             id={triggerId}
             className={triggerClassName}
             aria-label={getAriaLabel()}
@@ -77,18 +74,28 @@ const CollapsibleInfo: React.FC<CollapsibleInfoProps> = ({
             aria-describedby={contentDescription ? `${generatedId}-desc` : undefined}
             type="button"
         >
-            {/* Icon with proper ARIA handling */}
-            <span aria-hidden="true">
-                {icon || <PlusIcon className={iconClassName} />}
-            </span>
-            
-            {/* Optional visible trigger text */}
-            {triggerText && (
-                <span className="ml-2">
-                    {triggerText}
+            {/* Icon with conditional rotation applied directly to the icon */}
+            <div className="md:px-1 md:py-0.2 md:flex md:items-center md:justify-center md:rounded-3xl bg-red-500 text-soviet-gold border-1 border-soviet-gold">
+
+                {/* Optional visible trigger text */}
+                {triggerText && (
+                    <span>
+                        {triggerText}
+                    </span>
+                )}
+                <span aria-hidden="true">
+                    {icon ? (
+                        <span className={`inline-block transition-transform duration-500 ease-in-out ${isOpen ? 'rotate-45' : ''}`}>
+                            {icon}
+                        </span>
+                    ) : (
+                        <PlusIcon className={`rounded-xl  transition-transform duration-500 ease-in-out ${isOpen ? 'rotate-45' : ''}`} />
+                    )}
                 </span>
-            )}
-            
+
+
+            </div>
+
             {/* Screen reader only state description */}
             <span className="sr-only">
                 {isOpen ? "Collapse" : "Expand"} content
@@ -97,23 +104,16 @@ const CollapsibleInfo: React.FC<CollapsibleInfoProps> = ({
     );
 
     return (
-        <Collapsible 
+        <Collapsible
             className={wrapperClassName}
             defaultOpen={defaultOpen}
             onOpenChange={handleOpenChange}
             aria-label={contentDescription}
         >
-            {/* {level ? (
-                <TriggerWrapper role="heading" aria-level={level}>
-                    {triggerContent}
-                </TriggerWrapper>
-            ) : (
-                triggerContent
-            )} */}
 
             {triggerContent}
 
-            <CollapsibleContent 
+            <CollapsibleContent
                 id={generatedId}
                 className={contentClassName}
                 role="region"
@@ -123,14 +123,14 @@ const CollapsibleInfo: React.FC<CollapsibleInfoProps> = ({
             >
                 {/* Optional content description for screen readers */}
                 {contentDescription && (
-                    <span 
+                    <span
                         id={`${generatedId}-desc`}
                         className="sr-only"
                     >
                         {contentDescription}
                     </span>
                 )}
-                
+
                 <div role="group">
                     {content}
                 </div>

@@ -1,6 +1,7 @@
 // InfoText - the info text with source citation
 import { InfoItem } from '@/types';
 import CollapsibleInfo from './CollapsibleInfo';
+import { QuoteIcon } from '@radix-ui/react-icons';
 
 interface InfoTextProps {
     info: InfoItem;
@@ -27,8 +28,8 @@ const InfoText: React.FC<InfoTextProps> = ({
     citeSourceClassName = ``,
     collapsibleDefault = true,
     collapsibleWrapperClassName = `absolute rounded-t-xl`,
-    collapsibleTriggerClassName = `transition-transform duration-500 ease-in-out data-[state=open]:rotate-45`,
-    collapsibleIconClassName = `w-3 h-3 bg-red-500 text-soviet-gold border-1 border-soviet-gold`,
+    collapsibleTriggerClassName = ``,
+    collapsibleIconClassName = `bg-red-500 text-soviet-gold border-1 border-soviet-gold`,
     collapsibleContentClassName = `w-[85%] p-2 text-wrap text-[0.9rem] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-500`,
     // accessibility props
     id,
@@ -82,6 +83,7 @@ const InfoText: React.FC<InfoTextProps> = ({
                     iconClassName={collapsibleIconClassName}
                     contentClassName={collapsibleContentClassName}
                     ariaLabel="Toggle source citation visibility"
+                    triggerText=<QuoteIcon/>
                     // contentId={sourceId}
                 />
             )}

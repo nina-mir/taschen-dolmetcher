@@ -95,7 +95,7 @@ export function NavigationMenuDemo() {
                   </p>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/docs" title="Introduction">
+              <ListItem  title="Introduction">
                 <img src="https://camo.githubusercontent.com/c207e3fb3ee188b56a32c8acbdf6559d191d3c1f08a0913be2a5b78b3fd4c6b6/68747470733a2f2f61737365742e6d757365756d2d6469676974616c2e6f72672f2f6d656469612f3830302f6265726c696e2f696d616765732f33342f38303337322d3230373236332f3230373236332f3230373236332d38303337322e6a7067" />
                 {/* <a
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none"
@@ -105,14 +105,13 @@ export function NavigationMenuDemo() {
                   Hindersin, Bob. Taschen-Dolmetscher für Frontsoldaten Russisch.
                   Georg Siemens Verlagsbuchhandlung, 1943.
                 </cite>
-                {/* </a>      */}
               </ListItem>
-              <ListItem href="/docs/installation" title="Writers/Words">
+              <ListItem title="Writers/Words">
                 Many Soviet artists and writers also participated in this great effort.<em>Ilya Ehrenburg
                   and Vasily Grossman</em>,
                 two Jewish Ukranian-born writers, stand out for their coverage of the frontlines and inspiring words.
               </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
+              <ListItem title="Typography">
                 Adobe Fonts similar to New Yorker fontInspired by the B/W colors of WW2 and the ashes of Treblinka, a color palette was designed for this work.
               </ListItem>
             </ul>
@@ -136,7 +135,7 @@ export function NavigationMenuDemo() {
                 <ListItem
                   key={component.title}
                   title={component.title}
-                  href={component.href}
+                  // href={component.href}
                   className="[&>*]:text-lg"
                 >
                   {component.description}

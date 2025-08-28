@@ -5,7 +5,7 @@
 - [Project Status](#project-status)
 - [Motivation](#motivation)
 - [Technology](#technology)
-- [UI Engineering Design and Testing](#ui-engineering-design-and-testing)
+- [UI Engineering Design & Testing](#ui-engineering-design-and-testing)
 
 ## Overview
 
@@ -50,7 +50,7 @@ and heavily inspired by
 This project is being built using a modern web tech stack—primarily React v.19, TypeScript and Tailwind CSS v.4. It provides interactive flashcards, phonetic guides, and historical insights about the crimes of Nazi Germany and its collaborators. By blending language practice with historical context, the project encourages users to reflect on the atrocities committed during World War II while acquiring practical linguistic skills.
 
 
-## UI Engineering Design and Testing
+## UI Engineering Design & Testing
 
 Using a design-first apparoach in creating this project, all the components were build and tested via Storybook <a
             href="https://nina-mir.github.io/taschen-dolmetcher-storybook/"
@@ -58,3 +58,5 @@ Using a design-first apparoach in creating this project, all the components were
           >
             <img src="https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg" />
           </a>
+
+Corresponding documentation for each reuseable UI component is provided within the storybook asset. Please click on the storybook badge above. 
