@@ -3,7 +3,7 @@
 import { QuestionType, LanguageType } from '@/types';
 import data from '@/assets/data/improved_data_deepseek_en_array.json';
 import multipleChoiceData from '@/assets/data/multiple_choice_data_claude.json'
-import mediaData from '@/assets/data/imagesData.json';
+import mediaData from '@/assets/data/imagesData_local.json';
 import textData from '@/assets/data/infoData.json';
 
 import Question from '@/components/Question';
