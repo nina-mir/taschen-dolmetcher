@@ -245,7 +245,7 @@ const Question: React.FC<QuestionProps> = ({
           className={`
             ${showInfo === 'hidden' ? '' : 'hidden'}
             font-garamond-pp
-            bg-stone-400
+            bg-stone-400 dark:bg-stone-700
             text-stone-100
             placeholder:tracking-[0.2rem]
             text-2xl
@@ -258,8 +258,8 @@ const Question: React.FC<QuestionProps> = ({
 
         {revealText && (
           <div className="mt-2 px-3 py-2 bg-soviet-gold/20 border border-soviet-gold/60 rounded font-garamond-pp text-base">
-            <span className="text-stone-500 text-sm">answer: </span>
-            <span className="font-semibold text-stone-800">{revealText}</span>
+            <span className="text-stone-500 dark:text-stone-400 text-sm">answer: </span>
+            <span className="font-semibold text-stone-800 dark:text-stone-100">{revealText}</span>
           </div>
         )}
 

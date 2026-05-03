@@ -1,6 +1,7 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import ScoreTracker from "@/components/ScoreTracker"
+import { UploadIcon } from "@radix-ui/react-icons"
 
 import {
   NavigationMenu,
@@ -17,9 +18,21 @@ interface NavigationMenuDemoProps {
   correct: number;
   incorrect: number;
   onNewGame: () => void;
+  isDark: boolean;
+  onDarkToggle: () => void;
+  onShare: () => void;
+  copied: boolean;
 }
 
-export function NavigationMenuDemo({ correct, incorrect, onNewGame }: NavigationMenuDemoProps) {
+export function NavigationMenuDemo({
+  correct,
+  incorrect,
+  onNewGame,
+  isDark,
+  onDarkToggle,
+  onShare,
+  copied,
+}: NavigationMenuDemoProps) {
   const [activeMenu, setActiveMenu] = React.useState<string>("")
 
   const handleMenuClick = (menuValue: string) => {
@@ -32,15 +45,22 @@ export function NavigationMenuDemo({ correct, incorrect, onNewGame }: Navigation
 
   return (
     <NavigationMenu
-      className="font-garamond-pp bg-stone-300/80 max-w-full justify-end"
+      className="font-garamond-pp bg-stone-300/80 dark:bg-stone-900/90 max-w-full justify-end"
       value={activeMenu}
       onValueChange={handleValueChange}
     >
       <div className="relative w-full">
         {/* Score tracker: absolutely centered in the navbar — desktop only */}
         <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-10 pointer-events-none">
-          <div className="px-4 py-1 rounded-full bg-stone-200/70 border border-stone-400/40 pointer-events-auto">
-            <ScoreTracker correct={correct} incorrect={incorrect} variant="navbar" onNewGame={onNewGame} />
+          <div className="px-4 py-1 rounded-full bg-stone-200/70 dark:bg-stone-700/70 border border-stone-400/40 dark:border-stone-600/40 pointer-events-auto">
+            <ScoreTracker
+              correct={correct}
+              incorrect={incorrect}
+              variant="navbar"
+              onNewGame={onNewGame}
+              onShare={onShare}
+              copied={copied}
+            />
           </div>
         </div>
 
@@ -48,17 +68,17 @@ export function NavigationMenuDemo({ correct, incorrect, onNewGame }: Navigation
           {/* Left: History */}
           <NavigationMenuItem value="history">
             <NavigationMenuTrigger
-              className="text-lg data-[state=open]:bg-stone-300"
+              className="text-lg data-[state=open]:bg-stone-300 dark:data-[state=open]:bg-stone-700 dark:text-stone-100 dark:hover:bg-stone-700/50"
               onClick={() => handleMenuClick("history")}
               clickOnly={true}
             >
               History
             </NavigationMenuTrigger>
             <NavigationMenuContent
-              className="hover:bg-stone-300 bg-stone-300 border-0 focus:ring-0"
+              className="bg-stone-300 dark:bg-stone-800 hover:bg-stone-300 dark:hover:bg-stone-800 border-0 focus:ring-0"
               clickOnly={true}
             >
-              <div className="flex flex-col gap-5 px-6 pt-8 pb-28 md:p-6 w-[calc(100vw-2rem)] md:w-[400px] lg:w-[500px] max-h-[70vh] overflow-y-auto md:max-h-none md:overflow-visible text-xl md:text-base leading-relaxed font-garamond-pp">
+              <div className="flex flex-col gap-5 px-6 pt-8 pb-28 md:p-6 w-[calc(100vw-2rem)] md:w-[400px] lg:w-[500px] max-h-[70vh] overflow-y-auto md:max-h-none md:overflow-visible text-xl md:text-base leading-relaxed font-garamond-pp dark:text-stone-100">
                 <p>
                   On June 22, 1941, Germany attacked the USSR. This invasion caught despot Joseph Stalin by surprise.
                   But the Soviet people did not hide for 12 days like Stalin did.
@@ -78,7 +98,7 @@ export function NavigationMenuDemo({ correct, incorrect, onNewGame }: Navigation
           {/* Left: How to Play */}
           <NavigationMenuItem value="game">
             <NavigationMenuTrigger
-              className="text-lg data-[state=open]:bg-stone-300"
+              className="text-lg data-[state=open]:bg-stone-300 dark:data-[state=open]:bg-stone-700 dark:text-stone-100 dark:hover:bg-stone-700/50"
               onClick={() => handleMenuClick("game")}
               clickOnly={true}
             >
@@ -86,9 +106,9 @@ export function NavigationMenuDemo({ correct, incorrect, onNewGame }: Navigation
             </NavigationMenuTrigger>
             <NavigationMenuContent
               clickOnly={true}
-              className="hover:bg-stone-300 bg-stone-300 border-0 focus:ring-0"
+              className="bg-stone-300 dark:bg-stone-800 hover:bg-stone-300 dark:hover:bg-stone-800 border-0 focus:ring-0"
             >
-              <div className="flex flex-col gap-5 px-6 pt-8 pb-28 md:p-6 w-[calc(100vw-2rem)] md:w-[400px] lg:w-[500px] max-h-[70vh] overflow-y-auto md:max-h-none md:overflow-visible text-xl md:text-base leading-relaxed font-garamond-pp">
+              <div className="flex flex-col gap-5 px-6 pt-8 pb-28 md:p-6 w-[calc(100vw-2rem)] md:w-[400px] lg:w-[500px] max-h-[70vh] overflow-y-auto md:max-h-none md:overflow-visible text-xl md:text-base leading-relaxed font-garamond-pp dark:text-stone-100">
                 <p>
                   Choose a language pair — German, English, or Russian — then pick your format:
                   multiple choice or type your answer. Questions are shuffled each session.
@@ -104,8 +124,39 @@ export function NavigationMenuDemo({ correct, incorrect, onNewGame }: Navigation
             </NavigationMenuContent>
           </NavigationMenuItem>
 
-          {/* Right: Storybook badge */}
+          {/* Right: dark mode toggle */}
           <NavigationMenuItem className="ml-auto">
+            <button
+              onClick={onDarkToggle}
+              className={`${navigationMenuTriggerStyle()} text-base cursor-pointer dark:text-stone-100 dark:hover:bg-stone-700/50`}
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={isDark ? 'Light mode' : 'Dark mode'}
+              type="button"
+            >
+              {isDark ? '☀️' : '🌙'}
+            </button>
+          </NavigationMenuItem>
+
+          {/* Right: share (desktop only, when score > 0) */}
+          {correct > 0 && (
+            <NavigationMenuItem>
+              <button
+                onClick={onShare}
+                className={`${navigationMenuTriggerStyle()} cursor-pointer dark:text-stone-100 dark:hover:bg-stone-700/50`}
+                aria-label="Share your score"
+                title={copied ? 'Copied!' : 'Share score'}
+                type="button"
+              >
+                {copied
+                  ? <span className="text-xs font-gyst text-emerald-600 dark:text-emerald-400">Copied!</span>
+                  : <UploadIcon className="w-4 h-4" />
+                }
+              </button>
+            </NavigationMenuItem>
+          )}
+
+          {/* Right: Storybook badge */}
+          <NavigationMenuItem>
             <NavigationMenuLink
               className={navigationMenuTriggerStyle()}
               href="https://nina-mir.github.io/taschen-dolmetcher-storybook/"
