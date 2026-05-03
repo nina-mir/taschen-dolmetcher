@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { CheckIcon, Cross2Icon, ResetIcon, UploadIcon } from "@radix-ui/react-icons"
+import { CheckIcon, Cross2Icon, ResetIcon, UploadIcon, ChevronUpIcon, ChevronDownIcon } from "@radix-ui/react-icons"
 import { isHapticEnabled, toggleHaptic } from '@/utils/haptics'
+
+const MINIMIZED_KEY = 'taschen-dolmetcher-tracker-minimized'
 
 interface ScoreTrackerProps {
   correct: number;
@@ -23,10 +25,19 @@ const ScoreTracker: React.FC<ScoreTrackerProps> = ({
 }) => {
   const total = correct + incorrect;
   const [hapticOn, setHapticOn] = useState<boolean>(isHapticEnabled)
+  const [minimized, setMinimized] = useState<boolean>(() => {
+    return localStorage.getItem(MINIMIZED_KEY) === 'true'
+  })
 
   const handleHapticToggle = () => {
     const next = toggleHaptic()
     setHapticOn(next)
+  }
+
+  const handleMinimizeToggle = () => {
+    const next = !minimized
+    setMinimized(next)
+    localStorage.setItem(MINIMIZED_KEY, String(next))
   }
 
   if (variant === 'navbar') {
@@ -67,7 +78,40 @@ const ScoreTracker: React.FC<ScoreTrackerProps> = ({
     )
   }
 
-  // mobile-banner variant
+  // ── mobile-banner ──────────────────────────────────────────────────
+
+  if (minimized) {
+    return (
+      <div
+        className="fixed bottom-0 left-0 right-0 z-50 md:hidden flex justify-center pb-4 px-6 pointer-events-none"
+        role="status"
+        aria-live="polite"
+        aria-label={`Score: ${correct} correct, ${incorrect} incorrect`}
+      >
+        <div className="pointer-events-auto flex items-center gap-3 bg-stone-900/65 backdrop-blur-md rounded-full px-4 py-2 border border-stone-700/40 shadow-lg">
+          <span className="flex items-center gap-1 text-emerald-400 font-gyst font-bold text-lg leading-none">
+            <CheckIcon className="w-4 h-4" aria-hidden="true" />
+            {correct}
+          </span>
+          <span className="text-stone-600 text-xs">|</span>
+          <span className="flex items-center gap-1 text-red-400 font-gyst font-bold text-lg leading-none">
+            {incorrect}
+            <Cross2Icon className="w-4 h-4" aria-hidden="true" />
+          </span>
+          <button
+            onClick={handleMinimizeToggle}
+            className="text-stone-500 hover:text-soviet-gold transition-colors duration-200 cursor-pointer ml-1"
+            aria-label="Expand score tracker"
+            title="Expand"
+            type="button"
+          >
+            <ChevronUpIcon className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div
       className="fixed bottom-0 left-0 right-0 z-50 md:hidden flex justify-center pb-4 px-6 pointer-events-none"
@@ -148,6 +192,16 @@ const ScoreTracker: React.FC<ScoreTrackerProps> = ({
           type="button"
         >
           {hapticOn ? '📳' : '🔕'}
+        </button>
+
+        <button
+          onClick={handleMinimizeToggle}
+          className="text-stone-500 hover:text-soviet-gold transition-colors duration-200 cursor-pointer"
+          aria-label="Minimize score tracker"
+          title="Minimize"
+          type="button"
+        >
+          <ChevronDownIcon className="w-4 h-4" />
         </button>
       </div>
     </div>
