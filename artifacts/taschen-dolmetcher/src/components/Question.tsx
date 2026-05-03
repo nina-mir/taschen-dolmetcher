@@ -46,6 +46,7 @@ interface QuestionProps {
   toLanguage: string;
   media: MediaItem;
   info: InfoItem;
+  onAnswer: (isCorrect: boolean) => void;
 }
 
 type KorrektClasses = {
@@ -69,7 +70,8 @@ const Question: React.FC<QuestionProps> = ({
   fromLanguage,
   toLanguage,
   media,
-  info
+  info,
+  onAnswer,
 }) => {
   const [result, setResult] = useState<boolean>(false)
   const [showInfo, setShowInfo] = useState<string>('hidden')
@@ -106,6 +108,8 @@ const Question: React.FC<QuestionProps> = ({
         isCorrect = true
       }
     }
+
+    onAnswer(isCorrect)
 
     if (isCorrect) {
       setResult(true)
