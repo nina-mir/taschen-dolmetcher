@@ -128,12 +128,30 @@ export function NavigationMenuDemo({
           <NavigationMenuItem className="ml-auto">
             <button
               onClick={onDarkToggle}
-              className={`${navigationMenuTriggerStyle()} text-base cursor-pointer dark:text-stone-100 dark:hover:bg-stone-700/50`}
+              className={`${navigationMenuTriggerStyle()} cursor-pointer dark:hover:bg-stone-700/50`}
               aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
               title={isDark ? 'Light mode' : 'Dark mode'}
               type="button"
             >
-              {isDark ? '☀️' : '🌙'}
+              {isDark ? (
+                /* Sun — yellow outline on dark background */
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <circle cx="12" cy="12" r="4.5" stroke="#FFD700" strokeWidth="1.75"/>
+                  <line x1="12" y1="2" x2="12" y2="5" stroke="#FFD700" strokeWidth="1.75" strokeLinecap="round"/>
+                  <line x1="12" y1="19" x2="12" y2="22" stroke="#FFD700" strokeWidth="1.75" strokeLinecap="round"/>
+                  <line x1="4.22" y1="4.22" x2="6.34" y2="6.34" stroke="#FFD700" strokeWidth="1.75" strokeLinecap="round"/>
+                  <line x1="17.66" y1="17.66" x2="19.78" y2="19.78" stroke="#FFD700" strokeWidth="1.75" strokeLinecap="round"/>
+                  <line x1="2" y1="12" x2="5" y2="12" stroke="#FFD700" strokeWidth="1.75" strokeLinecap="round"/>
+                  <line x1="19" y1="12" x2="22" y2="12" stroke="#FFD700" strokeWidth="1.75" strokeLinecap="round"/>
+                  <line x1="4.22" y1="19.78" x2="6.34" y2="17.66" stroke="#FFD700" strokeWidth="1.75" strokeLinecap="round"/>
+                  <line x1="17.66" y1="6.34" x2="19.78" y2="4.22" stroke="#FFD700" strokeWidth="1.75" strokeLinecap="round"/>
+                </svg>
+              ) : (
+                /* Crescent moon — red outline on light background */
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="#dc2626" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              )}
             </button>
           </NavigationMenuItem>
 
