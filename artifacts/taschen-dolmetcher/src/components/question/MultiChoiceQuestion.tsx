@@ -25,6 +25,7 @@ interface QuestionProps {
   toLanguage: LanguageType;
   media: MediaItem;
   info: InfoItem;
+  onAnswer: (isCorrect: boolean) => void;
 }
 
 type KorrektClasses = {
@@ -34,6 +35,8 @@ type KorrektClasses = {
   marginB: string;
   showText: boolean;
   displayText: string;
+  wrongImgUrl: string;
+  wrongCaption: string;
 };
 
 const DEFAULT_CLASSES: KorrektClasses = {
@@ -43,6 +46,8 @@ const DEFAULT_CLASSES: KorrektClasses = {
   marginB: 'mb-[0rem]',
   showText: false,
   displayText: '',
+  wrongImgUrl: '',
+  wrongCaption: '',
 }
 
 const MultiChoiceQuestion: React.FC<QuestionProps> = ({
@@ -55,7 +60,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   fromLanguage,
   toLanguage,
   media,
-  info
+  info,
+  onAnswer,
 }) => {
   const [result, setResult] = useState<boolean>(false)
   const [showInfo, setShowInfo] = useState<string>('hidden')
@@ -109,6 +115,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       }
     }
 
+    onAnswer(isCorrect)
+
     if (isCorrect) {
       setResult(true)
       setFeedbackMessage('Correct answer!')
@@ -119,6 +127,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
         marginB: 'mb-[1.5rem]',
         showText: false,
         displayText: '',
+        wrongImgUrl: '',
+        wrongCaption: '',
       })
       setShowInfo('')
       return true
@@ -139,6 +149,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       marginB: 'mb-[0rem]',
       showText: true,
       displayText: wrongEntry.altText || 'Wrong Answer!',
+      wrongImgUrl: wrongEntry.imgUrl,
+      wrongCaption: wrongEntry.imgCaption || 'Wrong Answer!',
     })
 
     setTimeout(() => {
@@ -168,9 +180,9 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
       <FeedbackOverlay
         isVisible={correctClasses.showText}
-        backgroundImgUrl={wrongData[0].imgUrl}
+        backgroundImgUrl={correctClasses.wrongImgUrl}
         messageText="Incorrect ❌⚠️"
-        captionText={wrongData[0].imgCaption}
+        captionText={correctClasses.wrongCaption}
         ariaLabel="Answer feedback"
       />
 

@@ -13,6 +13,7 @@ interface QuestionsContainerProps {
   fromLanguage: LanguageType;
   toLanguage: LanguageType;
   qFormat: QuestionType;
+  onAnswer: (isCorrect: boolean) => void;
 }
 
 // Shuffle question indices once per session so data + multipleChoiceData stay in sync
@@ -22,7 +23,7 @@ const questionIndices: number[] = knuthRandomizer(data.map((_, i) => i))
 const shuffledMediaData = knuthRandomizer([...mediaData])
 const shuffledTextData = knuthRandomizer([...textData])
 
-const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat }: QuestionsContainerProps) => {
+const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer }: QuestionsContainerProps) => {
   if (qFormat === 'choosing') {
     const questions = questionIndices.map((dataIdx, displayIdx) => (
       <MultiChoiceQuestion
@@ -37,6 +38,7 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat }: QuestionsCont
         toLanguage={toLanguage}
         media={shuffledMediaData[displayIdx]}
         info={shuffledTextData[displayIdx]}
+        onAnswer={onAnswer}
       />
     ));
 
@@ -59,6 +61,7 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat }: QuestionsCont
       toLanguage={toLanguage}
       media={shuffledMediaData[displayIdx]}
       info={shuffledTextData[displayIdx]}
+      onAnswer={onAnswer}
     />
   ));
 

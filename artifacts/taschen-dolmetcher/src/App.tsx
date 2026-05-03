@@ -4,6 +4,7 @@ import QuestionsContainer from './components/QuestionsContainer';
 import LanguageSelector from './components/LanguageSelector'
 import { NavigationMenuDemo } from './components/Navbar'
 import ToggleQuestionType from './components/QuestionsFormat'
+import ScoreTracker from './components/ScoreTracker'
 import Footer from './components/Footer';
 
 import { StarFilledIcon, CornersIcon } from "@radix-ui/react-icons"
@@ -30,6 +31,8 @@ function App() {
   const [toLanguage, setToLanguage] = useState<LanguageType>('en')
   const [okayChoices, setOkayChoices] = useState<boolean>(true)
   const [qFormat, setQFormat] = useState<QuestionType>('choosing')
+  const [correct, setCorrect] = useState<number>(0)
+  const [incorrect, setIncorrect] = useState<number>(0)
 
   const handleLanguageChange = (from: LanguageType, to: LanguageType) => {
     if (from !== to) {
@@ -41,12 +44,22 @@ function App() {
     }
   }
 
+  const handleAnswer = (isCorrect: boolean) => {
+    if (isCorrect) {
+      setCorrect(prev => prev + 1)
+    } else {
+      setIncorrect(prev => prev + 1)
+    }
+  }
+
   return (
     <div className="w-full">
       <div className="fixed top-0 left-0 right-0 z-50">
-        <NavigationMenuDemo />
+        <NavigationMenuDemo correct={correct} incorrect={incorrect} />
       </div>
+
       <Header />
+
       <div className="flex flex-col items-center gap-[1rem]">
         <div className='w-full flex flex-col items-center -gap-5'>
           <LanguageSelector
@@ -58,13 +71,13 @@ function App() {
         </div>
 
         <div className='
-        flex
-        items-center
-        gap-[3px]
-        font-garamond-pp
-        text-xl
-        text-center
-        text-wrap
+          flex
+          items-center
+          gap-[3px]
+          font-garamond-pp
+          text-xl
+          text-center
+          text-wrap
         '>
           <StarFilledIcon className='w-6 h-6 inline-block text-red-600' />
           {okayChoices && <p>{makeInstruction(fromLanguage, toLanguage)}</p>}
@@ -75,6 +88,7 @@ function App() {
             toLanguage={toLanguage}
             fromLanguage={fromLanguage}
             qFormat={qFormat}
+            onAnswer={handleAnswer}
           />
         )}
 
@@ -95,12 +109,16 @@ function App() {
           </div>
         )}
       </div>
+
       <div className="w-full flex flex-col mt-10">
         <p className="font-semibold bg-pink-400 w-full p-4 font-gyst inline-block align-bottom text-stone-900 text-2xl text-center">
           In memory &amp; admiration of Vasily Grossman, Ilya Ehrenburg, and countless other poets fighting fascism.
         </p>
         <Footer />
       </div>
+
+      {/* Mobile score banner — fixed bottom, hidden on desktop */}
+      <ScoreTracker correct={correct} incorrect={incorrect} variant="mobile-banner" />
     </div>
   )
 }

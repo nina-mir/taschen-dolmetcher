@@ -1,5 +1,6 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
+import ScoreTracker from "@/components/ScoreTracker"
 
 import {
   NavigationMenu,
@@ -39,7 +40,12 @@ const components: { title: string; href: string; description: string }[] = [
   },
 ]
 
-export function NavigationMenuDemo() {
+interface NavigationMenuDemoProps {
+  correct: number;
+  incorrect: number;
+}
+
+export function NavigationMenuDemo({ correct, incorrect }: NavigationMenuDemoProps) {
   const [activeMenu, setActiveMenu] = React.useState<string>("")
 
   const handleMenuClick = (menuValue: string) => {
@@ -58,6 +64,7 @@ export function NavigationMenuDemo() {
     >
       <div className="w-full">
         <NavigationMenuList className="w-[100%]">
+          {/* Left: History */}
           <NavigationMenuItem value="history">
             <NavigationMenuTrigger
               className="text-lg data-[state=open]:bg-stone-300"
@@ -100,6 +107,7 @@ export function NavigationMenuDemo() {
             </NavigationMenuContent>
           </NavigationMenuItem>
 
+          {/* Left: How to Play */}
           <NavigationMenuItem value="game">
             <NavigationMenuTrigger
               className="text-lg data-[state=open]:bg-stone-300"
@@ -126,6 +134,14 @@ export function NavigationMenuDemo() {
             </NavigationMenuContent>
           </NavigationMenuItem>
 
+          {/* Center: Score tracker — desktop only */}
+          <NavigationMenuItem className="hidden md:flex flex-1 justify-center pointer-events-none">
+            <div className="px-4 py-1 rounded-full bg-stone-200/70 border border-stone-400/40">
+              <ScoreTracker correct={correct} incorrect={incorrect} variant="navbar" />
+            </div>
+          </NavigationMenuItem>
+
+          {/* Right: Storybook badge */}
           <NavigationMenuItem className="ml-auto">
             <NavigationMenuLink
               className={navigationMenuTriggerStyle()}
