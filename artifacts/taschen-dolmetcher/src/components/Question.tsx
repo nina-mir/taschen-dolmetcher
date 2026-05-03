@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
 import { DotFilledIcon, EyeClosedIcon, EyeOpenIcon, PlusIcon } from "@radix-ui/react-icons"
@@ -15,6 +15,9 @@ import {
 
 import { MediaItem, InfoItem } from '@/types';
 import { figureQA } from '@/utils/questionHelpers';
+import FeedbackOverlay from './question/FeedbackOverlay'
+import wrongData from '@/assets/data/wrongAnswerImages.json'
+import { hapticCorrect, hapticWrong } from '@/utils/haptics'
 
 import {
   Collapsible,
@@ -80,11 +83,21 @@ const Question: React.FC<QuestionProps> = ({
   const [showInfo, setShowInfo] = useState<string>('hidden')
   const [userInput, setUserInput] = useState<string>('')
   const [correctClasses, setCorrectClasses] = useState<KorrektClasses>(DEFAULT_CLASSES);
+  const [wrongAttempts, setWrongAttempts] = useState<number>(0)
+  const [showWrongOverlay, setShowWrongOverlay] = useState<boolean>(false)
+  const [wrongImgUrl, setWrongImgUrl] = useState<string>('')
+  const [wrongCaption, setWrongCaption] = useState<string>('')
+  const wrongTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     setCorrectClasses(DEFAULT_CLASSES)
     setUserInput('')
     setResult(false)
+    setWrongAttempts(0)
+    setShowWrongOverlay(false)
+    return () => {
+      if (wrongTimeoutRef.current) clearTimeout(wrongTimeoutRef.current)
+    }
   }, [fromLanguage, toLanguage])
 
   const update = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,6 +108,14 @@ const Question: React.FC<QuestionProps> = ({
     if (e.key === 'Enter') {
       checkAnswer(userInput, answer)
     }
+  }
+
+  const handleOverlayDismiss = () => {
+    if (wrongTimeoutRef.current) {
+      clearTimeout(wrongTimeoutRef.current)
+      wrongTimeoutRef.current = null
+    }
+    setShowWrongOverlay(false)
   }
 
   const checkAnswer = (input: string, ans: string | string[]): boolean => {
@@ -115,6 +136,7 @@ const Question: React.FC<QuestionProps> = ({
     onAnswer(isCorrect)
 
     if (isCorrect) {
+      hapticCorrect()
       setResult(true)
       setCorrectClasses({
         bg: 'bg-red-600',
@@ -124,17 +146,40 @@ const Question: React.FC<QuestionProps> = ({
       setShowInfo('')
       return true
     } else {
+      hapticWrong()
+      const newAttempts = wrongAttempts + 1
+      setWrongAttempts(newAttempts)
+      const wrongEntry = wrongData[Math.floor(Math.random() * wrongData.length)]
+      setWrongImgUrl(wrongEntry.imgUrl)
+      setWrongCaption(wrongEntry.imgCaption || '')
+      setShowWrongOverlay(true)
+      if (wrongTimeoutRef.current) clearTimeout(wrongTimeoutRef.current)
+      wrongTimeoutRef.current = setTimeout(() => {
+        setShowWrongOverlay(false)
+      }, 3500)
       setResult(false)
       return false
     }
   }
 
   const [question, answer] = figureQA(fromLanguage as any, toLanguage as any, de, en, ru)
+  const revealText = wrongAttempts >= 3 && !result
+    ? (Array.isArray(answer) ? answer[0] : answer)
+    : null
 
   return (
     <Card
       className={`relative w-[90%] md:w-[600px] ${correctClasses.bg} ${correctClasses.marginB} ${showInfo !== 'hidden' ? 'z-10' : ''}`}
     >
+      <FeedbackOverlay
+        isVisible={showWrongOverlay}
+        backgroundImgUrl={wrongImgUrl}
+        messageText="Incorrect ❌⚠️"
+        captionText={wrongCaption}
+        ariaLabel="Answer feedback"
+        onDismiss={handleOverlayDismiss}
+      />
+
       <CardHeader>
         <CardTitle className="text-xl flex flex-row justify-between">
           <div>
@@ -210,6 +255,13 @@ const Question: React.FC<QuestionProps> = ({
           onKeyDown={handleEnter}
           value={userInput}
         />
+
+        {revealText && (
+          <div className="mt-2 px-3 py-2 bg-soviet-gold/20 border border-soviet-gold/60 rounded font-garamond-pp text-base">
+            <span className="text-stone-500 text-sm">answer: </span>
+            <span className="font-semibold text-stone-800">{revealText}</span>
+          </div>
+        )}
 
         {result && (
           <EyeClosedIcon

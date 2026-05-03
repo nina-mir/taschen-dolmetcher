@@ -3,16 +3,7 @@ import SubmitSection from "./SubmitSection";
 import AnswerChoices from "./AnswerChoices";
 import FeedbackOverlay from "./FeedbackOverlay";
 import ContentSection from "./ContentSection";
-import { useState, useEffect, useId, useMemo } from "react";
-
-function shuffleArray<T>(arr: T[]): T[] {
-  const a = [...arr]
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]]
-  }
-  return a
-}
+import { useState, useEffect, useId, useMemo, useRef } from "react";
 
 import {
   Card,
@@ -22,6 +13,16 @@ import {
 import { MediaItem, InfoItem, LanguageType } from '@/types';
 import { figureQA } from '@/utils/questionHelpers';
 import wrongData from '@/assets/data/wrongAnswerImages.json'
+import { hapticCorrect, hapticWrong } from '@/utils/haptics'
+
+function shuffleArray<T>(arr: T[]): T[] {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
 
 interface QuestionProps {
   id: number;
@@ -78,6 +79,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   const [feedbackMessage, setFeedbackMessage] = useState<string>('');
   const [correctClasses, setCorrectClasses] = useState<KorrektClasses>(DEFAULT_CLASSES);
   const [wrongAttempts, setWrongAttempts] = useState<number>(0);
+  const wrongTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     setCorrectClasses(DEFAULT_CLASSES)
@@ -86,6 +88,9 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
     setSelectedValue('')
     setFeedbackMessage('')
     setWrongAttempts(0)
+    return () => {
+      if (wrongTimeoutRef.current) clearTimeout(wrongTimeoutRef.current)
+    }
   }, [fromLanguage, toLanguage])
 
   const uniqueId = useId();
@@ -120,6 +125,15 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
     }
   }
 
+  const handleOverlayDismiss = () => {
+    if (wrongTimeoutRef.current) {
+      clearTimeout(wrongTimeoutRef.current)
+      wrongTimeoutRef.current = null
+    }
+    setCorrectClasses(DEFAULT_CLASSES)
+    setFeedbackMessage('')
+  }
+
   const checkAnswer = (userInput: string, ans: string | string[]): boolean => {
     let isCorrect = false
     if (Array.isArray(ans)) {
@@ -138,6 +152,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
     onAnswer(isCorrect)
 
     if (isCorrect) {
+      hapticCorrect()
       setResult(true)
       setFeedbackMessage('Correct answer!')
       setCorrectClasses({
@@ -160,6 +175,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   }
 
   const handleWrongAnswer = () => {
+    hapticWrong()
     setWrongAttempts(prev => prev + 1)
     const wrongEntry = wrongData[Math.floor(Math.random() * wrongData.length)]
     setFeedbackMessage('Incorrect answer. Please try again.')
@@ -174,7 +190,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       wrongCaption: wrongEntry.imgCaption || 'Wrong Answer!',
     })
 
-    setTimeout(() => {
+    if (wrongTimeoutRef.current) clearTimeout(wrongTimeoutRef.current)
+    wrongTimeoutRef.current = setTimeout(() => {
       setCorrectClasses(DEFAULT_CLASSES)
       setFeedbackMessage('')
     }, 3500);
@@ -205,6 +222,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
         messageText="Incorrect ❌⚠️"
         captionText={correctClasses.wrongCaption}
         ariaLabel="Answer feedback"
+        onDismiss={handleOverlayDismiss}
       />
 
       <QuestionHeader
