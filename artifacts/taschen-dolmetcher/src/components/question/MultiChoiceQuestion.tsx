@@ -3,7 +3,16 @@ import SubmitSection from "./SubmitSection";
 import AnswerChoices from "./AnswerChoices";
 import FeedbackOverlay from "./FeedbackOverlay";
 import ContentSection from "./ContentSection";
-import { useState, useEffect, useId } from "react";
+import { useState, useEffect, useId, useMemo } from "react";
+
+function shuffleArray<T>(arr: T[]): T[] {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
 
 import {
   Card,
@@ -83,6 +92,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   const feedbackId = `feedback-${uniqueId}`;
 
   const [question, answer] = figureQA(fromLanguage, toLanguage, de, en, ru)
+  const shuffledChoices = useMemo(() => shuffleArray(choices), [choices])
 
   const handleEnter = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && selectedValue) {
@@ -218,7 +228,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
             onValueChange={setSelectedValue}
             onKeyDown={handleEnter}
             showInfo={showInfo}
-            choices={choices}
+            choices={shuffledChoices}
             uniqueId={uniqueId}
             labelClassName={labelClasses}
             radioItemClassName={radioItem}
