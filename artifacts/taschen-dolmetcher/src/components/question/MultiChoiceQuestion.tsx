@@ -77,6 +77,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   const [selectedValue, setSelectedValue] = useState<string>('');
   const [feedbackMessage, setFeedbackMessage] = useState<string>('');
   const [correctClasses, setCorrectClasses] = useState<KorrektClasses>(DEFAULT_CLASSES);
+  const [wrongAttempts, setWrongAttempts] = useState<number>(0);
 
   useEffect(() => {
     setCorrectClasses(DEFAULT_CLASSES)
@@ -84,6 +85,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
     setShowInfo('hidden')
     setSelectedValue('')
     setFeedbackMessage('')
+    setWrongAttempts(0)
   }, [fromLanguage, toLanguage])
 
   const uniqueId = useId();
@@ -93,6 +95,14 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
   const [question, answer] = figureQA(fromLanguage, toLanguage, de, en, ru)
   const shuffledChoices = useMemo(() => shuffleArray(choices), [choices])
+
+  const revealCorrect = wrongAttempts >= 3
+    ? shuffledChoices.find(c =>
+        Array.isArray(answer)
+          ? answer.some(a => a.toLowerCase() === c.toLowerCase())
+          : c.toLowerCase() === (answer as string).toLowerCase()
+      ) ?? null
+    : null
 
   const handleEnter = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && selectedValue) {
@@ -150,6 +160,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   }
 
   const handleWrongAnswer = () => {
+    setWrongAttempts(prev => prev + 1)
     const wrongEntry = wrongData[Math.floor(Math.random() * wrongData.length)]
     setFeedbackMessage('Incorrect answer. Please try again.')
     setCorrectClasses({
@@ -234,6 +245,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
             radioItemClassName={radioItem}
             groupId={radioGroupId}
             questionId={questionId}
+            revealCorrect={revealCorrect}
           />
         </fieldset>
       </CardContent>

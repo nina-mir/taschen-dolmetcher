@@ -98,7 +98,7 @@ export function NavigationMenuDemo({ correct, incorrect, onNewGame }: Navigation
                   A wrong answer brings a brief visit from Akhmatova or Pasternak.
                 </p>
                 <p>
-                  Your score is tracked at the top of the page. Refresh for a new session.
+                  Your score is tracked at the top of the page. After three wrong attempts on a question, the correct answer is highlighted. Use the reset button to start a fresh session.
                 </p>
               </div>
             </NavigationMenuContent>
