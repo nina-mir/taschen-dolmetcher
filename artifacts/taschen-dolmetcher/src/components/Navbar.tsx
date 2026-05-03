@@ -12,33 +12,6 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Step.1 Choose languages! 🧠",
-    href: "#",
-    description: "Choose a from and to language option! Choose from German/English/Russian!",
-  },
-  {
-    title: "Step.2 Multiple-choice OR typing? ⚓",
-    href: "#",
-    description: "Choose between Multiple-Choice questions or typing-in your answer!",
-  },
-  {
-    title: "Step.3 Submit your answer! ✌🏽",
-    href: "#",
-    description: "If your answer is correct, you'll see an image + interesting text of the war.",
-  },
-  {
-    title: "Wrong Answer?! ❌",
-    href: "#",
-    description: "Anna Akhmatova and Boris Pasternak will tell you if your answer is wrong!",
-  },
-  {
-    title: "Correct answer? 🎈",
-    href: "#",
-    description: "You'll be rewarded with a piece of history: An image + a bit of text from the Eastern Front!",
-  },
-]
 
 interface NavigationMenuDemoProps {
   correct: number;
@@ -114,17 +87,19 @@ export function NavigationMenuDemo({ correct, incorrect }: NavigationMenuDemoPro
               clickOnly={true}
               className="hover:bg-stone-300 bg-stone-300 border-0 focus:ring-0"
             >
-              <ul className="text-base grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                {components.map((component) => (
-                  <ListItem
-                    key={component.title}
-                    title={component.title}
-                    className="[&>*]:text-lg"
-                  >
-                    {component.description}
-                  </ListItem>
-                ))}
-              </ul>
+              <div className="flex flex-col gap-4 p-6 md:w-[400px] lg:w-[500px] text-base font-garamond-pp">
+                <p>
+                  Choose a language pair — German, English, or Russian — then pick your format:
+                  multiple choice or type your answer. Questions are shuffled each session.
+                </p>
+                <p>
+                  A correct answer reveals a photograph and a passage from the Eastern Front.
+                  A wrong answer brings a brief visit from Akhmatova or Pasternak.
+                </p>
+                <p>
+                  Your score is tracked at the top of the page. Refresh for a new session.
+                </p>
+              </div>
             </NavigationMenuContent>
           </NavigationMenuItem>
 
