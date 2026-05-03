@@ -107,6 +107,7 @@ const ContentSection: React.FC<ContentSectionProps> = ({
               isSourceCollapsible={true}
               wrapperClassName={`leading-5 font-mono w-full text-stone-50 p-2 text-[1rem]`}
               citeSourceClassName={`bg-stone-500 text-white block`}
+              collapsibleWrapperClassName="rounded-t-xl"
               id={infoId}
               ariaLabel="Additional context information"
             />
