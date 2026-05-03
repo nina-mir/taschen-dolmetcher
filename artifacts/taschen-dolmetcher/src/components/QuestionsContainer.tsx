@@ -9,31 +9,34 @@ import MultiChoiceQuestion from '@/components/question/MultiChoiceQuestion';
 
 import knuthRandomizer from '@/utils/helpers'
 
-
 interface QuestionsContainerProps {
   fromLanguage: LanguageType;
   toLanguage: LanguageType;
   qFormat: QuestionType;
 }
 
-const shuffledMediaData = knuthRandomizer(mediaData)
-const shuffledTextData = knuthRandomizer(textData)
+// Shuffle question indices once per session so data + multipleChoiceData stay in sync
+const questionIndices: number[] = knuthRandomizer(data.map((_, i) => i))
+
+// Media and info are independent — shuffle them separately
+const shuffledMediaData = knuthRandomizer([...mediaData])
+const shuffledTextData = knuthRandomizer([...textData])
 
 const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat }: QuestionsContainerProps) => {
   if (qFormat === 'choosing') {
-    const questions = data.map((item, idx) => (
+    const questions = questionIndices.map((dataIdx, displayIdx) => (
       <MultiChoiceQuestion
-        key={idx}
-        id={idx}
-        de={item.de}
-        en={item.en}
-        ru={item.ru}
-        choices={multipleChoiceData[idx][toLanguage]}
-        phonetic={item.phonetic}
+        key={dataIdx}
+        id={displayIdx + 1}
+        de={data[dataIdx].de}
+        en={data[dataIdx].en}
+        ru={data[dataIdx].ru}
+        choices={multipleChoiceData[dataIdx][toLanguage]}
+        phonetic={data[dataIdx].phonetic}
         fromLanguage={fromLanguage}
         toLanguage={toLanguage}
-        media={shuffledMediaData[idx]}
-        info={shuffledTextData[idx]}
+        media={shuffledMediaData[displayIdx]}
+        info={shuffledTextData[displayIdx]}
       />
     ));
 
@@ -44,18 +47,18 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat }: QuestionsCont
     )
   }
 
-  const questions = data.map((item, idx) => (
+  const questions = questionIndices.map((dataIdx, displayIdx) => (
     <Question
-      key={idx}
-      id={idx}
-      de={item.de}
-      en={item.en}
-      ru={item.ru}
-      phonetic={item.phonetic}
+      key={dataIdx}
+      id={displayIdx + 1}
+      de={data[dataIdx].de}
+      en={data[dataIdx].en}
+      ru={data[dataIdx].ru}
+      phonetic={data[dataIdx].phonetic}
       fromLanguage={fromLanguage}
       toLanguage={toLanguage}
-      media={mediaData[idx]}
-      info={textData[idx]}
+      media={shuffledMediaData[displayIdx]}
+      info={shuffledTextData[displayIdx]}
     />
   ));
 
