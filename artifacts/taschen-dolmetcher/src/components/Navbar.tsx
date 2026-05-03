@@ -39,7 +39,7 @@ export function NavigationMenuDemo({ correct, incorrect, onNewGame }: Navigation
       <div className="relative w-full">
         {/* Score tracker: absolutely centered in the navbar — desktop only */}
         <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-10 pointer-events-none">
-          <div className="px-4 py-1 rounded-full bg-stone-200/70 border border-stone-400/40">
+          <div className="px-4 py-1 rounded-full bg-stone-200/70 border border-stone-400/40 pointer-events-auto">
             <ScoreTracker correct={correct} incorrect={incorrect} variant="navbar" onNewGame={onNewGame} />
           </div>
         </div>
