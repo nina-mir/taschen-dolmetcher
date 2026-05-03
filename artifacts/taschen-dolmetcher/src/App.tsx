@@ -8,9 +8,10 @@ import ScoreTracker from './components/ScoreTracker'
 import Footer from './components/Footer';
 
 import { StarFilledIcon, CornersIcon } from "@radix-ui/react-icons"
-
 import { useState } from 'react'
+import data from '@/assets/data/improved_data_deepseek_en_array.json'
 
+const TOTAL_QUESTIONS = data.length
 
 function makeInstruction(from: LanguageType, to: LanguageType): string {
   switch (from) {
@@ -33,6 +34,7 @@ function App() {
   const [qFormat, setQFormat] = useState<QuestionType>('choosing')
   const [correct, setCorrect] = useState<number>(0)
   const [incorrect, setIncorrect] = useState<number>(0)
+  const [gameKey, setGameKey] = useState<number>(0)
 
   const handleLanguageChange = (from: LanguageType, to: LanguageType) => {
     if (from !== to) {
@@ -52,10 +54,34 @@ function App() {
     }
   }
 
+  const handleNewGame = () => {
+    setCorrect(0)
+    setIncorrect(0)
+    setGameKey(prev => prev + 1)
+  }
+
+  const progressPct = (Math.min(correct, TOTAL_QUESTIONS) / TOTAL_QUESTIONS) * 100
+
   return (
     <div className="w-full">
       <div className="fixed top-0 left-0 right-0 z-50">
-        <NavigationMenuDemo correct={correct} incorrect={incorrect} />
+        <NavigationMenuDemo
+          correct={correct}
+          incorrect={incorrect}
+          onNewGame={handleNewGame}
+        />
+        {/* Progress bar */}
+        <div className="w-full h-1 bg-stone-300/60">
+          <div
+            className="h-full bg-red-600 transition-all duration-700 ease-out"
+            style={{ width: `${progressPct}%` }}
+            role="progressbar"
+            aria-valuenow={correct}
+            aria-valuemin={0}
+            aria-valuemax={TOTAL_QUESTIONS}
+            aria-label={`${correct} of ${TOTAL_QUESTIONS} questions answered correctly`}
+          />
+        </div>
       </div>
 
       <Header />
@@ -85,6 +111,7 @@ function App() {
 
         {okayChoices && (
           <QuestionsContainer
+            key={gameKey}
             toLanguage={toLanguage}
             fromLanguage={fromLanguage}
             qFormat={qFormat}
@@ -117,8 +144,12 @@ function App() {
         <Footer />
       </div>
 
-      {/* Mobile score banner — fixed bottom, hidden on desktop */}
-      <ScoreTracker correct={correct} incorrect={incorrect} variant="mobile-banner" />
+      <ScoreTracker
+        correct={correct}
+        incorrect={incorrect}
+        variant="mobile-banner"
+        onNewGame={handleNewGame}
+      />
     </div>
   )
 }
