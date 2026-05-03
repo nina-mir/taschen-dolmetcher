@@ -2,7 +2,7 @@ import * as React from "react"
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
-import { DotFilledIcon, ResetIcon, EyeClosedIcon, EyeOpenIcon, PlusIcon } from "@radix-ui/react-icons"
+import { DotFilledIcon, EyeClosedIcon, EyeOpenIcon, PlusIcon } from "@radix-ui/react-icons"
 
 import {
   Card,
@@ -142,7 +142,6 @@ const Question: React.FC<QuestionProps> = ({
             <DotFilledIcon className={`inline w-3 h-3 ${correctClasses.text}`} />
             {question}
           </div>
-          <ResetIcon className={correctClasses.text} />
         </CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
