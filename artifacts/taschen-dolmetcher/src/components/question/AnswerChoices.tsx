@@ -3,6 +3,7 @@ import {
   RadioGroup,
   RadioGroupItem,
 } from "@/components/ui/radio-group"
+import { useDarkModeContext } from '@/contexts/DarkModeContext'
 
 interface AnswerChoicesProps {
   value: string;
@@ -30,9 +31,13 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
   uniqueId,
   groupId,
   questionId,
-  bgClass = `bg-stone-400`,
   revealCorrect = null,
 }) => {
+  const isDark = useDarkModeContext()
+
+  // Stone-400 in light, stone-700 in dark
+  const [bgR, bgG, bgB] = isDark ? [68, 64, 60] : [168, 162, 158]
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && value) {
       onKeyDown(e);
@@ -52,13 +57,12 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
     const isSelected = value === item;
     const isRevealed = revealCorrect !== null && item === revealCorrect;
 
-    let wrapperClassName = `${bgClass}
-      flex items-center gap-3 rounded-l-full cursor-pointer
+    let wrapperClassName = `flex items-center gap-3 rounded-l-full cursor-pointer
       group transition-all duration-200 hover:scale-102
-      focus-within:ring-1 focus-within:ring-stone-900`;
+      focus-within:ring-1 focus-within:ring-stone-900 dark:focus-within:ring-stone-400`;
     if (idx === 0) { wrapperClassName += ` mt-3` }
     if (idx === choices.length - 1) { wrapperClassName += ` mb-3` }
-    if (isSelected) { wrapperClassName += ` ring-2 ring-stone-800 bg-red-300` }
+    if (isSelected) { wrapperClassName += ` ring-2 ring-stone-800 dark:ring-stone-300` }
     if (isRevealed) { wrapperClassName += ` ring-2 ring-soviet-gold` }
 
     const maxOpacity = choices.length * 5 + 10;
@@ -67,8 +71,8 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
       backgroundColor: isRevealed
         ? `rgb(255, 215, 0, 0.25)`
         : isSelected
-          ? `rgb(168, 162, 158, 0)`
-          : `rgb(168, 162, 158, ${itemOpacity})`,
+          ? `rgb(${bgR}, ${bgG}, ${bgB}, 0)`
+          : `rgb(${bgR}, ${bgG}, ${bgB}, ${itemOpacity})`,
     } as React.CSSProperties;
 
     return (
@@ -87,11 +91,11 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
         />
         <Label
           htmlFor={choiceId}
-          className={`${labelClassName} cursor-pointer flex-1 px-2 ${isSelected ? 'font-semibold text-black' : ''} ${isRevealed ? 'font-semibold' : ''}`}
+          className={`${labelClassName} cursor-pointer flex-1 px-2 ${isSelected ? 'font-semibold text-black dark:text-white' : ''} ${isRevealed ? 'font-semibold' : ''}`}
         >
           {item}
           {isRevealed && (
-            <span className="ml-2 text-sm font-gyst text-stone-600" aria-hidden="true">← correct</span>
+            <span className="ml-2 text-sm font-gyst text-stone-600 dark:text-stone-300" aria-hidden="true">← correct</span>
           )}
         </Label>
 
@@ -121,11 +125,11 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
         rounded-br-lg
         border-l-1
         border-soviet-gold
-        hover:bg-stone-400/50
+        hover:bg-stone-400/50 dark:hover:bg-stone-700/50
         hover:border-r-6
         hover:border-r-red-500
         hover:font-bold
-        **:text-black
+        **:text-black dark:**:text-stone-100
         focus-within:outline-none
         focus-within:ring-1
         focus-within:ring-red-500

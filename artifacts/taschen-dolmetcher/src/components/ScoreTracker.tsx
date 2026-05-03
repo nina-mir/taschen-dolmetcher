@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CheckIcon, Cross2Icon, ResetIcon } from "@radix-ui/react-icons"
+import { CheckIcon, Cross2Icon, ResetIcon, UploadIcon } from "@radix-ui/react-icons"
 import { isHapticEnabled, toggleHaptic } from '@/utils/haptics'
 
 interface ScoreTrackerProps {
@@ -8,9 +8,19 @@ interface ScoreTrackerProps {
   variant: 'navbar' | 'mobile-banner';
   onNewGame: () => void;
   highScore?: number;
+  onShare: () => void;
+  copied: boolean;
 }
 
-const ScoreTracker: React.FC<ScoreTrackerProps> = ({ correct, incorrect, variant, onNewGame, highScore = 0 }) => {
+const ScoreTracker: React.FC<ScoreTrackerProps> = ({
+  correct,
+  incorrect,
+  variant,
+  onNewGame,
+  highScore = 0,
+  onShare,
+  copied,
+}) => {
   const total = correct + incorrect;
   const [hapticOn, setHapticOn] = useState<boolean>(isHapticEnabled)
 
@@ -27,26 +37,26 @@ const ScoreTracker: React.FC<ScoreTrackerProps> = ({ correct, incorrect, variant
         role="status"
         aria-live="polite"
       >
-        <span className="flex items-center gap-1 text-emerald-700 font-semibold">
+        <span className="flex items-center gap-1 text-emerald-700 dark:text-emerald-400 font-semibold">
           <CheckIcon className="w-4 h-4" aria-hidden="true" />
           {correct}
         </span>
         <span className="text-stone-400 text-xs">|</span>
-        <span className="flex items-center gap-1 text-red-600 font-semibold">
+        <span className="flex items-center gap-1 text-red-600 dark:text-red-400 font-semibold">
           <Cross2Icon className="w-4 h-4" aria-hidden="true" />
           {incorrect}
         </span>
         {total > 0 && (
           <>
             <span className="text-stone-400 text-xs">|</span>
-            <span className="text-stone-500 text-xs">
+            <span className="text-stone-500 dark:text-stone-400 text-xs">
               {Math.round((correct / total) * 100)}%
             </span>
           </>
         )}
         <button
           onClick={onNewGame}
-          className="ml-1 text-stone-400 hover:text-red-600 transition-colors duration-200 cursor-pointer"
+          className="ml-1 text-stone-400 hover:text-red-600 dark:hover:text-red-400 transition-colors duration-200 cursor-pointer"
           aria-label="Start new game"
           title="New game"
           type="button"
@@ -114,6 +124,21 @@ const ScoreTracker: React.FC<ScoreTrackerProps> = ({ correct, incorrect, variant
         >
           <ResetIcon className="w-5 h-5" />
         </button>
+
+        {correct > 0 && (
+          <button
+            onClick={onShare}
+            className="text-stone-400 hover:text-soviet-gold transition-colors duration-200 cursor-pointer"
+            aria-label="Share your score"
+            title={copied ? 'Copied!' : 'Share score'}
+            type="button"
+          >
+            {copied
+              ? <span className="text-xs font-gyst text-emerald-400">✓</span>
+              : <UploadIcon className="w-5 h-5" />
+            }
+          </button>
+        )}
 
         <button
           onClick={handleHapticToggle}
