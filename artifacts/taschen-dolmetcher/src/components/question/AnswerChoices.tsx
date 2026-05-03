@@ -16,6 +16,7 @@ interface AnswerChoicesProps {
   groupId: string;
   questionId: string;
   bgClass?: string;
+  revealCorrect?: string | null;
 }
 
 const AnswerChoices: React.FC<AnswerChoicesProps> = ({
@@ -30,6 +31,7 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
   groupId,
   questionId,
   bgClass = `bg-stone-400`,
+  revealCorrect = null,
 }) => {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && value) {
@@ -48,6 +50,7 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
   const answerChoices = choices.map((item, idx) => {
     const choiceId = `${uniqueId}-r-${idx}`;
     const isSelected = value === item;
+    const isRevealed = revealCorrect !== null && item === revealCorrect;
 
     let wrapperClassName = `${bgClass}
       flex items-center gap-3 rounded-l-full cursor-pointer
@@ -56,13 +59,16 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
     if (idx === 0) { wrapperClassName += ` mt-3` }
     if (idx === choices.length - 1) { wrapperClassName += ` mb-3` }
     if (isSelected) { wrapperClassName += ` ring-2 ring-stone-800 bg-red-300` }
+    if (isRevealed) { wrapperClassName += ` ring-2 ring-soviet-gold` }
 
     const maxOpacity = choices.length * 5 + 10;
     const itemOpacity = (maxOpacity - 5 * idx) / 100;
     const itemStyle = {
-      backgroundColor: isSelected
-        ? `rgb(168, 162, 158, 0)`
-        : `rgb(168, 162, 158, ${itemOpacity})`,
+      backgroundColor: isRevealed
+        ? `rgb(255, 215, 0, 0.25)`
+        : isSelected
+          ? `rgb(168, 162, 158, 0)`
+          : `rgb(168, 162, 158, ${itemOpacity})`,
     } as React.CSSProperties;
 
     return (
@@ -81,14 +87,18 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
         />
         <Label
           htmlFor={choiceId}
-          className={`${labelClassName} cursor-pointer flex-1 px-2 ${isSelected ? 'font-semibold text-black' : ''}`}
+          className={`${labelClassName} cursor-pointer flex-1 px-2 ${isSelected ? 'font-semibold text-black' : ''} ${isRevealed ? 'font-semibold' : ''}`}
         >
           {item}
+          {isRevealed && (
+            <span className="ml-2 text-sm font-gyst text-stone-600" aria-hidden="true">← correct</span>
+          )}
         </Label>
 
         <span id={`${choiceId}-desc`} className="sr-only">
           Choice {idx + 1} of {choices.length}: {item}
           {isSelected ? ' (selected)' : ''}
+          {isRevealed ? ' (correct answer)' : ''}
         </span>
       </div>
     )
