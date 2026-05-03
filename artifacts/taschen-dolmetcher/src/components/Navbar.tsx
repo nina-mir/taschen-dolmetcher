@@ -84,33 +84,20 @@ export function NavigationMenuDemo({ correct, incorrect }: NavigationMenuDemoPro
               className="hover:bg-stone-300 bg-stone-300 border-0 focus:ring-0"
               clickOnly={true}
             >
-              <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                <li className="row-span-3">
-                  <NavigationMenuLink asChild className="text-base">
-                    <p>
-                      On June-22-1941, Germany attacked the USSR. This invasion caught despot Joseph Stalin by surprise.
-                      But, the Soviet residents did not hide for 12 days like Stalin did.
-                      The Soviet citizens mobilized. Their sacrifice on the eastern front and on the home front decided the demise of German fascists.
-                    </p>
-                  </NavigationMenuLink>
-                </li>
-                <ListItem title="Introduction">
-                  <img src="https://camo.githubusercontent.com/c207e3fb3ee188b56a32c8acbdf6559d191d3c1f08a0913be2a5b78b3fd4c6b6/68747470733a2f2f61737365742e6d757365756d2d6469676974616c2e6f72672f2f6d656469612f3830302f6265726c696e2f696d616765732f33342f38303337322d3230373236332f3230373236332f3230373236332d38303337322e6a7067" alt="Taschen-Dolmetscher booklet" />
-                  <cite>
-                    Hindersin, Bob. Taschen-Dolmetscher für Frontsoldaten Russisch.
-                    Georg Siemens Verlagsbuchhandlung, 1943.
-                  </cite>
-                </ListItem>
-                <ListItem title="Writers/Words">
-                  Many Soviet artists and writers also participated in this great effort.
-                  <em>Ilya Ehrenburg and Vasily Grossman</em>, two Jewish Ukranian-born writers,
-                  stand out for their coverage of the frontlines and inspiring words.
-                </ListItem>
-                <ListItem title="Typography">
-                  Inspired by the B/W colors of WW2 and the ashes of Treblinka,
-                  a color palette was designed for this work.
-                </ListItem>
-              </ul>
+              <div className="flex flex-col gap-4 p-6 md:w-[400px] lg:w-[500px] text-base font-garamond-pp">
+                <p>
+                  On June 22, 1941, Germany attacked the USSR. This invasion caught despot Joseph Stalin by surprise.
+                  But the Soviet people did not hide for 12 days like Stalin did.
+                  They mobilized. Their sacrifice on the eastern front and on the home front decided the demise of German fascism.
+                </p>
+                <p>
+                  Many Soviet artists and writers participated in this great effort.
+                  <em> Ilya Ehrenburg and Vasily Grossman</em>, two Jewish Ukrainian-born writers,
+                  stand out for their coverage of the frontlines and their inspiring words.
+                  This app is built around a 1943 German–Russian phrasebook issued to Wehrmacht soldiers —
+                  a small artifact of a vast and brutal war, repurposed here as a language learning game.
+                </p>
+              </div>
             </NavigationMenuContent>
           </NavigationMenuItem>
 
