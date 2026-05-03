@@ -1,0 +1,59 @@
+import { Button } from "@/components/ui/button"
+import { CardFooter } from "@/components/ui/card"
+
+interface SubmitProps {
+  hideBtn: string;
+  btnClassName: string;
+  checkAnswer: () => void;
+  disabled?: boolean;
+  ariaDescribedby?: string;
+  isLoading?: boolean;
+}
+
+const SubmitSection: React.FC<SubmitProps> = ({
+  hideBtn,
+  btnClassName = "font-sans",
+  checkAnswer,
+  disabled = false,
+  ariaDescribedby,
+  isLoading = false,
+}) => {
+  const isHidden = hideBtn === 'hidden';
+
+  return (
+    <CardFooter
+      role="contentinfo"
+      aria-label="Question submission area"
+      className={`flex justify-between ${isHidden ? 'hidden' : ''}`}
+    >
+      <Button
+        type="submit"
+        className={btnClassName}
+        onClick={checkAnswer}
+        disabled={disabled || isLoading}
+        aria-describedby={ariaDescribedby}
+        aria-label={disabled ? "Select an answer before submitting" : "Submit your answer"}
+      >
+        {isLoading ? (
+          <>
+            <span className="sr-only">Checking answer...</span>
+            <span aria-hidden="true">CHECKING...</span>
+          </>
+        ) : (
+          "SUBMIT"
+        )}
+      </Button>
+      {disabled && (
+        <div
+          className="sr-only"
+          id="submit-instruction"
+          aria-live="polite"
+        >
+          Please select an answer option before submitting
+        </div>
+      )}
+    </CardFooter>
+  )
+}
+
+export default SubmitSection

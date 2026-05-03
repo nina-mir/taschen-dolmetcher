@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/taschen-dolmetcher/"
+title = "Taschen-Dolmetscher Revisited"
+version = "1.0.0"
+id = "artifacts/taschen-dolmetcher"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/taschen-dolmetcher/" ]
+localPort = 21085
+
+[services.development]
+run = "pnpm --filter @workspace/taschen-dolmetcher run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/taschen-dolmetcher", "run", "build" ]
+publicDir = "artifacts/taschen-dolmetcher/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21085"
+BASE_PATH = "/taschen-dolmetcher/"
