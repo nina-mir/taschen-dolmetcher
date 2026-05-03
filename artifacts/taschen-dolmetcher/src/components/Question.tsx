@@ -130,7 +130,7 @@ const Question: React.FC<QuestionProps> = ({
 
   return (
     <Card
-      className={`relative w-[90%] md:w-[600px] ${correctClasses.bg} ${correctClasses.marginB}`}
+      className={`relative w-[90%] md:w-[600px] ${correctClasses.bg} ${correctClasses.marginB} ${showInfo !== 'hidden' ? 'z-10' : ''}`}
     >
       <CardHeader>
         <CardTitle className="text-xl flex flex-row justify-between">
@@ -163,15 +163,22 @@ const Question: React.FC<QuestionProps> = ({
           backdrop-opacity-[0.9]`
         }>
           <div>
-            <Collapsible className="absolute data-[state=open]:bg-red-500/50 rounded-t-xl">
-              <CollapsibleTrigger className="transition-transform duration-500 ease-in-out data-[state=open]:rotate-45">
-                <PlusIcon className="w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold" />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="w-[95%] p-2 text-wrap text-lg data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-500">
-                <p className="bg-stone-500 text-white">📷:{media.imgCaption}</p>
-              </CollapsibleContent>
-            </Collapsible>
+            {/* Mobile only: collapsible caption toggle */}
+            <div className="md:hidden">
+              <Collapsible className="absolute data-[state=open]:bg-red-500/50 rounded-t-xl">
+                <CollapsibleTrigger className="transition-transform duration-500 ease-in-out data-[state=open]:rotate-45">
+                  <PlusIcon className="w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="w-[95%] p-2 text-wrap text-lg data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-500">
+                  <p className="bg-stone-500 text-white">📷:{media.imgCaption}</p>
+                </CollapsibleContent>
+              </Collapsible>
+            </div>
             <img src={media.imgUrl} className="rounded-t-xl mr-0" alt={media.altText || ''} />
+            {/* Desktop only: caption shown inline, no floating overlay */}
+            <p className="hidden md:block font-mono text-white text-sm p-2 bg-stone-700/60">
+              📷 {media.imgCaption}
+            </p>
 
             <div>
               <p className="leading-5 w-full font-mono text-stone-50 bg-red-900 md:w-[60%] md:text-[1.2rem] p-2">
