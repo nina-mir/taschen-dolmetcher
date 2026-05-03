@@ -139,7 +139,7 @@ export function NavigationMenuDemo({
 
           {/* Right: share (desktop only, when score > 0) */}
           {correct > 0 && (
-            <NavigationMenuItem>
+            <NavigationMenuItem className="hidden md:flex">
               <button
                 onClick={onShare}
                 className={`${navigationMenuTriggerStyle()} cursor-pointer dark:text-stone-100 dark:hover:bg-stone-700/50`}
