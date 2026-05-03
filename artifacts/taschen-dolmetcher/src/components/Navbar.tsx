@@ -58,7 +58,7 @@ export function NavigationMenuDemo({ correct, incorrect, onNewGame }: Navigation
               className="hover:bg-stone-300 bg-stone-300 border-0 focus:ring-0"
               clickOnly={true}
             >
-              <div className="flex flex-col gap-5 p-8 md:p-6 w-[80vw] md:w-[400px] lg:w-[500px] text-xl md:text-base leading-relaxed font-garamond-pp">
+              <div className="flex flex-col gap-5 px-6 pt-8 pb-28 md:p-6 w-[calc(100vw-2rem)] md:w-[400px] lg:w-[500px] max-h-[70vh] overflow-y-auto md:max-h-none md:overflow-visible text-xl md:text-base leading-relaxed font-garamond-pp">
                 <p>
                   On June 22, 1941, Germany attacked the USSR. This invasion caught despot Joseph Stalin by surprise.
                   But the Soviet people did not hide for 12 days like Stalin did.
@@ -88,7 +88,7 @@ export function NavigationMenuDemo({ correct, incorrect, onNewGame }: Navigation
               clickOnly={true}
               className="hover:bg-stone-300 bg-stone-300 border-0 focus:ring-0"
             >
-              <div className="flex flex-col gap-5 p-8 md:p-6 w-[80vw] md:w-[400px] lg:w-[500px] text-xl md:text-base leading-relaxed font-garamond-pp">
+              <div className="flex flex-col gap-5 px-6 pt-8 pb-28 md:p-6 w-[calc(100vw-2rem)] md:w-[400px] lg:w-[500px] max-h-[70vh] overflow-y-auto md:max-h-none md:overflow-visible text-xl md:text-base leading-relaxed font-garamond-pp">
                 <p>
                   Choose a language pair — German, English, or Russian — then pick your format:
                   multiple choice or type your answer. Questions are shuffled each session.
