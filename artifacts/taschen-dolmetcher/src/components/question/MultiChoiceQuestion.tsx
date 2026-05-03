@@ -164,7 +164,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
   return (
     <Card
-      className={`relative w-[90%] ${correctClasses.bg} ${correctClasses.marginB}`}
+      className={`relative w-[90%] ${correctClasses.bg} ${correctClasses.marginB} ${showInfo !== 'hidden' ? 'z-10' : ''}`}
       role="region"
       aria-labelledby={questionId}
       aria-describedby={feedbackMessage ? feedbackId : undefined}
