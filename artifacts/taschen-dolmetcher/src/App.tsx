@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import { StarFilledIcon, CornersIcon } from "@radix-ui/react-icons"
 import { useState } from 'react'
 import data from '@/assets/data/improved_data_deepseek_en_array.json'
+import { useHighScore } from './hooks/useHighScore'
 
 const TOTAL_QUESTIONS = data.length
 
@@ -35,6 +36,8 @@ function App() {
   const [correct, setCorrect] = useState<number>(0)
   const [incorrect, setIncorrect] = useState<number>(0)
   const [gameKey, setGameKey] = useState<number>(0)
+
+  const { highScore } = useHighScore(correct)
 
   const handleLanguageChange = (from: LanguageType, to: LanguageType) => {
     if (from !== to) {
@@ -149,6 +152,7 @@ function App() {
         incorrect={incorrect}
         variant="mobile-banner"
         onNewGame={handleNewGame}
+        highScore={highScore}
       />
     </div>
   )

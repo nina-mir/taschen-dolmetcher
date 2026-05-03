@@ -1,14 +1,23 @@
+import { useState } from 'react'
 import { CheckIcon, Cross2Icon, ResetIcon } from "@radix-ui/react-icons"
+import { isHapticEnabled, toggleHaptic } from '@/utils/haptics'
 
 interface ScoreTrackerProps {
   correct: number;
   incorrect: number;
   variant: 'navbar' | 'mobile-banner';
   onNewGame: () => void;
+  highScore?: number;
 }
 
-const ScoreTracker: React.FC<ScoreTrackerProps> = ({ correct, incorrect, variant, onNewGame }) => {
+const ScoreTracker: React.FC<ScoreTrackerProps> = ({ correct, incorrect, variant, onNewGame, highScore = 0 }) => {
   const total = correct + incorrect;
+  const [hapticOn, setHapticOn] = useState<boolean>(isHapticEnabled)
+
+  const handleHapticToggle = () => {
+    const next = toggleHaptic()
+    setHapticOn(next)
+  }
 
   if (variant === 'navbar') {
     return (
@@ -56,7 +65,7 @@ const ScoreTracker: React.FC<ScoreTrackerProps> = ({ correct, incorrect, variant
       aria-live="polite"
       aria-label={`Score: ${correct} correct, ${incorrect} incorrect`}
     >
-      <div className="pointer-events-auto flex items-center gap-4 bg-stone-900/65 backdrop-blur-md rounded-full px-6 py-3 border border-stone-700/40 shadow-lg">
+      <div className="pointer-events-auto flex items-center gap-4 bg-stone-900/65 backdrop-blur-md rounded-full px-5 py-3 border border-stone-700/40 shadow-lg">
         <div className="flex items-center gap-2">
           <CheckIcon className="w-5 h-5 text-emerald-400" aria-hidden="true" />
           <span className="text-emerald-400 font-gyst font-bold text-xl leading-none">
@@ -82,6 +91,18 @@ const ScoreTracker: React.FC<ScoreTrackerProps> = ({ correct, incorrect, variant
           <Cross2Icon className="w-5 h-5 text-red-400" aria-hidden="true" />
         </div>
 
+        {highScore > 0 && (
+          <>
+            <div className="w-px h-5 bg-stone-700" aria-hidden="true" />
+            <div className="flex flex-col items-center">
+              <span className="text-stone-400 font-garamond-pp text-xs leading-none">best</span>
+              <span className="text-soviet-gold font-gyst font-bold text-base leading-none mt-0.5">
+                {highScore}
+              </span>
+            </div>
+          </>
+        )}
+
         <div className="w-px h-5 bg-stone-700" aria-hidden="true" />
 
         <button
@@ -92,6 +113,16 @@ const ScoreTracker: React.FC<ScoreTrackerProps> = ({ correct, incorrect, variant
           type="button"
         >
           <ResetIcon className="w-5 h-5" />
+        </button>
+
+        <button
+          onClick={handleHapticToggle}
+          className={`transition-colors duration-200 cursor-pointer text-lg leading-none ${hapticOn ? 'text-soviet-gold' : 'text-stone-600'}`}
+          aria-label={hapticOn ? 'Haptic feedback on — tap to disable' : 'Haptic feedback off — tap to enable'}
+          title={hapticOn ? 'Haptic on' : 'Haptic off'}
+          type="button"
+        >
+          {hapticOn ? '📳' : '🔕'}
         </button>
       </div>
     </div>

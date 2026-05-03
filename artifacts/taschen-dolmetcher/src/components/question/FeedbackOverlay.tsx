@@ -1,3 +1,5 @@
+import { useRef } from 'react'
+
 interface FeedbackProps {
   isVisible: boolean;
   backgroundImgUrl?: string;
@@ -8,6 +10,7 @@ interface FeedbackProps {
   messageClassName?: string;
   captionClassName?: string;
   backgroundStyle?: React.CSSProperties;
+  onDismiss?: () => void;
 }
 
 const FeedbackOverlay: React.FC<FeedbackProps> = ({
@@ -23,11 +26,12 @@ const FeedbackOverlay: React.FC<FeedbackProps> = ({
   `,
   messageClassName = "text-xl md:text-2xl text-soviet-gold bg-red-500/80 p-3 md:self-start rounded",
   captionClassName = "bg-black/50 text-white px-4 py-2 rounded-lg font-semibold text-lg backdrop-blur-sm",
-  backgroundStyle
+  backgroundStyle,
+  onDismiss,
 }) => {
-  if (!isVisible) {
-    return null;
-  }
+  const touchStartYRef = useRef<number | null>(null)
+
+  if (!isVisible) return null;
 
   const defaultBackgroundStyle: React.CSSProperties = {
     backgroundImage: backgroundImgUrl ? `url(${backgroundImgUrl})` : undefined,
@@ -38,6 +42,18 @@ const FeedbackOverlay: React.FC<FeedbackProps> = ({
 
   const combinedBackgroundStyle = { ...defaultBackgroundStyle, ...backgroundStyle };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartYRef.current = e.touches[0].clientY
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartYRef.current !== null) {
+      const deltaY = e.changedTouches[0].clientY - touchStartYRef.current
+      if (deltaY > 60) onDismiss?.()
+      touchStartYRef.current = null
+    }
+  }
+
   return (
     <section
       role="alert"
@@ -45,6 +61,8 @@ const FeedbackOverlay: React.FC<FeedbackProps> = ({
       aria-label={ariaLabel}
       className={containerClassName}
       style={combinedBackgroundStyle}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <header
         className={messageClassName}
@@ -61,6 +79,11 @@ const FeedbackOverlay: React.FC<FeedbackProps> = ({
           aria-label="Additional feedback information"
         >
           {captionText}
+          {onDismiss && (
+            <span className="block text-xs text-white/60 mt-1 md:hidden">
+              swipe down to dismiss
+            </span>
+          )}
         </footer>
       )}
     </section>
