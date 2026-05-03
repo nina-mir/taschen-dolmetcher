@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "EVcdF09pCRQy3ESZWGNSq"
+uri = "file://artifacts/taschen-dolmetcher/CONTRIBUTING.md"
+type = "text"
+title = "CONTRIBUTING.md — Project modification guide"
