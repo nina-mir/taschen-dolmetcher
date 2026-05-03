@@ -1,12 +1,13 @@
-import { CheckIcon, Cross2Icon } from "@radix-ui/react-icons"
+import { CheckIcon, Cross2Icon, ResetIcon } from "@radix-ui/react-icons"
 
 interface ScoreTrackerProps {
   correct: number;
   incorrect: number;
   variant: 'navbar' | 'mobile-banner';
+  onNewGame: () => void;
 }
 
-const ScoreTracker: React.FC<ScoreTrackerProps> = ({ correct, incorrect, variant }) => {
+const ScoreTracker: React.FC<ScoreTrackerProps> = ({ correct, incorrect, variant, onNewGame }) => {
   const total = correct + incorrect;
 
   if (variant === 'navbar') {
@@ -34,6 +35,15 @@ const ScoreTracker: React.FC<ScoreTrackerProps> = ({ correct, incorrect, variant
             </span>
           </>
         )}
+        <button
+          onClick={onNewGame}
+          className="ml-1 text-stone-400 hover:text-red-600 transition-colors duration-200 cursor-pointer"
+          aria-label="Start new game"
+          title="New game"
+          type="button"
+        >
+          <ResetIcon className="w-4 h-4" />
+        </button>
       </div>
     )
   }
@@ -46,7 +56,7 @@ const ScoreTracker: React.FC<ScoreTrackerProps> = ({ correct, incorrect, variant
       aria-live="polite"
       aria-label={`Score: ${correct} correct, ${incorrect} incorrect`}
     >
-      <div className="pointer-events-auto flex items-center gap-5 bg-stone-900/65 backdrop-blur-md rounded-full px-8 py-3 border border-stone-700/40 shadow-lg">
+      <div className="pointer-events-auto flex items-center gap-4 bg-stone-900/65 backdrop-blur-md rounded-full px-6 py-3 border border-stone-700/40 shadow-lg">
         <div className="flex items-center gap-2">
           <CheckIcon className="w-5 h-5 text-emerald-400" aria-hidden="true" />
           <span className="text-emerald-400 font-gyst font-bold text-xl leading-none">
@@ -71,6 +81,18 @@ const ScoreTracker: React.FC<ScoreTrackerProps> = ({ correct, incorrect, variant
           </span>
           <Cross2Icon className="w-5 h-5 text-red-400" aria-hidden="true" />
         </div>
+
+        <div className="w-px h-5 bg-stone-700" aria-hidden="true" />
+
+        <button
+          onClick={onNewGame}
+          className="text-stone-400 hover:text-soviet-gold transition-colors duration-200 cursor-pointer"
+          aria-label="Start new game"
+          title="New game"
+          type="button"
+        >
+          <ResetIcon className="w-5 h-5" />
+        </button>
       </div>
     </div>
   )

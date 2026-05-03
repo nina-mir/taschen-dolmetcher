@@ -22,6 +22,9 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 
+const normalizeAnswer = (str: string): string =>
+  str.toLowerCase().trim().replace(/[!?.,'":;…—–]+/g, '').replace(/\s+/g, ' ').trim()
+
 const placeholderMaker = (answer: string | string[]): string => {
   const punctuationAndSpace = new Set([
     ' ', '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-',
@@ -98,13 +101,13 @@ const Question: React.FC<QuestionProps> = ({
     let isCorrect = false
     if (Array.isArray(ans)) {
       for (const item of ans) {
-        if (item.toLowerCase() === input.toLowerCase()) {
+        if (normalizeAnswer(item) === normalizeAnswer(input)) {
           isCorrect = true
           break
         }
       }
     } else {
-      if (input.toLowerCase() === ans.toLowerCase()) {
+      if (normalizeAnswer(input) === normalizeAnswer(ans)) {
         isCorrect = true
       }
     }
