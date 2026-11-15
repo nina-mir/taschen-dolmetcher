@@ -1,7 +1,7 @@
 import { MediaItem, InfoItem } from '@/types';
 import CollapsibleInfo from "./CollapsibleInfo";
 import InfoText from './InfoText';
-import MediaImage from './MediaImage';
+import ImageViewer from './ImageViewer';
 import { Separator } from "@/components/ui/separator"
 import { EyeOpenIcon } from "@radix-ui/react-icons"
 import { useId } from 'react';
@@ -64,7 +64,7 @@ const ContentSection: React.FC<ContentSectionProps> = ({
                 📷:{media.imgCaption}
               </p>
             }
-            wrapperClassName={`absolute data-[state=open]:bg-red-500/50 rounded-t-xl w-[70%]`}
+            wrapperClassName={`absolute z-10 data-[state=open]:bg-red-500/50 rounded-t-xl w-[70%]`}
             triggerClassName={`transition-transform duration-500 ease-in-out data-[state=open]:rotate-45`}
             iconClassName={`w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold`}
             contentClassName={`w-[95%] p-2 text-wrap text-lg data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 duration-500`}
@@ -73,17 +73,19 @@ const ContentSection: React.FC<ContentSectionProps> = ({
         </div>
 
         {/* Mobile: Image */}
-        <MediaImage
+        <ImageViewer
           media={media}
-          className={`block md:hidden rounded-t-xl md:rounded-t-none mr-0 md:max-h-[70vh] md:w-[50%]`}
+          triggerClassName="block md:hidden w-full"
+          imgClassName="w-full rounded-t-xl"
           id={imageId}
           ariaDescribedby={captionId}
         />
 
         <div className="hidden md:flex" role="group" aria-label="Image and information panel">
-          <MediaImage
+          <ImageViewer
             media={media}
-            className={`rounded-t-xl md:rounded-t-none md:max-h-[70vh] md:w-[50%] my-auto`}
+            triggerClassName="md:w-[50%] shrink-0 my-auto"
+            imgClassName="w-full md:max-h-[70vh] object-contain"
             id={imageId}
             ariaDescribedby={`${captionId} ${infoId}`}
           />

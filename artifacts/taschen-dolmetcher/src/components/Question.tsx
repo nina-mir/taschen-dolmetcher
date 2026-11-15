@@ -16,6 +16,7 @@ import {
 import { MediaItem, InfoItem } from '@/types';
 import { figureQA } from '@/utils/questionHelpers';
 import FeedbackOverlay from './question/FeedbackOverlay'
+import ImageViewer from './question/ImageViewer'
 import wrongData from '@/assets/data/wrongAnswerImages.json'
 import { hapticCorrect, hapticWrong } from '@/utils/haptics'
 
@@ -212,7 +213,7 @@ const Question: React.FC<QuestionProps> = ({
           <div>
             {/* Mobile only: collapsible caption toggle */}
             <div className="md:hidden">
-              <Collapsible className="absolute data-[state=open]:bg-red-500/50 rounded-t-xl">
+              <Collapsible className="absolute z-10 data-[state=open]:bg-red-500/50 rounded-t-xl">
                 <CollapsibleTrigger className="transition-transform duration-500 ease-in-out data-[state=open]:rotate-45">
                   <PlusIcon className="w-6 h-6 bg-red-500 text-soviet-gold border-1 border-soviet-gold" />
                 </CollapsibleTrigger>
@@ -221,7 +222,7 @@ const Question: React.FC<QuestionProps> = ({
                 </CollapsibleContent>
               </Collapsible>
             </div>
-            <img src={media.imgUrl} className="rounded-t-xl mr-0" alt={media.altText || ''} />
+            <ImageViewer media={media} triggerClassName="block w-full" imgClassName="w-full rounded-t-xl" />
             {/* Desktop only: caption shown inline, no floating overlay */}
             <p className="hidden md:block font-mono text-white text-sm p-2 bg-stone-700/60">
               📷 {media.imgCaption}
