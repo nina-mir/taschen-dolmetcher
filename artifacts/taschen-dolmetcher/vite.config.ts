@@ -3,48 +3,19 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
-const isBuild = process.argv.includes('build');
-const isReplit = process.env.REPL_ID !== undefined;
+// Dev/preview server port. Override with PORT=xxxx if 3000 is taken.
+const port = Number(process.env.PORT || "3000");
 
-// PORT is only needed for the dev/preview server, not during builds
-const rawPort = process.env.PORT;
-if (!isBuild && !rawPort) {
-  throw new Error("PORT environment variable is required but was not provided.");
-}
-const port = Number(rawPort || '3000');
-
-// BASE_PATH: required on Replit, defaults to '/' elsewhere (e.g. GitHub Actions)
-const basePath = process.env.BASE_PATH || '/';
+// The site is served from a sub-path on GitHub Pages (/taschen-dolmetcher/),
+// which the deploy workflow passes in as BASE_PATH. Locally it is just "/".
+const basePath = process.env.BASE_PATH || "/";
 
 export default defineConfig({
   base: basePath,
-  plugins: [
-    react(),
-    tailwindcss(),
-    ...(isReplit
-      ? [
-          await import("@replit/vite-plugin-runtime-error-modal").then((m) =>
-            m.default()
-          ),
-        ]
-      : []),
-    ...(process.env.NODE_ENV !== "production" && isReplit
-      ? [
-          await import("@replit/vite-plugin-cartographer").then((m) =>
-            m.cartographer({
-              root: path.resolve(import.meta.dirname, ".."),
-            }),
-          ),
-          await import("@replit/vite-plugin-dev-banner").then((m) =>
-            m.devBanner(),
-          ),
-        ]
-      : []),
-  ],
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "src"),
-      "@assets": path.resolve(import.meta.dirname, "..", "..", "attached_assets"),
     },
     dedupe: ["react", "react-dom"],
   },
@@ -55,7 +26,6 @@ export default defineConfig({
   },
   server: {
     port,
-    strictPort: true,
     host: "0.0.0.0",
     allowedHosts: true,
     fs: {
