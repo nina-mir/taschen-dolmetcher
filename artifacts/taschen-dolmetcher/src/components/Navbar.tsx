@@ -45,7 +45,7 @@ export function NavigationMenuDemo({
 
   return (
     <NavigationMenu
-      className="font-garamond-pp bg-stone-300/80 dark:bg-stone-900/90 max-w-full justify-end"
+      className="font-garamond-pp bg-stone-300 dark:bg-stone-900 max-w-full justify-end"
       value={activeMenu}
       onValueChange={handleValueChange}
     >
