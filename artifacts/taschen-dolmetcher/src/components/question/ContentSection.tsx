@@ -27,6 +27,10 @@ const ContentSection: React.FC<ContentSectionProps> = ({
 
   const isVisible = showInfo !== 'hidden';
 
+  // Nothing is rendered until the answer is correct, so the browser does not
+  // download every card's photo when the page opens.
+  if (!isVisible) return null;
+
   return (
     <div
       id={sectionId}

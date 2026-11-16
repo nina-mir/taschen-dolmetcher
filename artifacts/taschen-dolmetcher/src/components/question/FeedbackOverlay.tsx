@@ -1,90 +1,63 @@
-import { useRef } from 'react'
+import { Cross2Icon } from "@radix-ui/react-icons"
 
 interface FeedbackProps {
   isVisible: boolean;
+  /** Portrait shown as a small thumbnail next to the message. */
   backgroundImgUrl?: string;
   messageText: string;
   captionText?: string;
   ariaLabel?: string;
-  containerClassName?: string;
-  messageClassName?: string;
-  captionClassName?: string;
-  backgroundStyle?: React.CSSProperties;
   onDismiss?: () => void;
 }
 
+/**
+ * Wrong-answer feedback. A compact strip at the bottom of the card, so the
+ * question and the remaining choices stay visible while the player retries.
+ */
 const FeedbackOverlay: React.FC<FeedbackProps> = ({
   isVisible,
   backgroundImgUrl,
   messageText,
-  captionText = 'Wrong Answer!',
+  captionText,
   ariaLabel = 'Answer feedback',
-  containerClassName = `
-    absolute
-    inset-0 flex flex-col items-center justify-between z-10
-    focus:outline-none
-  `,
-  messageClassName = "text-xl md:text-2xl text-soviet-gold bg-red-500/80 p-3 md:self-start rounded",
-  captionClassName = "bg-black/50 text-white px-4 py-2 rounded-lg font-semibold text-lg backdrop-blur-sm",
-  backgroundStyle,
   onDismiss,
 }) => {
-  const touchStartYRef = useRef<number | null>(null)
-
   if (!isVisible) return null;
-
-  const defaultBackgroundStyle: React.CSSProperties = {
-    backgroundImage: backgroundImgUrl ? `url(${backgroundImgUrl})` : undefined,
-    backgroundSize: 'contain',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-  };
-
-  const combinedBackgroundStyle = { ...defaultBackgroundStyle, ...backgroundStyle };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartYRef.current = e.touches[0].clientY
-  }
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartYRef.current !== null) {
-      const deltaY = e.changedTouches[0].clientY - touchStartYRef.current
-      if (deltaY > 60) onDismiss?.()
-      touchStartYRef.current = null
-    }
-  }
 
   return (
     <section
       role="alert"
-      aria-live="assertive"
       aria-label={ariaLabel}
-      className={containerClassName}
-      style={combinedBackgroundStyle}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
+      className="mx-6 flex items-stretch overflow-hidden rounded-lg border border-stone-700 bg-stone-900 text-stone-100 animate-in fade-in-0 slide-in-from-bottom-2 duration-300"
     >
-      <header
-        className={messageClassName}
-        role="status"
-        aria-label="Answer result"
-      >
-        <span className="font-semibold">{messageText}</span>
-      </header>
+      {backgroundImgUrl && (
+        <img
+          src={backgroundImgUrl}
+          alt=""
+          className="w-20 min-h-20 shrink-0 object-cover bg-stone-700"
+        />
+      )}
 
-      {captionText && (
-        <footer
-          className={captionClassName}
-          role="complementary"
-          aria-label="Additional feedback information"
+      <div className="min-w-0 flex-1 px-3 py-2">
+        <p className="font-gyst font-semibold text-soviet-gold leading-tight">
+          {messageText}
+        </p>
+        {captionText && (
+          <p className="mt-1 text-sm leading-snug text-stone-300">
+            {captionText}
+          </p>
+        )}
+      </div>
+
+      {onDismiss && (
+        <button
+          type="button"
+          onClick={onDismiss}
+          className="flex w-11 shrink-0 items-center justify-center text-stone-400 hover:text-stone-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-soviet-gold cursor-pointer"
+          aria-label="Dismiss feedback"
         >
-          {captionText}
-          {onDismiss && (
-            <span className="block text-xs text-white/60 mt-1 md:hidden">
-              swipe down to dismiss
-            </span>
-          )}
-        </footer>
+          <Cross2Icon className="w-5 h-5" />
+        </button>
       )}
     </section>
   );

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
 import { DotFilledIcon, EyeClosedIcon, EyeOpenIcon, PlusIcon } from "@radix-ui/react-icons"
@@ -19,6 +19,7 @@ import FeedbackOverlay from './question/FeedbackOverlay'
 import ImageViewer from './question/ImageViewer'
 import wrongData from '@/assets/data/wrongAnswerImages.json'
 import { hapticCorrect, hapticWrong } from '@/utils/haptics'
+import { preloadImage } from '@/utils/preloadImage'
 
 import {
   Collapsible,
@@ -88,7 +89,6 @@ const Question: React.FC<QuestionProps> = ({
   const [showWrongOverlay, setShowWrongOverlay] = useState<boolean>(false)
   const [wrongImgUrl, setWrongImgUrl] = useState<string>('')
   const [wrongCaption, setWrongCaption] = useState<string>('')
-  const wrongTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     setCorrectClasses(DEFAULT_CLASSES)
@@ -96,13 +96,12 @@ const Question: React.FC<QuestionProps> = ({
     setResult(false)
     setWrongAttempts(0)
     setShowWrongOverlay(false)
-    return () => {
-      if (wrongTimeoutRef.current) clearTimeout(wrongTimeoutRef.current)
-    }
   }, [fromLanguage, toLanguage])
 
   const update = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value)
+    // Typing again clears the wrong-answer strip
+    if (showWrongOverlay) setShowWrongOverlay(false)
   }
 
   const handleEnter = (e: React.KeyboardEvent) => {
@@ -112,10 +111,6 @@ const Question: React.FC<QuestionProps> = ({
   }
 
   const handleOverlayDismiss = () => {
-    if (wrongTimeoutRef.current) {
-      clearTimeout(wrongTimeoutRef.current)
-      wrongTimeoutRef.current = null
-    }
     setShowWrongOverlay(false)
   }
 
@@ -154,10 +149,6 @@ const Question: React.FC<QuestionProps> = ({
       setWrongImgUrl(wrongEntry.imgUrl)
       setWrongCaption(wrongEntry.imgCaption || '')
       setShowWrongOverlay(true)
-      if (wrongTimeoutRef.current) clearTimeout(wrongTimeoutRef.current)
-      wrongTimeoutRef.current = setTimeout(() => {
-        setShowWrongOverlay(false)
-      }, 3500)
       setResult(false)
       return false
     }
@@ -172,15 +163,6 @@ const Question: React.FC<QuestionProps> = ({
     <Card
       className={`relative w-[90%] md:w-[600px] ${correctClasses.bg} ${correctClasses.marginB} ${showInfo !== 'hidden' ? 'z-10' : ''}`}
     >
-      <FeedbackOverlay
-        isVisible={showWrongOverlay}
-        backgroundImgUrl={wrongImgUrl}
-        messageText="Incorrect ❌⚠️"
-        captionText={wrongCaption}
-        ariaLabel="Answer feedback"
-        onDismiss={handleOverlayDismiss}
-      />
-
       <CardHeader>
         <CardTitle className="text-xl flex flex-row justify-between">
           <div>
@@ -210,7 +192,8 @@ const Question: React.FC<QuestionProps> = ({
           bg-blend-normal
           backdrop-opacity-[0.9]`
         }>
-          <div>
+          {/* Rendered only once revealed, so photos are not downloaded up front */}
+          {showInfo !== 'hidden' && <div>
             {/* Mobile only: collapsible caption toggle */}
             <div className="md:hidden">
               <Collapsible className="absolute z-10 data-[state=open]:bg-red-500/50 rounded-t-xl">
@@ -234,7 +217,7 @@ const Question: React.FC<QuestionProps> = ({
               </p>
               <cite className="ml-1 text-stone-100 text-wrap text-xs md:w-[50%]">{info.sourceChicago}</cite>
             </div>
-          </div>
+          </div>}
 
           <EyeOpenIcon
             className={`absolute ${showInfo} bottom-0 right-1 md:w-10 md:h-10 w-10 h-10 text-soviet-gold`}
@@ -253,6 +236,7 @@ const Question: React.FC<QuestionProps> = ({
           `}
           placeholder={placeholderMaker(answer)}
           onChange={update}
+          onFocus={() => preloadImage(media.imgUrl)}
           onKeyDown={handleEnter}
           value={userInput}
         />
@@ -279,6 +263,15 @@ const Question: React.FC<QuestionProps> = ({
           SUBMIT
         </Button>
       </CardFooter>
+
+      <FeedbackOverlay
+        isVisible={showWrongOverlay}
+        backgroundImgUrl={wrongImgUrl}
+        messageText="Incorrect — try again"
+        captionText={wrongCaption}
+        ariaLabel="Answer feedback"
+        onDismiss={handleOverlayDismiss}
+      />
     </Card>
   )
 }

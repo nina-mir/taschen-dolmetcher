@@ -3,7 +3,7 @@ import SubmitSection from "./SubmitSection";
 import AnswerChoices from "./AnswerChoices";
 import FeedbackOverlay from "./FeedbackOverlay";
 import ContentSection from "./ContentSection";
-import { useState, useEffect, useId, useMemo, useRef } from "react";
+import { useState, useEffect, useId, useMemo } from "react";
 
 import {
   Card,
@@ -14,6 +14,7 @@ import { MediaItem, InfoItem, LanguageType } from '@/types';
 import { figureQA } from '@/utils/questionHelpers';
 import wrongData from '@/assets/data/wrongAnswerImages.json'
 import { hapticCorrect, hapticWrong } from '@/utils/haptics'
+import { preloadImage } from '@/utils/preloadImage'
 
 function shuffleArray<T>(arr: T[]): T[] {
   const a = [...arr]
@@ -79,7 +80,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   const [feedbackMessage, setFeedbackMessage] = useState<string>('');
   const [correctClasses, setCorrectClasses] = useState<KorrektClasses>(DEFAULT_CLASSES);
   const [wrongAttempts, setWrongAttempts] = useState<number>(0);
-  const wrongTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [wrongChoices, setWrongChoices] = useState<string[]>([]);
 
   useEffect(() => {
     setCorrectClasses(DEFAULT_CLASSES)
@@ -88,9 +89,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
     setSelectedValue('')
     setFeedbackMessage('')
     setWrongAttempts(0)
-    return () => {
-      if (wrongTimeoutRef.current) clearTimeout(wrongTimeoutRef.current)
-    }
+    setWrongChoices([])
   }, [fromLanguage, toLanguage])
 
   const uniqueId = useId();
@@ -122,16 +121,21 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       setSelectedValue('')
       setShowInfo('hidden')
       setFeedbackMessage('')
+      setWrongChoices([])
     }
   }
 
   const handleOverlayDismiss = () => {
-    if (wrongTimeoutRef.current) {
-      clearTimeout(wrongTimeoutRef.current)
-      wrongTimeoutRef.current = null
-    }
     setCorrectClasses(DEFAULT_CLASSES)
     setFeedbackMessage('')
+  }
+
+  // Picking another choice clears the wrong-answer strip, and starts
+  // fetching this card's photo so it is ready when the answer is right.
+  const handleSelect = (value: string) => {
+    setSelectedValue(value)
+    if (correctClasses.showText) handleOverlayDismiss()
+    preloadImage(media.imgUrl)
   }
 
   const checkAnswer = (userInput: string, ans: string | string[]): boolean => {
@@ -168,20 +172,22 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       setShowInfo('')
       return true
     } else {
-      handleWrongAnswer()
+      handleWrongAnswer(userInput)
       setResult(false)
       return false
     }
   }
 
-  const handleWrongAnswer = () => {
+  const handleWrongAnswer = (wrongChoice: string) => {
     hapticWrong()
     setWrongAttempts(prev => prev + 1)
+    setWrongChoices(prev => prev.includes(wrongChoice) ? prev : [...prev, wrongChoice])
+    setSelectedValue('')
     const wrongEntry = wrongData[Math.floor(Math.random() * wrongData.length)]
     setFeedbackMessage('Incorrect answer. Please try again.')
     setCorrectClasses({
-      backgroundImage: `url(${wrongEntry.imgUrl})`,
-      bg: 'bg-black',
+      backgroundImage: '',
+      bg: 'bg-transparent',
       text: 'text-red-600',
       marginB: 'mb-[0rem]',
       showText: true,
@@ -189,12 +195,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       wrongImgUrl: wrongEntry.imgUrl,
       wrongCaption: wrongEntry.imgCaption || 'Wrong Answer!',
     })
-
-    if (wrongTimeoutRef.current) clearTimeout(wrongTimeoutRef.current)
-    wrongTimeoutRef.current = setTimeout(() => {
-      setCorrectClasses(DEFAULT_CLASSES)
-      setFeedbackMessage('')
-    }, 3500);
   }
 
   const labelClasses = `text-2xl font-garamond-pp`
@@ -215,15 +215,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
       >
         {feedbackMessage}
       </div>
-
-      <FeedbackOverlay
-        isVisible={correctClasses.showText}
-        backgroundImgUrl={correctClasses.wrongImgUrl}
-        messageText="Incorrect ❌⚠️"
-        captionText={correctClasses.wrongCaption}
-        ariaLabel="Answer feedback"
-        onDismiss={handleOverlayDismiss}
-      />
 
       <QuestionHeader
         question={question}
@@ -254,7 +245,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
 
           <AnswerChoices
             value={selectedValue}
-            onValueChange={setSelectedValue}
+            onValueChange={handleSelect}
             onKeyDown={handleEnter}
             showInfo={showInfo}
             choices={shuffledChoices}
@@ -264,6 +255,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
             groupId={radioGroupId}
             questionId={questionId}
             revealCorrect={revealCorrect}
+            wrongChoices={wrongChoices}
           />
         </fieldset>
       </CardContent>
@@ -274,6 +266,15 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
         checkAnswer={() => checkAnswer(selectedValue, answer)}
         disabled={!selectedValue}
         ariaDescribedby={questionId}
+      />
+
+      <FeedbackOverlay
+        isVisible={correctClasses.showText}
+        backgroundImgUrl={correctClasses.wrongImgUrl}
+        messageText="Incorrect — try again"
+        captionText={correctClasses.wrongCaption}
+        ariaLabel="Answer feedback"
+        onDismiss={handleOverlayDismiss}
       />
     </Card>
   )

@@ -18,6 +18,8 @@ interface AnswerChoicesProps {
   questionId: string;
   bgClass?: string;
   revealCorrect?: string | null;
+  /** Choices already tried and found wrong — struck through and disabled. */
+  wrongChoices?: string[];
 }
 
 const AnswerChoices: React.FC<AnswerChoicesProps> = ({
@@ -32,6 +34,7 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
   groupId,
   questionId,
   revealCorrect = null,
+  wrongChoices = [],
 }) => {
   const isDark = useDarkModeContext()
 
@@ -45,6 +48,7 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
   };
 
   const handleChoiceClick = (item: string) => {
+    if (wrongChoices.includes(item)) return;
     onValueChange(item);
     const radioElement = document.getElementById(`${uniqueId}-r-${choices.indexOf(item)}`);
     if (radioElement) {
@@ -56,9 +60,11 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
     const choiceId = `${uniqueId}-r-${idx}`;
     const isSelected = value === item;
     const isRevealed = revealCorrect !== null && item === revealCorrect;
+    const isWrong = wrongChoices.includes(item);
 
-    let wrapperClassName = `flex items-center gap-3 rounded-l-full cursor-pointer
-      group transition-all duration-200 hover:scale-102
+    let wrapperClassName = `flex items-center gap-3 rounded-l-full
+      ${isWrong ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:scale-102'}
+      group transition-all duration-200
       focus-within:ring-1 focus-within:ring-stone-900 dark:focus-within:ring-stone-400`;
     if (idx === 0) { wrapperClassName += ` mt-3` }
     if (idx === choices.length - 1) { wrapperClassName += ` mb-3` }
@@ -88,10 +94,11 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
           className={`${radioItemClassName} focus:ring-red-500/30 cursor-pointer`}
           id={choiceId}
           aria-describedby={`${choiceId}-desc`}
+          disabled={isWrong}
         />
         <Label
           htmlFor={choiceId}
-          className={`${labelClassName} cursor-pointer flex-1 px-2 ${isSelected ? 'font-semibold text-black dark:text-white' : ''} ${isRevealed ? 'font-semibold' : ''}`}
+          className={`${labelClassName} flex-1 px-2 ${isWrong ? 'cursor-not-allowed line-through decoration-red-600 decoration-2' : 'cursor-pointer'} ${isSelected ? 'font-semibold text-black dark:text-white' : ''} ${isRevealed ? 'font-semibold' : ''}`}
         >
           {item}
           {isRevealed && (
@@ -103,6 +110,7 @@ const AnswerChoices: React.FC<AnswerChoicesProps> = ({
           Choice {idx + 1} of {choices.length}: {item}
           {isSelected ? ' (selected)' : ''}
           {isRevealed ? ' (correct answer)' : ''}
+          {isWrong ? ' (already tried, incorrect)' : ''}
         </span>
       </div>
     )
