@@ -73,7 +73,7 @@ const Question: React.FC<QuestionProps> = ({
   id,
   de,
   en,
-  phonetic: _phonetic,
+  phonetic,
   ru,
   fromLanguage,
   toLanguage,
@@ -171,6 +171,14 @@ const Question: React.FC<QuestionProps> = ({
             {question}
           </div>
         </CardTitle>
+        {result && (
+          <p className="mt-2 font-garamond-pp text-2xl leading-snug text-white">
+            {Array.isArray(answer) ? answer[0] : answer}
+            {toLanguage === 'ru' && phonetic && (
+              <span className="block text-lg italic text-white/80">{phonetic}</span>
+            )}
+          </p>
+        )}
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>

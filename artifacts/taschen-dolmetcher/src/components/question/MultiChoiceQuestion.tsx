@@ -65,7 +65,7 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
   id,
   de,
   en,
-  phonetic: _phonetic,
+  phonetic,
   ru,
   choices,
   fromLanguage,
@@ -223,6 +223,8 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
         textColor={correctClasses.text}
         idClassName="font-gyst"
         questionId={questionId}
+        answerText={result ? selectedValue : null}
+        phonetic={result && toLanguage === 'ru' ? phonetic : null}
       />
 
       <CardContent>

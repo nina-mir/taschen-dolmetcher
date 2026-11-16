@@ -12,6 +12,10 @@ interface QuestionHeaderProps {
   textColor: string;
   idClassName: string;
   questionId: string;
+  /** The correct translation, shown under the question once it is solved. */
+  answerText?: string | null;
+  /** The 1941 booklet's phonetic spelling, shown beside a Russian answer. */
+  phonetic?: string | null;
 }
 
 const QuestionHeader: React.FC<QuestionHeaderProps> = ({
@@ -21,6 +25,8 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({
   textColor,
   idClassName = "font-sans",
   questionId,
+  answerText = null,
+  phonetic = null,
 }) => {
   return (
     <CardHeader>
@@ -45,6 +51,15 @@ const QuestionHeader: React.FC<QuestionHeaderProps> = ({
           </h2>
         </div>
       </CardTitle>
+
+      {answerText && (
+        <p className="mt-2 font-garamond-pp text-2xl leading-snug text-white" aria-label={`Correct translation: ${answerText}`}>
+          {answerText}
+          {phonetic && (
+            <span className="block text-lg italic text-white/80">{phonetic}</span>
+          )}
+        </p>
+      )}
 
       <CardDescription className="sr-only">
         Language learning question {id}. Select the correct translation from the options below.
