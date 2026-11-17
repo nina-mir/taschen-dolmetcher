@@ -49,7 +49,7 @@ const Footer: React.FC<FooterProps> = ({
     url: "https://github.com/nina-mir/taschen-dolmetcher",
     text: "Source code on GitHub"
   },
-  height = "h-[16rem]",
+  height = "min-h-[16rem]",
   backgroundColor = "bg-stone-600",
   textColor = "text-stone-300",
   accentColor = "text-soviet-gold",
@@ -116,6 +116,21 @@ const Footer: React.FC<FooterProps> = ({
               </a>
             </div>
           )}
+
+          <div className="flex justify-center pt-2">
+            <a
+              href="https://nina-mir.github.io/taschen-dolmetcher-storybook/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Component documentation in Storybook"
+            >
+              <img
+                src="https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg"
+                alt="Storybook"
+                loading="lazy"
+              />
+            </a>
+          </div>
         </div>
       </div>
     </footer>

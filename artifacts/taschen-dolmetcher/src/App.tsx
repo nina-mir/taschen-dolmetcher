@@ -6,6 +6,7 @@ import { NavigationMenuDemo } from './components/Navbar'
 import ToggleQuestionType from './components/QuestionsFormat'
 import ScoreTracker from './components/ScoreTracker'
 import Footer from './components/Footer';
+import Archive from './components/archive/Archive';
 import { DarkModeProvider } from './contexts/DarkModeContext'
 
 import { StarFilledIcon, CornersIcon } from "@radix-ui/react-icons"
@@ -14,6 +15,7 @@ import data from '@/assets/data/improved_data_deepseek_en_array.json'
 import { useHighScore } from './hooks/useHighScore'
 import { useDarkMode } from './hooks/useDarkMode'
 import { useShareScore } from './hooks/useShareScore'
+import { useHashRoute } from './hooks/useHashRoute'
 
 const TOTAL_QUESTIONS = data.length
 
@@ -41,6 +43,8 @@ function App() {
 
   const { highScore } = useHighScore(correct)
   const { isDark, toggleDark } = useDarkMode()
+  const route = useHashRoute()
+  const showArchive = route === 'archive'
   const { handleShare, copied } = useShareScore(correct, incorrect, TOTAL_QUESTIONS)
 
   const handleLanguageChange = (from: LanguageType, to: LanguageType) => {
@@ -81,6 +85,7 @@ function App() {
             onDarkToggle={toggleDark}
             onShare={handleShare}
             copied={copied}
+            route={route}
           />
           {/* Progress bar */}
           <div className="w-full h-1 bg-stone-300/60 dark:bg-stone-700/60">
@@ -96,6 +101,11 @@ function App() {
           </div>
         </div>
 
+        {showArchive && <Archive />}
+
+        {/* The game stays mounted while the archive is open, so answers and
+            score are still there when the player comes back. */}
+        <div className={showArchive ? 'hidden' : ''}>
         <Header />
 
         <div className="flex flex-col items-center gap-[1rem]">
@@ -148,6 +158,7 @@ function App() {
             </div>
           )}
         </div>
+        </div>
 
         <div className="w-full flex flex-col mt-10">
           <p className="font-semibold bg-pink-400 w-full p-4 font-gyst inline-block align-bottom text-stone-900 text-2xl text-center">
@@ -156,7 +167,7 @@ function App() {
           <Footer />
         </div>
 
-        <ScoreTracker
+        {!showArchive && <ScoreTracker
           correct={correct}
           incorrect={incorrect}
           variant="mobile-banner"
@@ -164,7 +175,7 @@ function App() {
           highScore={highScore}
           onShare={handleShare}
           copied={copied}
-        />
+        />}
       </div>
     </DarkModeProvider>
   )

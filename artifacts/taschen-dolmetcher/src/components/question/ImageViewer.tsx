@@ -20,6 +20,10 @@ interface ImageViewerProps {
   imgClassName?: string;
   id?: string;
   ariaDescribedby?: string;
+  /** Smaller image to show in the page; the viewer still opens the full one. */
+  thumbSrc?: string;
+  /** The corner icon hinting that the image can be opened. */
+  showExpandIcon?: boolean;
 }
 
 /**
@@ -32,6 +36,8 @@ const ImageViewer: React.FC<ImageViewerProps> = ({
   imgClassName = '',
   id,
   ariaDescribedby,
+  thumbSrc,
+  showExpandIcon = true,
 }) => {
   const credit = [media.photog, media.credit, media.originalArchive]
     .filter(Boolean)
@@ -45,17 +51,20 @@ const ImageViewer: React.FC<ImageViewerProps> = ({
         aria-label="View image full screen with caption"
       >
         <MediaImage
-          media={media}
+          media={thumbSrc ? { ...media, imgUrl: thumbSrc } : media}
+          loading={thumbSrc ? 'lazy' : 'eager'}
           className={imgClassName}
           id={id}
           ariaDescribedby={ariaDescribedby}
         />
-        <span
-          className="absolute top-2 right-2 flex items-center justify-center w-8 h-8 rounded-full bg-black/55 text-white group-hover:bg-black/80 transition-colors"
-          aria-hidden="true"
-        >
-          <EnterFullScreenIcon className="w-4 h-4" />
-        </span>
+        {showExpandIcon && (
+          <span
+            className="absolute top-2 right-2 flex items-center justify-center w-8 h-8 rounded-full bg-black/55 text-white group-hover:bg-black/80 transition-colors"
+            aria-hidden="true"
+          >
+            <EnterFullScreenIcon className="w-4 h-4" />
+          </span>
+        )}
       </DialogTrigger>
 
       <DialogPortal>

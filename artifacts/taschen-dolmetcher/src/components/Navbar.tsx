@@ -2,6 +2,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 import ScoreTracker from "@/components/ScoreTracker"
 import { UploadIcon } from "@radix-ui/react-icons"
+import { Route } from "@/hooks/useHashRoute"
 
 import {
   NavigationMenu,
@@ -22,6 +23,7 @@ interface NavigationMenuDemoProps {
   onDarkToggle: () => void;
   onShare: () => void;
   copied: boolean;
+  route: Route;
 }
 
 export function NavigationMenuDemo({
@@ -32,6 +34,7 @@ export function NavigationMenuDemo({
   onDarkToggle,
   onShare,
   copied,
+  route,
 }: NavigationMenuDemoProps) {
   const [activeMenu, setActiveMenu] = React.useState<string>("")
 
@@ -118,10 +121,23 @@ export function NavigationMenuDemo({
                   A wrong answer brings a brief visit from Akhmatova or Pasternak.
                 </p>
                 <p>
+                  Rather look and read than play? The Archive shows every photograph and passage.
+                </p>
+                <p>
                   Your score is tracked at the top of the page. After three wrong attempts on a question, the correct answer is highlighted. Use the reset button to start a fresh session.
                 </p>
               </div>
             </NavigationMenuContent>
+          </NavigationMenuItem>
+
+          {/* Left: switch between the game and the archive */}
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              className={`${navigationMenuTriggerStyle()} text-lg dark:text-stone-100 dark:hover:bg-stone-700/50`}
+              href={route === 'archive' ? '#/' : '#/archive'}
+            >
+              {route === 'archive' ? 'Game' : 'Archive'}
+            </NavigationMenuLink>
           </NavigationMenuItem>
 
           {/* Right: dark mode toggle */}
@@ -173,16 +189,6 @@ export function NavigationMenuDemo({
             </NavigationMenuItem>
           )}
 
-          {/* Right: Storybook badge */}
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              className={navigationMenuTriggerStyle()}
-              href="https://nina-mir.github.io/taschen-dolmetcher-storybook/"
-              target="_blank"
-            >
-              <img src="https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg" alt="Storybook" />
-            </NavigationMenuLink>
-          </NavigationMenuItem>
         </NavigationMenuList>
       </div>
     </NavigationMenu>
