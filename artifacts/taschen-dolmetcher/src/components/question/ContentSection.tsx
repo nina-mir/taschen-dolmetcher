@@ -3,21 +3,18 @@ import CollapsibleInfo from "./CollapsibleInfo";
 import InfoText from './InfoText';
 import ImageViewer from './ImageViewer';
 import { Separator } from "@/components/ui/separator"
-import { EyeOpenIcon } from "@radix-ui/react-icons"
 import { useId } from 'react';
 
 interface ContentSectionProps {
   media: MediaItem;
   info: InfoItem;
   showInfo: string;
-  onToggleInfo: (arg0: string) => void;
 }
 
 const ContentSection: React.FC<ContentSectionProps> = ({
   media,
   info,
   showInfo,
-  onToggleInfo,
 }) => {
   const uniqueId = useId();
   const sectionId = `content-section-${uniqueId}`;
@@ -130,36 +127,6 @@ const ContentSection: React.FC<ContentSectionProps> = ({
             id={infoId}
             ariaLabel="Additional context information"
           />
-
-          <button
-            className={`
-              absolute
-              ${showInfo}
-              bottom-0
-              right-1
-              w-10
-              h-10
-              text-soviet-gold
-              hover:text-yellow-300
-              focus:outline-none
-              focus:ring-2
-              focus:ring-soviet-gold
-              focus:ring-offset-2
-              focus:ring-offset-black
-              rounded-sm
-              transition-colors
-              duration-200
-            `}
-            onClick={() => onToggleInfo('hidden')}
-            aria-label="Hide context information panel"
-            aria-expanded={isVisible}
-            aria-controls={sectionId}
-            type="button"
-            title="close info panel"
-          >
-            <EyeOpenIcon className="w-full h-full" />
-            <span className="sr-only">Close information panel</span>
-          </button>
         </div>
       </div>
     </div>

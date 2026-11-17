@@ -232,7 +232,6 @@ const MultiChoiceQuestion: React.FC<QuestionProps> = ({
           media={media}
           info={info}
           showInfo={showInfo}
-          onToggleInfo={setShowInfo}
         />
 
         <fieldset
