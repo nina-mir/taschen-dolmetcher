@@ -60,13 +60,13 @@ const Header: React.FC = () => {
         src={taschen1}
         alt=""
         aria-hidden="true"
-        className='w-35 md:w-30 fixed top-90 md:top-10 md:-left-13 -left-20'
+        className='w-35 md:w-30 absolute top-90 md:top-10 md:-left-13 -left-20'
       />
       <img
         src={taschen1}
         alt=""
         aria-hidden="true"
-        className='w-40 md:w-50 fixed -right-20 md:-right-25 top-60 md:top-9'
+        className='w-40 md:w-50 absolute -right-20 md:-right-25 top-60 md:top-9'
       />
 
       <h2 className="font-garamond-pp text-xl max-w-md text-center text-wrap mb-2">

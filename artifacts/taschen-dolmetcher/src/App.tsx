@@ -105,7 +105,7 @@ function App() {
 
         {/* The game stays mounted while the archive is open, so answers and
             score are still there when the player comes back. */}
-        <div className={showArchive ? 'hidden' : ''}>
+        <div className={showArchive ? 'hidden' : 'relative overflow-x-clip'}>
         <Header />
 
         <div className="flex flex-col items-center gap-[1rem]">
@@ -138,6 +138,7 @@ function App() {
               fromLanguage={fromLanguage}
               qFormat={qFormat}
               onAnswer={handleAnswer}
+              onNewGame={handleNewGame}
             />
           )}
 
