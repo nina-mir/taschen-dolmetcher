@@ -12,6 +12,7 @@ import RoundProgress from '@/components/round/RoundProgress';
 import RoundSummary, { ReviewEntry } from '@/components/round/RoundSummary';
 
 import knuthRandomizer from '@/utils/helpers'
+import { loadGame, saveGame, Outcome } from '@/utils/savedGame'
 
 interface QuestionsContainerProps {
   fromLanguage: LanguageType;
@@ -26,8 +27,40 @@ const TOTAL = data.length
 const ROUND_SIZE = 10
 const ROUND_COUNT = Math.ceil(TOTAL / ROUND_SIZE)
 
-/** How a question in the current round went. */
-type Outcome = 'first' | 'missed' | 'skipped'
+const SIZES = { questions: TOTAL, media: mediaData.length, texts: textData.length }
+
+const indices = (n: number) => Array.from({ length: n }, (_, i) => i)
+const firstRound = (start: number) =>
+  Array.from({ length: Math.min(ROUND_SIZE, TOTAL - start) }, (_, i) => start + i)
+
+/**
+ * The game to start from: the saved one if there is one, else a fresh shuffle.
+ * A card already answered before a reload is not asked again; play resumes
+ * at the next one.
+ */
+function initialGame() {
+  const saved = loadGame(SIZES)
+  if (saved) {
+    const answered = !saved.showSummary && saved.roundItems[saved.step] in saved.outcomes
+    if (answered) {
+      const last = saved.step + 1 >= saved.roundItems.length
+      return { ...saved, step: last ? saved.step : saved.step + 1, showSummary: last }
+    }
+    return saved
+  }
+  return {
+    questionOrder: knuthRandomizer(indices(SIZES.questions)) as number[],
+    mediaOrder: knuthRandomizer(indices(SIZES.media)) as number[],
+    textOrder: knuthRandomizer(indices(SIZES.texts)) as number[],
+    roundNumber: 1,
+    isReview: false,
+    roundItems: firstRound(0),
+    nextDeckStart: Math.min(ROUND_SIZE, TOTAL),
+    step: 0,
+    outcomes: {} as Record<number, Outcome>,
+    showSummary: false,
+  }
+}
 
 function phraseIn(dataIdx: number, language: LanguageType): string {
   const entry = data[dataIdx]
@@ -47,27 +80,46 @@ function phraseIn(dataIdx: number, language: LanguageType): string {
  * Positions below are positions in the shuffled deck (0 to 73). Each phrase's
  * photo and reading are tied to its position, so a retried phrase comes back
  * with the same photo and reading.
+ *
+ * Progress is saved in the browser after every step (see utils/savedGame.ts).
  */
 const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer, onNewGame }: QuestionsContainerProps) => {
-  // Shuffled once per game. Question indices keep data + multipleChoiceData in
-  // sync; media and info are independent, so they are shuffled separately.
-  const [questionIndices] = useState<number[]>(() => knuthRandomizer(data.map((_, i) => i)))
-  const [shuffledMediaData] = useState(() => knuthRandomizer([...mediaData]))
-  const [shuffledTextData] = useState(() => knuthRandomizer([...textData]))
+  const [start] = useState(initialGame)
 
-  const firstRound = (start: number) =>
-    Array.from({ length: Math.min(ROUND_SIZE, TOTAL - start) }, (_, i) => start + i)
+  // Shuffled once per game. The question order keeps data + multipleChoiceData
+  // in sync; media and info are independent, so they are shuffled separately.
+  const questionIndices = start.questionOrder
+  const [shuffledMediaData] = useState(() => start.mediaOrder.map(i => mediaData[i]))
+  const [shuffledTextData] = useState(() => start.textOrder.map(i => textData[i]))
 
-  const [roundNumber, setRoundNumber] = useState<number>(1)       // fresh rounds played
-  const [roundSerial, setRoundSerial] = useState<number>(0)       // every round, review included
-  const [isReview, setIsReview] = useState<boolean>(false)
-  const [roundItems, setRoundItems] = useState<number[]>(() => firstRound(0))
-  const [nextDeckStart, setNextDeckStart] = useState<number>(Math.min(ROUND_SIZE, TOTAL))
-  const [step, setStep] = useState<number>(0)
-  const [outcomes, setOutcomes] = useState<Record<number, Outcome>>({})
-  const [hadWrong, setHadWrong] = useState<boolean>(false)        // wrong try on the card on screen
+  const [roundNumber, setRoundNumber] = useState<number>(start.roundNumber)    // fresh rounds played
+  const [roundSerial, setRoundSerial] = useState<number>(0)                    // every round, review included
+  const [isReview, setIsReview] = useState<boolean>(start.isReview)
+  const [roundItems, setRoundItems] = useState<number[]>(start.roundItems)
+  const [nextDeckStart, setNextDeckStart] = useState<number>(start.nextDeckStart)
+  const [step, setStep] = useState<number>(start.step)
+  const [outcomes, setOutcomes] = useState<Record<number, Outcome>>(start.outcomes)
+  const [hadWrong, setHadWrong] = useState<boolean>(false)                     // wrong try on the card on screen
   const [solved, setSolved] = useState<boolean>(false)
-  const [showSummary, setShowSummary] = useState<boolean>(false)
+  const [showSummary, setShowSummary] = useState<boolean>(start.showSummary)
+
+  // Save after every change, so a reload resumes here
+  useEffect(() => {
+    saveGame({
+      version: 1,
+      sizes: SIZES,
+      questionOrder: start.questionOrder,
+      mediaOrder: start.mediaOrder,
+      textOrder: start.textOrder,
+      roundNumber,
+      isReview,
+      roundItems,
+      nextDeckStart,
+      step,
+      outcomes,
+      showSummary,
+    })
+  }, [start, roundNumber, isReview, roundItems, nextDeckStart, step, outcomes, showSummary])
 
   const topRef = useRef<HTMLDivElement>(null)
 
@@ -154,6 +206,7 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer, onNew
           toReview={toReview}
           deckFinished={nextDeckStart >= TOTAL}
           deckSize={TOTAL}
+          phrasesSeen={nextDeckStart}
           onNextRound={handleNextRound}
           onRetry={() => startRound(toReviewPositions, true)}
           onPlayAgain={onNewGame}

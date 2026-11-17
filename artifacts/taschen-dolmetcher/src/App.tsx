@@ -10,12 +10,13 @@ import Archive from './components/archive/Archive';
 import { DarkModeProvider } from './contexts/DarkModeContext'
 
 import { StarFilledIcon, CornersIcon } from "@radix-ui/react-icons"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import data from '@/assets/data/improved_data_deepseek_en_array.json'
 import { useHighScore } from './hooks/useHighScore'
 import { useDarkMode } from './hooks/useDarkMode'
 import { useShareScore } from './hooks/useShareScore'
 import { useHashRoute } from './hooks/useHashRoute'
+import { loadScore, saveScore, clearSavedGame } from './utils/savedGame'
 
 const TOTAL_QUESTIONS = data.length
 
@@ -37,8 +38,9 @@ function App() {
   const [toLanguage, setToLanguage] = useState<LanguageType>('en')
   const [okayChoices, setOkayChoices] = useState<boolean>(true)
   const [qFormat, setQFormat] = useState<QuestionType>('choosing')
-  const [correct, setCorrect] = useState<number>(0)
-  const [incorrect, setIncorrect] = useState<number>(0)
+  // The score of the game in progress is restored after a reload
+  const [correct, setCorrect] = useState<number>(() => loadScore().correct)
+  const [incorrect, setIncorrect] = useState<number>(() => loadScore().incorrect)
   const [gameKey, setGameKey] = useState<number>(0)
 
   const { highScore } = useHighScore(correct)
@@ -65,7 +67,13 @@ function App() {
     }
   }
 
+  useEffect(() => {
+    saveScore({ correct, incorrect })
+  }, [correct, incorrect])
+
   const handleNewGame = () => {
+    // Forget the saved game first, so the fresh one starts from a new shuffle
+    clearSavedGame()
     setCorrect(0)
     setIncorrect(0)
     setGameKey(prev => prev + 1)

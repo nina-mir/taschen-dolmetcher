@@ -19,6 +19,8 @@ interface RoundSummaryProps {
   /** True once every phrase in the deck has been through a round. */
   deckFinished: boolean;
   deckSize: number;
+  /** Phrases that have come up in a round so far this game. */
+  phrasesSeen: number;
   onNextRound: () => void;
   onRetry: () => void;
   onPlayAgain: () => void;
@@ -39,6 +41,7 @@ const RoundSummary: React.FC<RoundSummaryProps> = ({
   toReview,
   deckFinished,
   deckSize,
+  phrasesSeen,
   onNextRound,
   onRetry,
   onPlayAgain,
@@ -98,11 +101,30 @@ const RoundSummary: React.FC<RoundSummaryProps> = ({
         <p className="font-garamond-pp text-xl">Nothing to review. Every phrase right first time.</p>
       )}
 
-      {deckFinished && (
-        <p className="font-garamond-pp text-xl">
-          That was the last of the {deckSize} phrases.
-        </p>
-      )}
+      <div className="flex flex-col gap-2">
+        <div className="flex justify-between font-garamond-pp text-xl">
+          <span>Phrases seen</span>
+          <span>{phrasesSeen} of {deckSize}</span>
+        </div>
+        <div
+          className="h-2 rounded-full bg-stone-400 dark:bg-stone-600"
+          role="progressbar"
+          aria-label="Phrases seen"
+          aria-valuemin={0}
+          aria-valuemax={deckSize}
+          aria-valuenow={phrasesSeen}
+        >
+          <div
+            className="h-2 rounded-full bg-red-600"
+            style={{ width: `${(phrasesSeen / deckSize) * 100}%` }}
+          />
+        </div>
+        {deckFinished && (
+          <p className="mt-2 font-garamond-pp text-xl">
+            That was the last of the {deckSize} phrases.
+          </p>
+        )}
+      </div>
 
       <div className="flex flex-col gap-3">
         {deckFinished ? (
