@@ -8,6 +8,8 @@ import textData from '@/assets/data/infoData.json';
 
 import Question from '@/components/Question';
 import MultiChoiceQuestion from '@/components/question/MultiChoiceQuestion';
+import RoundProgress from '@/components/round/RoundProgress';
+import RoundSummary, { ReviewEntry } from '@/components/round/RoundSummary';
 
 import knuthRandomizer from '@/utils/helpers'
 
@@ -16,98 +18,157 @@ interface QuestionsContainerProps {
   toLanguage: LanguageType;
   qFormat: QuestionType;
   onAnswer: (isCorrect: boolean) => void;
-  /** Resets the score and starts a fresh, reshuffled run. */
+  /** Resets the score and starts a fresh, reshuffled game. */
   onNewGame: () => void;
 }
 
 const TOTAL = data.length
+const ROUND_SIZE = 10
+const ROUND_COUNT = Math.ceil(TOTAL / ROUND_SIZE)
+
+/** How a question in the current round went. */
+type Outcome = 'first' | 'missed' | 'skipped'
+
+function phraseIn(dataIdx: number, language: LanguageType): string {
+  const entry = data[dataIdx]
+  if (language === 'en') return entry.en[0]
+  return language === 'ru' ? entry.ru : entry.de
+}
 
 /**
- * Shows the deck one question at a time.
+ * Plays the deck in rounds of 10, one question at a time.
  *
  * - "Skip this one" moves on without answering.
  * - Once the answer is correct, "Next question" appears under the card.
- * - After the last question, a short end screen offers to play again.
+ * - After each round, a summary lists the phrases to review: those skipped
+ *   or got right only after a wrong try. They can be retried as a review
+ *   round before the next round.
+ *
+ * Positions below are positions in the shuffled deck (0 to 73). Each phrase's
+ * photo and reading are tied to its position, so a retried phrase comes back
+ * with the same photo and reading.
  */
 const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer, onNewGame }: QuestionsContainerProps) => {
-  // Shuffled once per run. Question indices keep data + multipleChoiceData in
+  // Shuffled once per game. Question indices keep data + multipleChoiceData in
   // sync; media and info are independent, so they are shuffled separately.
   const [questionIndices] = useState<number[]>(() => knuthRandomizer(data.map((_, i) => i)))
   const [shuffledMediaData] = useState(() => knuthRandomizer([...mediaData]))
   const [shuffledTextData] = useState(() => knuthRandomizer([...textData]))
 
-  const [position, setPosition] = useState<number>(0)   // which question is on screen
-  const [solved, setSolved] = useState<boolean>(false)  // is the current one answered correctly?
-  const [solvedCount, setSolvedCount] = useState<number>(0)
-  // Last position counted as solved, so re-solving the same card after a
-  // language or format switch is not counted twice in the end summary.
-  const [lastCounted, setLastCounted] = useState<number>(-1)
-  const [skippedCount, setSkippedCount] = useState<number>(0)
+  const firstRound = (start: number) =>
+    Array.from({ length: Math.min(ROUND_SIZE, TOTAL - start) }, (_, i) => start + i)
+
+  const [roundNumber, setRoundNumber] = useState<number>(1)       // fresh rounds played
+  const [roundSerial, setRoundSerial] = useState<number>(0)       // every round, review included
+  const [isReview, setIsReview] = useState<boolean>(false)
+  const [roundItems, setRoundItems] = useState<number[]>(() => firstRound(0))
+  const [nextDeckStart, setNextDeckStart] = useState<number>(Math.min(ROUND_SIZE, TOTAL))
+  const [step, setStep] = useState<number>(0)
+  const [outcomes, setOutcomes] = useState<Record<number, Outcome>>({})
+  const [hadWrong, setHadWrong] = useState<boolean>(false)        // wrong try on the card on screen
+  const [solved, setSolved] = useState<boolean>(false)
+  const [showSummary, setShowSummary] = useState<boolean>(false)
 
   const topRef = useRef<HTMLDivElement>(null)
 
-  // Changing language or answer format resets the card on screen, so it is
-  // no longer solved.
-  useEffect(() => {
-    setSolved(false)
-  }, [fromLanguage, toLanguage, qFormat])
-
-  const handleAnswer = (isCorrect: boolean) => {
-    onAnswer(isCorrect)
-    if (isCorrect && !solved) {
-      setSolved(true)
-      if (lastCounted !== position) {
-        setLastCounted(position)
-        setSolvedCount(prev => prev + 1)
-      }
-    }
-  }
-
-  const goToNext = () => {
-    setPosition(prev => prev + 1)
-    setSolved(false)
-    // Bring the top of the new card into view, below the fixed nav bar
+  const scrollToTop = () => {
     requestAnimationFrame(() => {
       topRef.current?.scrollIntoView({ block: 'start', behavior: 'smooth' })
     })
   }
 
-  const handleSkip = () => {
-    setSkippedCount(prev => prev + 1)
-    goToNext()
+  // Changing language or answer format resets the card on screen, so it is
+  // no longer solved. Its recorded outcome stays.
+  useEffect(() => {
+    setSolved(false)
+  }, [fromLanguage, toLanguage, qFormat])
+
+  const position = roundItems[step]
+
+  const record = (outcome: Outcome) => {
+    setOutcomes(prev => (position in prev ? prev : { ...prev, [position]: outcome }))
   }
 
-  // ---- End of the deck ----
-  if (position >= TOTAL) {
+  const handleAnswer = (isCorrect: boolean) => {
+    onAnswer(isCorrect)
+    if (!isCorrect) {
+      setHadWrong(true)
+    } else if (!solved) {
+      setSolved(true)
+      record(hadWrong ? 'missed' : 'first')
+    }
+  }
+
+  const advance = () => {
+    setSolved(false)
+    setHadWrong(false)
+    if (step + 1 < roundItems.length) {
+      setStep(step + 1)
+    } else {
+      setShowSummary(true)
+    }
+    scrollToTop()
+  }
+
+  const handleSkip = () => {
+    record('skipped')
+    advance()
+  }
+
+  const startRound = (items: number[], review: boolean) => {
+    setRoundItems(items)
+    setIsReview(review)
+    setRoundSerial(prev => prev + 1)
+    setStep(0)
+    setOutcomes({})
+    setSolved(false)
+    setHadWrong(false)
+    setShowSummary(false)
+    scrollToTop()
+  }
+
+  const handleNextRound = () => {
+    startRound(firstRound(nextDeckStart), false)
+    setNextDeckStart(Math.min(nextDeckStart + ROUND_SIZE, TOTAL))
+    setRoundNumber(prev => prev + 1)
+  }
+
+  const toReviewPositions = roundItems.filter(p => outcomes[p] && outcomes[p] !== 'first')
+
+  // ---- End of a round ----
+  if (showSummary) {
+    const firstTry = roundItems.filter(p => outcomes[p] === 'first').length
+    const toReview: ReviewEntry[] = toReviewPositions.map(p => ({
+      phrase: phraseIn(questionIndices[p], fromLanguage),
+      answer: phraseIn(questionIndices[p], toLanguage),
+      outcome: outcomes[p] === 'skipped' ? 'skipped' : 'missed',
+    }))
+    const title = isReview ? 'Review complete' : `Round ${roundNumber} of ${ROUND_COUNT} complete`
+
     return (
       <div ref={topRef} className="w-full flex flex-col items-center scroll-mt-16">
-        <div className="w-[90%] rounded-xl border px-6 py-10 text-center flex flex-col items-center gap-4">
-          <h2 className="font-gyst text-2xl font-semibold">That was the last phrase.</h2>
-          <p className="font-garamond-pp text-2xl">
-            You answered {solvedCount} of {TOTAL} correctly
-            {skippedCount > 0 && <> and skipped {skippedCount}</>}.
-          </p>
-          <button
-            type="button"
-            onClick={onNewGame}
-            className="mt-2 min-h-12 px-6 rounded-md bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 font-gyst font-semibold cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-soviet-gold"
-          >
-            Play again
-          </button>
-          <a href="#/archive" className="font-garamond-pp text-xl underline underline-offset-4">
-            Visit the Archive
-          </a>
-        </div>
+        <RoundSummary
+          title={title}
+          firstTry={firstTry}
+          total={roundItems.length}
+          toReview={toReview}
+          deckFinished={nextDeckStart >= TOTAL}
+          deckSize={TOTAL}
+          onNextRound={handleNextRound}
+          onRetry={() => startRound(toReviewPositions, true)}
+          onPlayAgain={onNewGame}
+          shareMessage={`I got ${firstTry} of ${roundItems.length} right first time in ${isReview ? 'a review round' : `round ${roundNumber}`} of Taschen-Dolmetscher, a game built on a WW2 German-Russian phrasebook.`}
+        />
       </div>
     )
   }
 
   // ---- One question ----
   const dataIdx = questionIndices[position]
-  const isLast = position === TOTAL - 1
+  const isLastInRound = step === roundItems.length - 1
 
   const shared = {
-    id: position + 1,
+    id: step + 1,
     de: data[dataIdx].de,
     en: data[dataIdx].en,
     ru: data[dataIdx].ru,
@@ -118,24 +179,25 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer, onNew
     info: shuffledTextData[position],
     onAnswer: handleAnswer,
   }
+  // A new key per round, so a retried phrase starts as a fresh card
+  const cardKey = `${roundSerial}-${position}`
 
   return (
-    <div ref={topRef} className="w-full flex flex-col items-center gap-3 scroll-mt-16">
-      <p
-        className="w-[90%] font-gyst text-sm font-medium uppercase tracking-wider text-stone-600 dark:text-stone-400"
-        aria-live="polite"
-      >
-        Question {position + 1} of {TOTAL}
-      </p>
+    <div ref={topRef} className="w-full flex flex-col items-center gap-4 scroll-mt-16">
+      <RoundProgress
+        label={isReview ? 'Review' : `Round ${roundNumber} of ${ROUND_COUNT}`}
+        step={step}
+        total={roundItems.length}
+      />
 
       {qFormat === 'choosing' ? (
         <MultiChoiceQuestion
-          key={dataIdx}
+          key={cardKey}
           {...shared}
           choices={multipleChoiceData[dataIdx][toLanguage]}
         />
       ) : (
-        <Question key={dataIdx} {...shared} />
+        <Question key={cardKey} {...shared} />
       )}
 
       {/* relative + z-20 keeps the buttons clickable above the card (z-10) */}
@@ -143,10 +205,10 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer, onNew
         {solved ? (
           <button
             type="button"
-            onClick={goToNext}
+            onClick={advance}
             className="w-full min-h-13 rounded-md bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 font-gyst font-semibold flex items-center justify-center gap-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-soviet-gold"
           >
-            {isLast ? 'Finish' : 'Next question'}
+            {isLastInRound ? 'See how the round went' : 'Next question'}
             <ArrowRightIcon className="w-5 h-5" aria-hidden="true" />
           </button>
         ) : (
