@@ -160,7 +160,8 @@ function App() {
         </div>
         </div>
 
-        <div className="w-full flex flex-col mt-10">
+        {/* relative + z-10 keeps the dedication and footer above the page doodles */}
+        <div className="relative z-10 w-full flex flex-col mt-10">
           <p className="font-semibold bg-pink-400 w-full p-4 font-gyst inline-block align-bottom text-stone-900 text-2xl text-center">
             In memory &amp; admiration of Vasily Grossman, Ilya Ehrenburg, and countless other poets fighting fascism.
           </p>
