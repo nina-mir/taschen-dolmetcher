@@ -55,6 +55,10 @@ const Archive: React.FC = () => {
   return (
     <main className="mx-auto w-full max-w-5xl px-3 pt-24 pb-16 md:pt-28">
       <header className="mx-auto mb-10 max-w-2xl px-2 text-center">
+        <p className="mb-10 font-garamond-pp text-lg italic leading-snug text-stone-700 dark:text-stone-300 md:text-xl">
+          In memory &amp; admiration of Vasily Grossman, Ilya Ehrenburg, and
+          countless other poets fighting fascism.
+        </p>
         <h1 className="font-gyst text-4xl font-semibold md:text-5xl">Archive</h1>
         <p className="mt-5 font-garamond-pp text-xl leading-relaxed md:text-2xl">
           On the Eastern Front, horror fell on people arbitrarily. The photographs
