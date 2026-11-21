@@ -5,17 +5,23 @@ interface RoundProgressProps {
   step: number;
   /** Questions in this round. */
   total: number;
+  /** Zero-based position of an earlier question being looked at, if any. */
+  viewing?: number | null;
 }
 
 /** "Round 3 of 8 · Question 4 of 10" with one segment per question. */
-const RoundProgress: React.FC<RoundProgressProps> = ({ label, step, total }) => (
+const RoundProgress: React.FC<RoundProgressProps> = ({ label, step, total, viewing = null }) => (
   <div className="w-[90%] flex flex-col gap-2">
     <div
       className="flex justify-between font-gyst text-sm font-medium uppercase tracking-wider text-stone-600 dark:text-stone-400"
       aria-live="polite"
     >
       <span>{label}</span>
-      <span>Question {step + 1} of {total}</span>
+      <span>
+        {viewing === null
+          ? <>Question {step + 1} of {total}</>
+          : <>Looking back at {viewing + 1} of {total}</>}
+      </span>
     </div>
     <div
       className="grid gap-1"
@@ -25,7 +31,7 @@ const RoundProgress: React.FC<RoundProgressProps> = ({ label, step, total }) => 
       {Array.from({ length: total }, (_, i) => (
         <div
           key={i}
-          className={`h-1.5 rounded-full ${
+          className={`h-1.5 rounded-full ${i === viewing ? 'outline-2 outline-offset-2 outline-stone-900 dark:outline-stone-100 ' : ''}${
             i < step
               ? 'bg-stone-900 dark:bg-stone-100'
               : i === step

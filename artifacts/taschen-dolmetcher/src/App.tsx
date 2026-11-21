@@ -16,28 +16,48 @@ import { useHighScore } from './hooks/useHighScore'
 import { useDarkMode } from './hooks/useDarkMode'
 import { useShareScore } from './hooks/useShareScore'
 import { useHashRoute } from './hooks/useHashRoute'
-import { loadScore, saveScore, clearSavedGame } from './utils/savedGame'
+import { loadScore, saveScore, clearSavedGame, loadSettings, saveSettings } from './utils/savedGame'
+import StartOverDialog from './components/StartOverDialog'
 
 const TOTAL_QUESTIONS = data.length
 
-function makeInstruction(from: LanguageType, to: LanguageType): string {
+// Language names as they read after "into" in each instruction language
+const INTO: Record<LanguageType, Record<LanguageType, string>> = {
+  de: { de: 'ins Deutsche', en: 'ins Englische', ru: 'ins Russische' },
+  en: { de: 'into German', en: 'into English', ru: 'into Russian' },
+  ru: { de: 'на немецкий', en: 'на английский', ru: 'на русский' },
+}
+
+/** The instruction above the questions, in the language being asked. */
+function makeInstruction(from: LanguageType, to: LanguageType, format: QuestionType): string {
+  const into = INTO[from][to]
+  const choosing = format === 'choosing'
   switch (from) {
     case 'de':
-      return `Schreiben Sie die richtige Übersetzung in ${to}!`
+      return choosing
+        ? `Wählen Sie die richtige Übersetzung ${into}!`
+        : `Schreiben Sie die richtige Übersetzung ${into}!`
     case 'en':
-      return `Write the correct translation in ${to}`
+      return choosing
+        ? `Choose the correct translation ${into}.`
+        : `Write the correct translation ${into}.`
     case 'ru':
-      return `Напишите правильный перевод в ${to}`
+      return choosing
+        ? `Выберите правильный перевод ${into}!`
+        : `Напишите правильный перевод ${into}!`
     default:
       return `Etwas ist kaput!! Refresh, пожалуйста!`
   }
 }
 
 function App() {
-  const [fromLanguage, setFromLanguage] = useState<LanguageType>('de')
-  const [toLanguage, setToLanguage] = useState<LanguageType>('en')
+  // Language pair and answer format are remembered between visits
+  const [savedSettings] = useState(loadSettings)
+  const [fromLanguage, setFromLanguage] = useState<LanguageType>(savedSettings.from)
+  const [toLanguage, setToLanguage] = useState<LanguageType>(savedSettings.to)
   const [okayChoices, setOkayChoices] = useState<boolean>(true)
-  const [qFormat, setQFormat] = useState<QuestionType>('choosing')
+  const [qFormat, setQFormat] = useState<QuestionType>(savedSettings.format)
+  const [confirmingStartOver, setConfirmingStartOver] = useState<boolean>(false)
   // The score of the game in progress is restored after a reload
   const [correct, setCorrect] = useState<number>(() => loadScore().correct)
   const [incorrect, setIncorrect] = useState<number>(() => loadScore().incorrect)
@@ -71,6 +91,10 @@ function App() {
     saveScore({ correct, incorrect })
   }, [correct, incorrect])
 
+  useEffect(() => {
+    saveSettings({ from: fromLanguage, to: toLanguage, format: qFormat })
+  }, [fromLanguage, toLanguage, qFormat])
+
   const handleNewGame = () => {
     // Forget the saved game first, so the fresh one starts from a new shuffle
     clearSavedGame()
@@ -79,7 +103,14 @@ function App() {
     setGameKey(prev => prev + 1)
   }
 
-  const progressPct = (Math.min(correct, TOTAL_QUESTIONS) / TOTAL_QUESTIONS) * 100
+  // The reset buttons ask first, unless nothing has been answered yet
+  const requestNewGame = () => {
+    if (correct + incorrect === 0) {
+      handleNewGame()
+    } else {
+      setConfirmingStartOver(true)
+    }
+  }
 
   return (
     <DarkModeProvider value={isDark}>
@@ -88,25 +119,13 @@ function App() {
           <NavigationMenuDemo
             correct={correct}
             incorrect={incorrect}
-            onNewGame={handleNewGame}
+            onNewGame={requestNewGame}
             isDark={isDark}
             onDarkToggle={toggleDark}
             onShare={handleShare}
             copied={copied}
             route={route}
           />
-          {/* Progress bar */}
-          <div className="w-full h-1 bg-stone-300/60 dark:bg-stone-700/60">
-            <div
-              className="h-full bg-red-600 transition-all duration-700 ease-out"
-              style={{ width: `${progressPct}%` }}
-              role="progressbar"
-              aria-valuenow={correct}
-              aria-valuemin={0}
-              aria-valuemax={TOTAL_QUESTIONS}
-              aria-label={`${correct} of ${TOTAL_QUESTIONS} questions answered correctly`}
-            />
-          </div>
         </div>
 
         {showArchive && <Archive />}
@@ -136,7 +155,7 @@ function App() {
             text-wrap
           '>
             <StarFilledIcon className='w-6 h-6 inline-block text-red-600' />
-            {okayChoices && <p>{makeInstruction(fromLanguage, toLanguage)}</p>}
+            {okayChoices && <p>{makeInstruction(fromLanguage, toLanguage, qFormat)}</p>}
           </div>
 
           {okayChoices && (
@@ -147,6 +166,7 @@ function App() {
               qFormat={qFormat}
               onAnswer={handleAnswer}
               onNewGame={handleNewGame}
+              onStartOver={requestNewGame}
             />
           )}
 
@@ -171,7 +191,7 @@ function App() {
 
         {/* relative + z-10 keeps the dedication and footer above the page doodles */}
         <div className="relative z-10 w-full flex flex-col mt-10">
-          <p className="font-semibold bg-pink-400 w-full p-4 font-gyst inline-block align-bottom text-stone-900 text-2xl text-center">
+          <p className="bg-pink-400 w-full px-6 py-4 md:p-4 font-gyst font-medium md:font-semibold inline-block align-bottom text-stone-900 text-lg leading-snug md:text-2xl text-center">
             In memory &amp; admiration of Vasily Grossman, Ilya Ehrenburg, and countless other poets fighting fascism.
           </p>
           <Footer />
@@ -181,11 +201,16 @@ function App() {
           correct={correct}
           incorrect={incorrect}
           variant="mobile-banner"
-          onNewGame={handleNewGame}
+          onNewGame={requestNewGame}
           highScore={highScore}
           onShare={handleShare}
           copied={copied}
         />}
+        <StartOverDialog
+          open={confirmingStartOver}
+          onOpenChange={setConfirmingStartOver}
+          onConfirm={handleNewGame}
+        />
       </div>
     </DarkModeProvider>
   )

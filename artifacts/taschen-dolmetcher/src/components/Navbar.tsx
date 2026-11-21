@@ -113,18 +113,26 @@ export function NavigationMenuDemo({
             >
               <div className="flex flex-col gap-5 px-6 pt-8 pb-28 md:p-6 w-[calc(100vw-2rem)] md:w-[400px] lg:w-[500px] max-h-[70vh] overflow-y-auto md:max-h-none md:overflow-visible text-xl md:text-base leading-relaxed font-garamond-pp dark:text-stone-100">
                 <p>
-                  Choose a language pair — German, English, or Russian — then pick your format:
-                  multiple choice or type your answer. Questions are shuffled each session.
+                  Choose a language pair (German, English or Russian) and a format: multiple
+                  choice or type your answer. Both are remembered for next time.
                 </p>
                 <p>
-                  A correct answer reveals a photograph and a passage from the Eastern Front.
-                  A wrong answer brings a brief visit from Akhmatova or Pasternak.
+                  The game comes in rounds of ten phrases. A correct answer reveals the
+                  translation, a photograph and a passage from the Eastern Front. A wrong
+                  answer brings a brief visit from Akhmatova or Pasternak; after three wrong
+                  tries, the right answer is highlighted.
+                </p>
+                <p>
+                  Stuck? Skip the question. Use Previous to look back at earlier questions in
+                  the round, or to answer one you skipped. At the end of each round you can
+                  retry the phrases you missed or skipped.
+                </p>
+                <p>
+                  Your progress is saved in this browser, so you can stop and come back later.
+                  To start over, use the &#8634; button in the score bar.
                 </p>
                 <p>
                   Rather look and read than play? The Archive shows every photograph and passage.
-                </p>
-                <p>
-                  Your score is tracked at the top of the page. After three wrong attempts on a question, the correct answer is highlighted. Use the reset button to start a fresh session.
                 </p>
               </div>
             </NavigationMenuContent>

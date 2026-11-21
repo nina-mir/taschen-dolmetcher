@@ -24,6 +24,8 @@ interface RoundSummaryProps {
   onNextRound: () => void;
   onRetry: () => void;
   onPlayAgain: () => void;
+  /** Asks, then starts a fresh game. */
+  onStartOver: () => void;
   /** Text shared by "Share my score". */
   shareMessage: string;
 }
@@ -45,6 +47,7 @@ const RoundSummary: React.FC<RoundSummaryProps> = ({
   onNextRound,
   onRetry,
   onPlayAgain,
+  onStartOver,
   shareMessage,
 }) => {
   const [copied, setCopied] = useState(false)
@@ -148,6 +151,15 @@ const RoundSummary: React.FC<RoundSummaryProps> = ({
         >
           {copied ? 'Copied to clipboard' : 'Share my score'}
         </button>
+        {!deckFinished && (
+          <button
+            type="button"
+            onClick={onStartOver}
+            className="min-h-11 font-gyst text-sm font-medium underline underline-offset-4 text-stone-700 dark:text-stone-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-soviet-gold"
+          >
+            Start a new game
+          </button>
+        )}
         {deckFinished && (
           <a href="#/archive" className="self-center min-h-11 flex items-center font-garamond-pp text-xl underline underline-offset-4">
             Visit the Archive

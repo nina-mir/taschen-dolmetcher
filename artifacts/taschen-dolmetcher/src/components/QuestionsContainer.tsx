@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRightIcon } from '@radix-ui/react-icons';
+import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
 import { QuestionType, LanguageType } from '@/types';
 import data from '@/assets/data/improved_data_deepseek_en_array.json';
 import multipleChoiceData from '@/assets/data/multiple_choice_data_claude.json'
@@ -10,6 +10,7 @@ import Question from '@/components/Question';
 import MultiChoiceQuestion from '@/components/question/MultiChoiceQuestion';
 import RoundProgress from '@/components/round/RoundProgress';
 import RoundSummary, { ReviewEntry } from '@/components/round/RoundSummary';
+import SolvedCard from '@/components/round/SolvedCard';
 
 import knuthRandomizer from '@/utils/helpers'
 import { loadGame, saveGame, Outcome } from '@/utils/savedGame'
@@ -21,6 +22,8 @@ interface QuestionsContainerProps {
   onAnswer: (isCorrect: boolean) => void;
   /** Resets the score and starts a fresh, reshuffled game. */
   onNewGame: () => void;
+  /** Asks first, then starts a fresh game. */
+  onStartOver: () => void;
 }
 
 const TOTAL = data.length
@@ -73,6 +76,8 @@ function phraseIn(dataIdx: number, language: LanguageType): string {
  *
  * - "Skip this one" moves on without answering.
  * - Once the answer is correct, "Next question" appears under the card.
+ * - "Previous" looks back at earlier questions in the round. Answered ones
+ *   are shown read-only; a skipped one can still be answered.
  * - After each round, a summary lists the phrases to review: those skipped
  *   or got right only after a wrong try. They can be retried as a review
  *   round before the next round.
@@ -83,7 +88,7 @@ function phraseIn(dataIdx: number, language: LanguageType): string {
  *
  * Progress is saved in the browser after every step (see utils/savedGame.ts).
  */
-const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer, onNewGame }: QuestionsContainerProps) => {
+const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer, onNewGame, onStartOver }: QuestionsContainerProps) => {
   const [start] = useState(initialGame)
 
   // Shuffled once per game. The question order keeps data + multipleChoiceData
@@ -102,6 +107,9 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer, onNew
   const [hadWrong, setHadWrong] = useState<boolean>(false)                     // wrong try on the card on screen
   const [solved, setSolved] = useState<boolean>(false)
   const [showSummary, setShowSummary] = useState<boolean>(start.showSummary)
+  // Step being looked back at with Previous; null on the current question
+  const [viewStep, setViewStep] = useState<number | null>(null)
+  const [revisitHadWrong, setRevisitHadWrong] = useState<boolean>(false)
 
   // Save after every change, so a reload resumes here
   useEffect(() => {
@@ -154,6 +162,7 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer, onNew
   const advance = () => {
     setSolved(false)
     setHadWrong(false)
+    setViewStep(null)
     if (step + 1 < roundItems.length) {
       setStep(step + 1)
     } else {
@@ -175,8 +184,36 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer, onNew
     setOutcomes({})
     setSolved(false)
     setHadWrong(false)
+    setViewStep(null)
     setShowSummary(false)
     scrollToTop()
+  }
+
+  // ---- Looking back ----
+  const goPrevious = () => {
+    setViewStep((viewStep ?? step) - 1)
+    setSolved(false)
+    setRevisitHadWrong(false)
+    scrollToTop()
+  }
+
+  const goBackToCurrent = () => {
+    setViewStep(null)
+    setRevisitHadWrong(false)
+    scrollToTop()
+  }
+
+  // Answering a skipped question found with Previous. It counts like any
+  // answer: right first time if there was no wrong try.
+  const handleRevisitAnswer = (isCorrect: boolean) => {
+    onAnswer(isCorrect)
+    if (viewStep === null) return
+    const revisited = roundItems[viewStep]
+    if (!isCorrect) {
+      setRevisitHadWrong(true)
+    } else {
+      setOutcomes(prev => ({ ...prev, [revisited]: revisitHadWrong ? 'missed' : 'first' }))
+    }
   }
 
   const handleNextRound = () => {
@@ -210,6 +247,7 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer, onNew
           onNextRound={handleNextRound}
           onRetry={() => startRound(toReviewPositions, true)}
           onPlayAgain={onNewGame}
+          onStartOver={onStartOver}
           shareMessage={`I got ${firstTry} of ${roundItems.length} right first time in ${isReview ? 'a review round' : `round ${roundNumber}`} of Taschen-Dolmetscher, a game built on a WW2 German-Russian phrasebook.`}
         />
       </div>
@@ -217,23 +255,40 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer, onNew
   }
 
   // ---- One question ----
-  const dataIdx = questionIndices[position]
+  const looking = viewStep !== null
+  const shownStep = viewStep ?? step
+  const shownPosition = roundItems[shownStep]
+  const dataIdx = questionIndices[shownPosition]
+  const shownOutcome = outcomes[shownPosition]
+  const isAnswered = shownOutcome === 'first' || shownOutcome === 'missed'
   const isLastInRound = step === roundItems.length - 1
+  // The current question counts as done once it has a right answer recorded
+  const currentDone = outcomes[position] === 'first' || outcomes[position] === 'missed'
+
+  // Answered questions are shown read-only, except the current one just
+  // solved here, which stays as it is until Next.
+  const showReadOnly = isAnswered && (looking || !solved)
 
   const shared = {
-    id: step + 1,
+    id: shownStep + 1,
     de: data[dataIdx].de,
     en: data[dataIdx].en,
     ru: data[dataIdx].ru,
     phonetic: data[dataIdx].phonetic,
     fromLanguage,
     toLanguage,
-    media: shuffledMediaData[position],
-    info: shuffledTextData[position],
-    onAnswer: handleAnswer,
+    media: shuffledMediaData[shownPosition],
+    info: shuffledTextData[shownPosition],
+    onAnswer: looking ? handleRevisitAnswer : handleAnswer,
   }
-  // A new key per round, so a retried phrase starts as a fresh card
-  const cardKey = `${roundSerial}-${position}`
+  // A new key per round (and for a second try at a skipped one), so the card
+  // starts fresh
+  const cardKey = `${roundSerial}-${shownPosition}${looking ? '-again' : ''}`
+
+  const secondaryLink =
+    'min-h-11 px-2 font-gyst text-sm font-medium underline underline-offset-4 text-stone-700 dark:text-stone-300 cursor-pointer flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-soviet-gold'
+  const primaryButton =
+    'w-full min-h-13 rounded-md bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 font-gyst font-semibold flex items-center justify-center gap-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-soviet-gold'
 
   return (
     <div ref={topRef} className="w-full flex flex-col items-center gap-4 scroll-mt-16">
@@ -241,9 +296,20 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer, onNew
         label={isReview ? 'Review' : `Round ${roundNumber} of ${ROUND_COUNT}`}
         step={step}
         total={roundItems.length}
+        viewing={viewStep}
       />
 
-      {qFormat === 'choosing' ? (
+      {showReadOnly ? (
+        <SolvedCard
+          key={`${cardKey}-solved`}
+          id={shownStep + 1}
+          question={phraseIn(dataIdx, fromLanguage)}
+          answer={phraseIn(dataIdx, toLanguage)}
+          phonetic={toLanguage === 'ru' ? data[dataIdx].phonetic : null}
+          media={shuffledMediaData[shownPosition]}
+          info={shuffledTextData[shownPosition]}
+        />
+      ) : qFormat === 'choosing' ? (
         <MultiChoiceQuestion
           key={cardKey}
           {...shared}
@@ -253,26 +319,39 @@ const QuestionsContainer = ({ fromLanguage, toLanguage, qFormat, onAnswer, onNew
         <Question key={cardKey} {...shared} />
       )}
 
+      {looking && shownOutcome === 'skipped' && (
+        <p className="w-[90%] font-garamond-pp text-xl">
+          You skipped this one. Answer it now to see its photograph.
+        </p>
+      )}
+
       {/* relative + z-20 keeps the buttons clickable above the card (z-10) */}
-      <div className="relative z-20 w-[90%] flex justify-end">
-        {solved ? (
-          <button
-            type="button"
-            onClick={advance}
-            className="w-full min-h-13 rounded-md bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 font-gyst font-semibold flex items-center justify-center gap-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-soviet-gold"
-          >
+      <div className="relative z-20 w-[90%] flex flex-col gap-2">
+        {looking ? (
+          <button type="button" onClick={goBackToCurrent} className={primaryButton}>
+            Back to question {step + 1}
+            <ArrowRightIcon className="w-5 h-5" aria-hidden="true" />
+          </button>
+        ) : currentDone ? (
+          <button type="button" onClick={advance} className={primaryButton}>
             {isLastInRound ? 'See how the round went' : 'Next question'}
             <ArrowRightIcon className="w-5 h-5" aria-hidden="true" />
           </button>
-        ) : (
-          <button
-            type="button"
-            onClick={handleSkip}
-            className="min-h-11 px-2 font-gyst text-sm font-medium underline underline-offset-4 text-stone-700 dark:text-stone-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-soviet-gold"
-          >
-            Skip this one
-          </button>
-        )}
+        ) : null}
+
+        <div className="flex justify-between">
+          {shownStep > 0 ? (
+            <button type="button" onClick={goPrevious} className={secondaryLink}>
+              <ArrowLeftIcon className="w-4 h-4" aria-hidden="true" />
+              Previous
+            </button>
+          ) : <span />}
+          {!looking && !currentDone && (
+            <button type="button" onClick={handleSkip} className={secondaryLink}>
+              Skip this one
+            </button>
+          )}
+        </div>
       </div>
     </div>
   )

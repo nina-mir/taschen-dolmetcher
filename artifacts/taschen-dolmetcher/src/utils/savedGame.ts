@@ -9,6 +9,7 @@
 
 const GAME_KEY = 'taschen-dolmetcher-game'
 const SCORE_KEY = 'taschen-dolmetcher-score'
+const SETTINGS_KEY = 'taschen-dolmetcher-settings'
 const VERSION = 1
 
 export type Outcome = 'first' | 'missed' | 'skipped'
@@ -101,6 +102,40 @@ export function clearSavedGame(): void {
   try {
     localStorage.removeItem(GAME_KEY)
     localStorage.removeItem(SCORE_KEY)
+  } catch {
+    // ignore
+  }
+}
+
+export interface SavedSettings {
+  from: 'de' | 'en' | 'ru';
+  to: 'de' | 'en' | 'ru';
+  format: 'choosing' | 'typing';
+}
+
+const LANGUAGES = ['de', 'en', 'ru']
+
+/** The language pair and answer format last used (kept across new games). */
+export function loadSettings(): SavedSettings {
+  try {
+    const s = JSON.parse(localStorage.getItem(SETTINGS_KEY) ?? '') as SavedSettings
+    if (
+      LANGUAGES.includes(s.from) &&
+      LANGUAGES.includes(s.to) &&
+      s.from !== s.to &&
+      (s.format === 'choosing' || s.format === 'typing')
+    ) {
+      return s
+    }
+  } catch {
+    // no saved settings
+  }
+  return { from: 'de', to: 'en', format: 'choosing' }
+}
+
+export function saveSettings(settings: SavedSettings): void {
+  try {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings))
   } catch {
     // ignore
   }
