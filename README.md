@@ -1,6 +1,7 @@
 # Taschendolmetscher · Revisited
 
-In 1941, the German army issued its frontline soldiers a small booklet:
+In 1939, the German army printed a small booklet for its frontline soldiers,
+reissued in 1941, the year it invaded the Soviet Union:
 *Taschendolmetscher für Frontsoldaten — Russisch.* A pocket interpreter.
 Phrases for occupation, set in Fraktur and printed on bad paper:
 

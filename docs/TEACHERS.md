@@ -4,7 +4,7 @@ A practical guide to using *Taschendolmetscher · Revisited* in the classroom.
 
 ## What this is
 
-*Taschendolmetscher · Revisited* is a language game built around a small artifact: the *Taschendolmetscher für Frontsoldaten — Russisch*, a German–Russian phrasebook issued to Wehrmacht soldiers on the Eastern Front in 1941. The booklet contained the operational vocabulary of occupation: phrases for demanding identity papers, food, information, surrender.
+*Taschendolmetscher · Revisited* is a language game built around a small artifact: the *Taschendolmetscher für Frontsoldaten — Russisch*, a German–Russian phrasebook first printed in 1939 and issued to Wehrmacht soldiers on the Eastern Front from 1941. The booklet contained the operational vocabulary of occupation: phrases for demanding identity papers, food, information, surrender.
 
 The project asks students to learn those phrases — German, Russian, English — and pairs each one with the historical record of what the phrases were really for: photographs of the Eastern Front, partisan testimony, art made by Holocaust survivors, and reportage by Soviet war correspondents.
 
@@ -65,7 +65,7 @@ The project supports several disciplines and several depths of engagement.
 
 ## Things to anticipate
 
-**Students will ask whether the phrases are accurate.** They are — drawn from the actual 1941 booklet. Where translations have been smoothed for the game, that is documented in the underlying data. If a student wants to verify, the original is digitized at the Museum Digital Berlin record linked in the project's About page.
+**Students will ask whether the phrases are accurate.** They are — drawn from the actual booklet. Where translations have been smoothed for the game, that is documented in the underlying data. If a student wants to verify, the original is digitized at [the Museum Digital Berlin record.](https://berlin.museum-digital.de/object/80372)
 
 **Students may ask why the project doesn't include phrases from a Russian counter-phrasebook.** The Red Army did issue Russian–German phrasebooks for its own soldiers, with their own characteristic imperatives. The asymmetry of the current project — only the occupier's phrasebook — is a deliberate curatorial choice, but it is a choice, and a thoughtful student is right to notice it.
 

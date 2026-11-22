@@ -91,8 +91,18 @@ export function NavigationMenuDemo({
                   Many Soviet artists and writers participated in this great effort.
                   <em> Ilya Ehrenburg and Vasily Grossman</em>, two Jewish Ukrainian-born writers,
                   stand out for their coverage of the frontlines and their inspiring words.
-                  This app is built around a 1943 German–Russian phrasebook issued to Wehrmacht soldiers —
-                  a small artifact of a vast and brutal war, repurposed here as a language learning game.
+                  This app is built around a German–Russian phrasebook first printed in Berlin in 1939
+                  and reissued in 1941, the year Germany invaded the Soviet Union. Issued to Wehrmacht
+                  soldiers, it is a small artifact of a vast and brutal war, repurposed here as a
+                  language learning game. A 1939 copy is held by the{' '}
+                  <a
+                    href="https://berlin.museum-digital.de/object/80372"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-4"
+                  >
+                    Museum Berlin-Karlshorst
+                  </a>.
                 </p>
               </div>
             </NavigationMenuContent>

@@ -14,7 +14,6 @@ interface QuestionHeaderProps {
   questionId: string;
   /** The correct translation, shown under the question once it is solved. */
   answerText?: string | null;
-  /** The 1941 booklet's phonetic spelling, shown beside a Russian answer. */
   phonetic?: string | null;
 }
 
