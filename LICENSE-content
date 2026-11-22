@@ -1,0 +1,41 @@
+Taschen-Dolmetscher, Revisited: content license
+
+Copyright (c) 2025–2026 Nina Ruth Mir
+
+The code in this repository is licensed under the MIT License; see LICENSE.
+
+The project's own content is licensed under the Creative Commons
+Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0):
+https://creativecommons.org/licenses/by-sa/4.0/legalcode
+
+That content is:
+
+  - the captions, alt text and other descriptions of the photographs
+    written for this project
+  - the selection and arrangement of the phrases, photographs and
+    readings
+  - the English translations of the phrases and the answer choices
+  - the game's own text (How to Play, History, the Archive and Sources
+    pages) and the teachers' note in docs/TEACHERS.md
+
+To credit it, name "Nina Ruth Mir, Taschen-Dolmetscher, Revisited" and
+link to https://github.com/nina-mir/taschen-dolmetcher.
+
+NOT COVERED BY THIS LICENSE
+
+The following belong to others. They are included for educational and
+commemorative purposes, are not licensed under CC BY-SA 4.0 or MIT, and
+remain subject to their own terms:
+
+  - The photographs, paintings, drawings and posters in public/images/
+    and elsewhere in the project. Rights remain with the photographers,
+    artists and holding institutions named on the Sources page
+    (https://nina-mir.github.io/taschen-dolmetcher/#/sources), where each
+    image links to its source record.
+  - The quoted passages ("readings"), which remain the property of their
+    authors, translators and publishers, cited on the Sources page.
+  - The text of the original phrasebook, Taschen-Dolmetscher für
+    Frontsoldaten (Berlin, 1939; reissued 1941).
+
+If you hold rights to any of this material and would like it removed or
+its attribution corrected, please write to Nina@SFSU.Edu.
