@@ -53,8 +53,9 @@ export function NavigationMenuDemo({
       onValueChange={handleValueChange}
     >
       <div className="relative w-full">
-        {/* Score tracker: absolutely centered in the navbar — desktop only */}
-        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-10 pointer-events-none">
+        {/* Score tracker: absolutely centered in the navbar — desktop only,
+            and only on the game page */}
+        {route === 'game' && <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-10 pointer-events-none">
           <div className="px-4 py-1 rounded-full bg-stone-200/70 dark:bg-stone-700/70 border border-stone-400/40 dark:border-stone-600/40 pointer-events-auto">
             <ScoreTracker
               correct={correct}
@@ -65,7 +66,7 @@ export function NavigationMenuDemo({
               copied={copied}
             />
           </div>
-        </div>
+        </div>}
 
         <NavigationMenuList className="w-[100%]">
           {/* Left: History */}
@@ -190,7 +191,7 @@ export function NavigationMenuDemo({
           </NavigationMenuItem>
 
           {/* Right: share (desktop only, when score > 0) */}
-          {correct > 0 && (
+          {route === 'game' && correct > 0 && (
             <NavigationMenuItem className="hidden md:flex">
               <button
                 onClick={onShare}
