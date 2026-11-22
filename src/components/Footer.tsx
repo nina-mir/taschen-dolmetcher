@@ -13,7 +13,6 @@ const LINKS: FooterLink[] = [
   { label: "Source code", href: "https://github.com/nina-mir/taschen-dolmetcher", external: true },
   { label: "Storybook", href: "https://nina-mir.github.io/taschen-dolmetcher-storybook/", external: true },
   { label: "Teachers' note", href: "https://github.com/nina-mir/taschen-dolmetcher/blob/main/docs/TEACHERS.md", external: true },
-  { label: "Twitter", href: "https://twitter.com/transbelly_nina", external: true },
   { label: "Contact", href: "mailto:Nina@SFSU.Edu" },
 ]
 
