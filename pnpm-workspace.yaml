@@ -10,5 +10,10 @@ autoInstallPeers: false
 onlyBuiltDependencies:
   - esbuild
 
+# sharp (used by `pnpm thumbs`) ships ready-made binaries, so its install
+# script isn't needed
+ignoredBuiltDependencies:
+  - sharp
+
 overrides:
   esbuild: "0.27.3"

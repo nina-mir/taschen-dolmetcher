@@ -106,6 +106,9 @@ All project source files live in `src/`. Static files (photos, thumbnails, favic
 }
 ```
 
+**Add a photograph**
+→ Put the file in `public/images/`, add its entry to `src/assets/data/imagesData_local.json`, then run `pnpm thumbs` to make its Archive thumbnail.
+
 **Change the wrong-answer images**
 → Edit `src/assets/data/wrongAnswerImages.json`.
 

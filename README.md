@@ -17,7 +17,7 @@ the photographers and artists who recorded what those phrases were really for.
 
 It is a vocabulary deck and an act of witness, in the same interface.
 
-**[→ Play](https://nina-mir.github.io/taschen-dolmetcher/)** · **[Storybook](https://nina-mir.github.io/taschen-dolmetcher-storybook/)** · **[For teachers](docs/TEACHERS.md)**
+**[→ Play](https://nina-mir.github.io/taschen-dolmetcher/)** · **[Archive](https://nina-mir.github.io/taschen-dolmetcher/#/archive)** · **[Sources](https://nina-mir.github.io/taschen-dolmetcher/#/sources)** · **[For teachers](docs/TEACHERS.md)**
 
 ---
 
@@ -25,23 +25,38 @@ It is a vocabulary deck and an act of witness, in the same interface.
 
 A curated archive of 85 photographs, drawings, paintings, posters, and
 documents from the Eastern Front and the Holocaust by bullets, 1941–1945.
-About a third depict violence or its aftermath; those are blurred until you
-choose to reveal them. The rest are partisans washing in snow, evacuated
+About a third depict violence or its aftermath. The rest are partisans washing in snow, evacuated
 museum collections, a deer wandering into wartime Murmansk, two soldiers
 reading *Krasnaya Zvezda* in a forest. The booklet is one voice in a
 conversation; this project is the room.
 
 The historical material comes from the Ghetto Fighters' House Museum,
-Yad Vashem, USHMM, the Imperial War Museum, the Davis Center at Harvard,
+Yad Vashem, USHMM, the Imperial War Museums, the Davis Center at Harvard,
 the Hood Museum at Dartmouth, the Smith College Museum of Art, and the
 Russian regional archives at *russiainphoto.ru*. Among the photographers
 and artists: Dmitri Baltermants, Yevgeny Khaldey, Emmanuil Yevzerikhin,
 Max Alpert, Arkady Shaikhet, Valery Faminsky, Alexander Bogen, Moshe
 Kupferman, Haskiel Kujawski, Naomi Judkowski, Marko Behar, Giacomo Manzù.
 
-A full bibliography lives in [`docs/sources.md`](docs/sources.md).
+Every photograph and passage is credited, with links to the holding
+archive or the book, on the
+[Sources](https://nina-mir.github.io/taschen-dolmetcher/#/sources) page.
 Content advisory lives in [`docs/TEACHERS.md`](docs/TEACHERS.md), which is
 useful whether or not you teach.
+
+## How it plays
+
+- Pick a language pair (German, English or Russian) and a format:
+  multiple choice or type your answer.
+- The 74 phrases come in rounds of ten. A right answer reveals the
+  translation, a photograph and a passage; a wrong one brings a brief visit
+  from Akhmatova and Pasternak, or Ehrenburg.
+- Skip a phrase, look back with Previous, and retry what you missed at the
+  end of each round.
+- Progress is saved in your browser, so you can stop and come back.
+- Rather look and read than play? The
+  [Archive](https://nina-mir.github.io/taschen-dolmetcher/#/archive) shows
+  every photograph and passage without the quiz.
 
 ## Status
 
@@ -57,28 +72,57 @@ If any of those describe you, please write:
 
 ## For developers
 
-Built with React 19, TypeScript, Tailwind 4, Radix primitives, Storybook 9,
-Vitest, and Playwright. Deployed from `main` to GitHub Pages via Actions.
+Built with React 19, TypeScript, Vite 7, Tailwind CSS 4 and Radix UI
+primitives. Deployed from `main` to GitHub Pages by
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
+Component documentation lives in a separate
+[Storybook](https://nina-mir.github.io/taschen-dolmetcher-storybook/).
+
+You need Node 20 or newer and pnpm 10 (`npm install -g pnpm@10`; if
+corepack manages your pnpm, `corepack prepare pnpm@10 --activate`).
 
 ```bash
 pnpm install
-pnpm dev              # Vite dev server
-pnpm storybook        # component workbench
-pnpm build
-pnpm test
-pnpm validate:images  # check imagesData.json against the schema
+pnpm dev          # dev server at http://localhost:3000
+pnpm build        # production build into dist/
+pnpm serve        # preview the production build
+pnpm typecheck    # TypeScript check
+pnpm thumbs       # make Archive thumbnails for new photos
 ```
 
-Component documentation: [Storybook](https://nina-mir.github.io/taschen-dolmetcher-storybook/).
-Data contract: [`schemas/images.schema.json`](schemas/images.schema.json).
+### Where things live
+
+| Path | What it holds |
+|---|---|
+| `src/` | The app: components, hooks, styles |
+| `src/assets/data/improved_data_deepseek_en_array.json` | The 74 phrases, in German, English and Russian, with the booklet's phonetic spelling |
+| `src/assets/data/multiple_choice_data_claude.json` | The answer choices for each phrase |
+| `src/assets/data/imagesData_local.json` | The photographs: file, caption, alt text, photographer, source link |
+| `src/assets/data/infoData.json` | The readings, with citations |
+| `src/assets/data/wrongAnswerImages.json` | The portraits shown after a wrong answer |
+| `public/images/` | Photo files, with small versions for the Archive in `public/images/thumbs/` |
+| `docs/` | The teachers' note |
+
+`imagesData.json` and `original_data.json` in the same folder are earlier
+versions of the data and aren't used by the game.
+
+### Adding a photograph
+
+1. Put the file in `public/images/`.
+2. Add an entry for it to `imagesData_local.json`, with `imgUrl` set to
+   `images/<file name>`, a caption, alt text and the source link.
+3. Run `pnpm thumbs` to make its Archive thumbnail. The command also lists
+   any photo in the data that's missing from `public/images/`.
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for a map of the code.
 
 The most useful contributions right now are not code:
 
-1. Alt text for the ~30 archival images that still lack it
+1. Alt text for the 32 archival images that still lack it
 2. Native-speaker review of the German and Russian translations
 3. Corrections to historical attributions and dates
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md). Code contributions are welcome too.
+Code contributions are welcome too.
 
 ## A note on this object
 
