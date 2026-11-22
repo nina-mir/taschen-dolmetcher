@@ -60,7 +60,7 @@ const Header: React.FC = () => {
         src={taschen1}
         alt=""
         aria-hidden="true"
-        className='w-35 md:w-30 absolute top-90 md:top-10 md:-left-13 -left-20'
+        className='w-31 md:w-30 absolute top-60 md:top-10 md:-left-13 -left-20'
       />
       <img
         src={taschen1}

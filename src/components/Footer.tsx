@@ -9,6 +9,7 @@ interface FooterLink {
 
 const LINKS: FooterLink[] = [
   { label: "Archive", href: "#/archive" },
+  { label: "Sources", href: "#/sources" },
   { label: "Source code", href: "https://github.com/nina-mir/taschen-dolmetcher", external: true },
   { label: "Storybook", href: "https://nina-mir.github.io/taschen-dolmetcher-storybook/", external: true },
   { label: "Teachers' note", href: "https://github.com/nina-mir/taschen-dolmetcher/blob/main/docs/TEACHERS.md", external: true },
@@ -28,8 +29,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
   return (
     <footer className={cn("w-full bg-stone-950 text-stone-300", className)}>
-      {/* pb-28 on phones leaves room for the floating score bar */}
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 pt-9 pb-28 md:gap-7 md:px-8 md:pt-12 md:pb-11">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 pt-9 pb-8 md:gap-7 md:px-8 md:pt-12 md:pb-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-10">
           <div className="flex flex-col gap-1.5 font-garamond-pp">
             <span className="text-2xl leading-tight text-stone-50 md:whitespace-nowrap md:text-3xl">
@@ -65,13 +65,13 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
         <div className="h-px bg-stone-700" aria-hidden="true" />
 
-        <div className="flex flex-col gap-2.5 font-garamond-pp text-base leading-snug text-stone-400 md:flex-row md:justify-between md:gap-10">
-          <p className="md:max-w-[60%]">
-            Photographs from the Ghetto Fighters&rsquo; House Archive, Russia in
-            Photo (russiainphoto.ru), the Imperial War Museums and other
-            collections. Open any photograph to see its source.
+        <div className="flex flex-col gap-2 font-garamond-pp text-base leading-snug text-stone-400">
+          <p>
+            Photographs and texts courtesy of the archives and publishers listed in{" "}
+            <a href="#/sources" className="underline underline-offset-4 hover:text-white">Sources</a>.
           </p>
-          <p className="shrink-0">&copy; {years} &middot; San Francisco, USA</p>
+          {/* Copyright stays the last line of the page */}
+          <p>&copy; {years} &middot; San Francisco, USA</p>
         </div>
       </div>
     </footer>

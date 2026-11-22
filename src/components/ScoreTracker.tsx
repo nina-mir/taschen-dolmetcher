@@ -12,6 +12,8 @@ interface ScoreTrackerProps {
   highScore?: number;
   onShare: () => void;
   copied: boolean;
+  /** Slide the phone score bar out of the way (while the footer is on screen). */
+  tucked?: boolean;
 }
 
 const ScoreTracker: React.FC<ScoreTrackerProps> = ({
@@ -22,6 +24,7 @@ const ScoreTracker: React.FC<ScoreTrackerProps> = ({
   highScore = 0,
   onShare,
   copied,
+  tucked = false,
 }) => {
   const total = correct + incorrect;
   const [hapticOn, setHapticOn] = useState<boolean>(isHapticEnabled)
@@ -83,7 +86,8 @@ const ScoreTracker: React.FC<ScoreTrackerProps> = ({
   if (minimized) {
     return (
       <div
-        className="fixed bottom-0 left-0 right-0 z-50 md:hidden flex justify-center pb-4 px-6 pointer-events-none"
+        className={`fixed bottom-0 left-0 right-0 z-50 md:hidden flex justify-center pb-4 px-6 pointer-events-none transition-transform duration-300 ${tucked ? 'translate-y-[150%]' : ''}`}
+        inert={tucked}
         role="status"
         aria-live="polite"
         aria-label={`Score: ${correct} correct, ${incorrect} incorrect`}
@@ -114,7 +118,8 @@ const ScoreTracker: React.FC<ScoreTrackerProps> = ({
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-50 md:hidden flex justify-center pb-4 px-6 pointer-events-none"
+      className={`fixed bottom-0 left-0 right-0 z-50 md:hidden flex justify-center pb-4 px-6 pointer-events-none transition-transform duration-300 ${tucked ? 'translate-y-[150%]' : ''}`}
+        inert={tucked}
       role="status"
       aria-live="polite"
       aria-label={`Score: ${correct} correct, ${incorrect} incorrect`}

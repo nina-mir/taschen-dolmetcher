@@ -152,9 +152,9 @@ export function NavigationMenuDemo({
           <NavigationMenuItem>
             <NavigationMenuLink
               className={`${navigationMenuTriggerStyle()} text-lg dark:text-stone-100 dark:hover:bg-stone-700/50`}
-              href={route === 'archive' ? '#/' : '#/archive'}
+              href={route === 'game' ? '#/archive' : '#/'}
             >
-              {route === 'archive' ? 'Game' : 'Archive'}
+              {route === 'game' ? 'Archive' : 'Game'}
             </NavigationMenuLink>
           </NavigationMenuItem>
 

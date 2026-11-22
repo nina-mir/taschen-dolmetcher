@@ -66,7 +66,8 @@ const Archive: React.FC = () => {
           connects them except that each is a trace of what happened there.
         </p>
         <p className="mt-4 font-gyst text-sm text-stone-600 dark:text-stone-400">
-          {photos.length} photographs · {readings.length} readings · tap a photograph to see it in full
+          {photos.length} photographs · {readings.length} readings · tap a photograph to see it in full ·{' '}
+          <a href="#/sources" className="underline underline-offset-4">where they come from</a>
         </p>
       </header>
 

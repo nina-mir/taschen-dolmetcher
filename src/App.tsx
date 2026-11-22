@@ -7,6 +7,7 @@ import ToggleQuestionType from './components/QuestionsFormat'
 import ScoreTracker from './components/ScoreTracker'
 import Footer from './components/Footer';
 import Archive from './components/archive/Archive';
+import Sources from './components/sources/Sources';
 import { DarkModeProvider } from './contexts/DarkModeContext'
 
 import { StarFilledIcon, CornersIcon } from "@radix-ui/react-icons"
@@ -67,6 +68,19 @@ function App() {
   const { isDark, toggleDark } = useDarkMode()
   const route = useHashRoute()
   const showArchive = route === 'archive'
+  const showSources = route === 'sources'
+  const onGamePage = route === 'game'
+
+  // On phones the score bar slides away while the footer is on screen, so it
+  // never covers the footer and the copyright can be the last line.
+  const [footerInView, setFooterInView] = useState<boolean>(false)
+  useEffect(() => {
+    const footer = document.querySelector('footer')
+    if (!footer || typeof IntersectionObserver === 'undefined') return
+    const observer = new IntersectionObserver(([entry]) => setFooterInView(entry.isIntersecting))
+    observer.observe(footer)
+    return () => observer.disconnect()
+  }, [])
   const { handleShare, copied } = useShareScore(correct, incorrect, TOTAL_QUESTIONS)
 
   const handleLanguageChange = (from: LanguageType, to: LanguageType) => {
@@ -129,10 +143,11 @@ function App() {
         </div>
 
         {showArchive && <Archive />}
+        {showSources && <Sources />}
 
-        {/* The game stays mounted while the archive is open, so answers and
+        {/* The game stays mounted while another page is open, so answers and
             score are still there when the player comes back. */}
-        <div className={showArchive ? 'hidden' : 'relative overflow-x-clip'}>
+        <div className={onGamePage ? 'relative overflow-x-clip' : 'hidden'}>
         <Header />
 
         <div className="flex flex-col items-center gap-[1rem]">
@@ -197,10 +212,11 @@ function App() {
           <Footer />
         </div>
 
-        {!showArchive && <ScoreTracker
+        {onGamePage && <ScoreTracker
           correct={correct}
           incorrect={incorrect}
           variant="mobile-banner"
+          tucked={footerInView}
           onNewGame={requestNewGame}
           highScore={highScore}
           onShare={handleShare}
