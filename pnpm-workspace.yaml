@@ -1,26 +1,9 @@
+# pnpm settings for this project.
+
 # Require npm package versions to be at least one day old before installing
 # them. Most malicious releases are caught and pulled within hours, so this
 # is a cheap defence against supply-chain attacks.
 minimumReleaseAge: 1440
-
-packages:
-  - artifacts/*
-
-# Shared versions, referenced from package.json as "catalog:"
-catalog:
-  '@tailwindcss/vite': ^4.1.14
-  '@types/node': ^25.3.3
-  '@types/react': ^19.2.0
-  '@types/react-dom': ^19.2.0
-  '@vitejs/plugin-react': ^5.0.4
-  class-variance-authority: ^0.7.1
-  clsx: ^2.1.1
-  lucide-react: ^0.545.0
-  react: 19.1.0
-  react-dom: 19.1.0
-  tailwind-merge: ^3.3.1
-  tailwindcss: ^4.1.14
-  vite: ^7.3.2
 
 autoInstallPeers: false
 

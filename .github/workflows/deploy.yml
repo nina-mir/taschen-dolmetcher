@@ -34,11 +34,11 @@ jobs:
           BASE_PATH: /${{ github.event.repository.name }}/
           PORT: 3000
           NODE_ENV: production
-        run: pnpm --filter @workspace/taschen-dolmetcher run build
+        run: pnpm build
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: artifacts/taschen-dolmetcher/dist/public
+          publish_dir: dist
           publish_branch: gh-pages

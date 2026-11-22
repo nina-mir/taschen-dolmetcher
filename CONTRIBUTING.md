@@ -1,6 +1,6 @@
 # Modifying Taschen-Dolmetscher
 
-All project source files live inside `artifacts/taschen-dolmetcher/src/` on the `improved-replit` branch.
+All project source files live in `src/`. Static files (photos, thumbnails, favicon) live in `public/`.
 
 ---
 
@@ -119,8 +119,8 @@ All project source files live inside `artifacts/taschen-dolmetcher/src/` on the 
 
 ## Tech stack
 
-- React 18 + TypeScript
+- React 19 + TypeScript
 - Vite
 - Tailwind CSS v4
 - shadcn/ui + Radix UI primitives
-- Deployed to GitHub Pages from the `improved-replit` branch via GitHub Actions (output: `gh-pages` branch)
+- Deployed to GitHub Pages from the `main` branch via GitHub Actions (`.github/workflows/deploy.yml`), which builds to `dist/` and publishes it to the `gh-pages` branch

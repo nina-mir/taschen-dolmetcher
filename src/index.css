@@ -2,6 +2,12 @@
 @import url("https://use.typekit.net/wwf2iyo.css");
 
 @import "tailwindcss";
+/* Tailwind looks for class names across the whole repo. Skip the docs and
+   the deploy workflow, so words like "blur" or "contents" in them don't
+   add unused CSS. */
+@source not "../docs";
+@source not "../*.md";
+@source not "../.github";
 @import "tw-animate-css";
 
 .my-custom-shadow {
