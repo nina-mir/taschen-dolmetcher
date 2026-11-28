@@ -1,3 +1,5 @@
+![The Taschen-Dolmetscher, Revisited game](docs/images/readme-dark.png)
+
 # Taschendolmetscher · Revisited
 
 In 1939, the German army printed a small booklet for its frontline soldiers,
