@@ -1,7 +1,7 @@
 import { QuestionType } from '@/types';
 import { TokensIcon, KeyboardIcon, DotsVerticalIcon } from "@radix-ui/react-icons"
 
-import topographySvg from '@/assets/topography.svg'
+import TopoBand from '@/components/TopoBand'
 
 import {
   ToggleGroup,
@@ -30,10 +30,7 @@ const ToggleQuestionType: React.FC<TypeProps> = ({
   }
 
   return (
-    <div
-      style={{ backgroundImage: `url(${topographySvg})` }}
-      className="bg-contain bg-repeat bg-stone-300 w-full"
-    >
+    <TopoBand className="bg-stone-300 dark:bg-stone-900">
       <div className='w-[90%] flex justify-center mt-5 mb-5 gap-[1.5rem] md:gap-10 m-auto'>
         <ToggleGroup
           type="single"
@@ -61,7 +58,7 @@ const ToggleQuestionType: React.FC<TypeProps> = ({
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
-    </div>
+    </TopoBand>
   )
 }
 

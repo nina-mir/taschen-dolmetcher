@@ -138,6 +138,33 @@ const Sources: React.FC = () => (
       </div>
     </section>
 
+    <section aria-labelledby="sources-design" className="mb-14">
+      <h2 id="sources-design" className={sectionHeading}>Design</h2>
+      <p className="mt-4 font-garamond-pp text-xl leading-relaxed">
+        The theme toggle&rsquo;s icons draw on <em>Beat the Whites with the Red Wedge</em>, a
+        1919&ndash;20 poster by the Soviet artist El Lissitzky. Made during the Russian Civil War,
+        it shows the Bolshevik Reds as a sharp red triangle driving into a white circle that stands
+        for the White forces. Built only from flat colour and plain geometry, it became one of the
+        defining images of Russian avant-garde design and shaped the visual language of Soviet
+        posters for decades. Here the wedge and circle become a switch between day and night: in
+        light mode a solid red wedge cuts into an empty circle, and in dark mode the circle turns
+        solid gold and the wedge becomes an outline. The poster comes from the Civil War rather
+        than the Second World War, but its graphic style carries into the posters and printed
+        material of the 1940s that this project explores.
+      </p>
+      <p className="mt-3">
+        <a
+          href="https://collections.mfa.org/objects/314484"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={outLink}
+        >
+          The poster at the Museum of Fine Arts, Boston{' '}
+          <ExternalLinkIcon className="h-4 w-4" aria-hidden="true" />
+        </a>
+      </p>
+    </section>
+
     <p className="flex flex-col items-center gap-2 text-center font-garamond-pp text-xl">
       <a href="#/archive" className="underline underline-offset-4">See them in the Archive</a>
       <a href="#/" className="underline underline-offset-4">Back to the game</a>

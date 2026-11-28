@@ -12,7 +12,7 @@ import {
 import germanFlag from '@/assets/german_flag.svg'
 import usFlag from '@/assets/english.svg'
 import russianFlag from '@/assets/russia.svg'
-import topographySvg from '@/assets/topography.svg'
+import TopoBand from '@/components/TopoBand'
 
 interface LanguageSelectorProps {
   initialFrom?: LanguageType;
@@ -46,10 +46,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   }
 
   return (
-    <div
-      style={{ backgroundImage: `url(${topographySvg})` }}
-      className="bg-contain bg-repeat w-full"
-    >
+    <TopoBand>
       <div className='w-[90%] flex justify-center mt-5 mb-5 gap-[1.5rem] md:gap-10 m-auto'>
         <div>
           <Label htmlFor="inputLanguage" className='invisible'></Label>
@@ -126,7 +123,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </TopoBand>
   )
 }
 

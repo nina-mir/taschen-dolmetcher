@@ -48,25 +48,25 @@ const Header: React.FC = () => {
         src={taschen2}
         alt=""
         aria-hidden="true"
-        className='w-25 md:w-20 fixed -bottom-4 rotate-10 md:-right-4 -right-13 fill-red-600'
+        className='w-25 md:w-20 fixed -bottom-4 rotate-10 md:-right-4 -right-13 fill-red-600 dark:invert dark:opacity-70'
       />
       <img
         src={taschen2}
         alt=""
         aria-hidden="true"
-        className='w-25 md:w-30 fixed -bottom-5 md:-bottom-8 -rotate-5 md:-left-14 -left-11'
+        className='w-25 md:w-30 fixed -bottom-5 md:-bottom-8 -rotate-5 md:-left-14 -left-11 dark:invert dark:opacity-70'
       />
       <img
         src={taschen1}
         alt=""
         aria-hidden="true"
-        className='w-31 md:w-30 absolute top-60 md:top-10 md:-left-13 -left-20'
+        className='w-31 md:w-30 absolute z-[1] top-60 md:top-10 md:-left-13 -left-20 dark:invert dark:opacity-70'
       />
       <img
         src={taschen1}
         alt=""
         aria-hidden="true"
-        className='w-40 md:w-50 absolute -right-20 md:-right-25 top-60 md:top-9'
+        className='w-40 md:w-50 absolute z-[1] -right-20 md:-right-25 top-60 md:top-9 dark:invert dark:opacity-70'
       />
 
       <h2 className="font-garamond-pp text-xl max-w-md text-center text-wrap mb-2">
