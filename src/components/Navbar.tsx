@@ -194,8 +194,38 @@ export function NavigationMenuDemo({
               title={isDark ? "Light mode" : "Dark mode"}
               type="button"
             >
-              {isDark ? (
-                /* Sun — yellow outline on dark background */
+                            {isDark ? (
+                /* Red wedge — dark mode: solid yellow circle, wedge cut out */
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <mask id="wedge-cut">
+                    <rect width="24" height="24" fill="white" />
+                    <path d="M1.5 8.5L15 12L1.5 15.5Z" fill="black" />
+                  </mask>
+                  <circle
+                    cx="14.5"
+                    cy="12"
+                    r="7"
+                    fill="#FFD700"
+                    stroke="#FFD700"
+                    strokeWidth="1.75"
+                    mask="url(#wedge-cut)"
+                  />
+                  <path
+                    d="M1.5 8.5L15 12L1.5 15.5Z"
+                    stroke="#FFD700"
+                    strokeWidth="1.75"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              ) : (
+                /* Red wedge — light mode: red outline circle, solid wedge */
                 <svg
                   width="18"
                   height="18"
@@ -205,100 +235,17 @@ export function NavigationMenuDemo({
                   aria-hidden="true"
                 >
                   <circle
-                    cx="12"
+                    cx="14.5"
                     cy="12"
-                    r="4.5"
-                    stroke="#FFD700"
-                    strokeWidth="1.75"
-                  />
-                  <line
-                    x1="12"
-                    y1="2"
-                    x2="12"
-                    y2="5"
-                    stroke="#FFD700"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                  />
-                  <line
-                    x1="12"
-                    y1="19"
-                    x2="12"
-                    y2="22"
-                    stroke="#FFD700"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                  />
-                  <line
-                    x1="4.22"
-                    y1="4.22"
-                    x2="6.34"
-                    y2="6.34"
-                    stroke="#FFD700"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                  />
-                  <line
-                    x1="17.66"
-                    y1="17.66"
-                    x2="19.78"
-                    y2="19.78"
-                    stroke="#FFD700"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                  />
-                  <line
-                    x1="2"
-                    y1="12"
-                    x2="5"
-                    y2="12"
-                    stroke="#FFD700"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                  />
-                  <line
-                    x1="19"
-                    y1="12"
-                    x2="22"
-                    y2="12"
-                    stroke="#FFD700"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                  />
-                  <line
-                    x1="4.22"
-                    y1="19.78"
-                    x2="6.34"
-                    y2="17.66"
-                    stroke="#FFD700"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                  />
-                  <line
-                    x1="17.66"
-                    y1="6.34"
-                    x2="19.78"
-                    y2="4.22"
-                    stroke="#FFD700"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              ) : (
-                /* Crescent moon — red outline on light background */
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                    r="7"
                     stroke="#dc2626"
                     strokeWidth="1.75"
-                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M1.5 8.5L15 12L1.5 15.5Z"
+                    fill="#dc2626"
+                    stroke="#dc2626"
+                    strokeWidth="1.75"
                     strokeLinejoin="round"
                   />
                 </svg>
